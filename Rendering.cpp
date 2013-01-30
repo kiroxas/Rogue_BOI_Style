@@ -99,8 +99,8 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 	const int maxf = std::max_element(positions.begin(),positions.end(),rendering::firstComp)->first;
 	const int maxs = std::max_element(positions.begin(),positions.end(),rendering::secondComp)->second;
 
-	const int number_room_w = maxs - mins + 1;
-	const int number_room_h = maxf - minf + 1;
+	const int number_room_w = maxf - minf + 1;
+	const int number_room_h = maxs - mins + 1;
 	const int width_for_rooms = (static_cast<float>(size.first) / ::quad) * ::quad_for_rooms; // Takes quad_for_rooms/quad % of the full size
 	const int height_for_rooms = (static_cast<float>(size.second) / ::quad) * ::quad_for_rooms; 
 	const int width_for_blanks = (static_cast<float>(size.first) / ::quad) * ::quad_for_blanks;
@@ -126,15 +126,6 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 		const unsigned int rank_h = abs(mins - p.second);
 		const float x = pos.first + rank_w * room_width + (rank_w + 1) * blank_width;
 		const float y = pos.second + rank_h * room_height + (rank_h + 1) * blank_height;
-		
-		/* Just to test, this need to be erased after */
-		std::ostringstream oss_x, oss_y, oss_rank_w, oss_rank_h;
-		oss_x << x;
-		oss_y << y;
-		oss_rank_w << rank_w;
-		oss_rank_h << rank_h;
-		
-		infos::log(RENDERING_PATH,"x: " + oss_x.str() + " y: " + oss_y.str() + " rank_w : " + oss_rank_w.str() + " rank_h: "+ oss_rank_h.str());
 
 		rec.setPosition(x,y);
 		rec.setSize(sf::Vector2f(room_width,room_height));
