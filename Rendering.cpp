@@ -1,3 +1,8 @@
+/* Rendering.cpp
+   File that  contains all the functions for rendering the game.
+   Author : Mouton Guillaume (Kiroxas)
+*/
+
 #include "Rendering.h"
 #include "Room.h"
 #include "Constantes.h"
@@ -5,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include <SFML/System/Vector2.hpp>
+#include <sstream>
 
 /* render_map
    maze : The maze that needs to be rendered
@@ -18,10 +24,16 @@ namespace
 	const int quad_for_rooms = 4;
 	const int quad_for_blanks = 1;
 	const int quad = quad_for_rooms + quad_for_blanks;
+	const float corridors_size = 0.25; // it's corriddors_size % of the blank size
 }
 
 void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
 {
+	/*
+		First let's figure out the layout of the map !
+		TODO : This must be done only once for each map, so we have to calculate this when we load a level, 
+		not when we render the map
+	*/
 	Room* seed = maze->getSeedRoom();
 
 	std::vector<Room*> vec;
@@ -79,9 +91,11 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 
 		++cpt;
 	}
+	
+	/* Now that we have the layout, let's figure out the size of each element in the map */
 
-	const int minf = std::min_element(positions.begin(),positions.end(),rendering::firstComp)->first;
-	const int mins = std::min_element(positions.begin(),positions.end(),rendering::secondComp)->second;
+	const int minf = std::min_element(positions.begin(),positions.end(),rendering::firstComp)->first; //Minimum for the width
+	const int mins = std::min_element(positions.begin(),positions.end(),rendering::secondComp)->second; //Minimum for the height
 	const int maxf = std::max_element(positions.begin(),positions.end(),rendering::firstComp)->first;
 	const int maxs = std::max_element(positions.begin(),positions.end(),rendering::secondComp)->second;
 
@@ -96,6 +110,14 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 	const float room_width = width_for_rooms / number_room_w;
 	const float blank_height = height_for_blanks / (number_room_h + 1);
 	const float blank_width = width_for_blanks / (number_room_w + 1);
+	
+	const int line_size_h = blank_height * ::corridors_size;
+	const int line_size_w = blank_width * ::corridors_size;
+	
+	cpt = 0;
+	/* Then, let's do the actual rendering */
+	
+	/* For Debugging purpose, let's log those infos, to see what's messing with the rendering */
 
 	for(auto p : positions)
 	{
@@ -104,195 +126,71 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 		const unsigned int rank_h = abs(mins - p.second);
 		const float x = pos.first + rank_w * room_width + (rank_w + 1) * blank_width;
 		const float y = pos.second + rank_h * room_height + (rank_h + 1) * blank_height;
+		
+		/* Just to test, this need to be erased after */
+		std::ostringstream oss_x, oss_y, oss_rank_w, oss_rank_h;
+		oss_x << x;
+		oss_y << y;
+		oss_rank_w << rank_w;
+		oss_rank_h << rank_h;
+		
+		infos::log(RENDERING_PATH,"x: " + oss_x.str() + " y: " + oss_y.str() + " rank_w : " + oss_rank_w.str() + " rank_h: "+ oss_rank_h.str());
 
 		rec.setPosition(x,y);
 		rec.setSize(sf::Vector2f(room_width,room_height));
 		screen.draw(rec);
+		
+		sf::RectangleShape line; // For corridors between rooms
+		
+		Room* piece = vec[cpt];
+		if(piece == nullptr) 
+		{
+			infos::log(RENDERING_PATH,"A room is null in render_map, we will not render the rest of the map");
+			return;
+		}
+		
+		float x_line, y_line;
+
+		if(piece->getNeighboor(NORTH) != nullptr)
+		{
+			//If north, the size is the width
+			//the (x,y) are located on the square above.
+			
+			x_line = x + (room_width/2) - (line_size_width / 2);
+			y_line = y - blank_height;
+			line.setPosition(x_line,y_line);
+			line.setSize(sf::Vector2f(line_size_w,blank_height));
+			screen.draw(line);
+		}
+		if(piece->getNeighboor(SOUTH) != nullptr)
+		{
+			x_line = x + (room_width/2) - (line_size_width / 2);
+			y_line = y + room_height;
+			line.setPosition(x_line,y_line);
+			line.setSize(sf::Vector2f(line_size_w,blank_height));
+			screen.draw(line);	
+		}
+		if(piece->getNeighboor(EAST) != nullptr)
+		{
+			x_line = x + room_width;
+			y_line = y + room_height/2 + line_size_height/2;
+			line.setPosition(x_line,y_line);
+			line.setSize(sf::Vector2f(blank_width,line_size_h));
+			screen.draw(line);	
+		}
+		if(piece->getNeighboor(WEST) != nullptr)
+		{
+			x_line = x - blank_width;
+			y_line = y + room_height/2 + line_size_height/2;
+			line.setPosition(x_line,y_line);
+			line.setSize(sf::Vector2f(blank_width,line_size_h));
+			screen.draw(line);		
+		}
+		
 	}
 
 	screen.display();
 }
-
-/*
-void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
-{
-
-	Room* seed = maze->getSeedRoom();
-	//const unsigned int n_rooms = maze->getNumberRooms();
-	//const int room_height = size.second / static_cast<int>(1.5* n_rooms);
-	//const int room_width = size.first / static_cast<int>(1.5* n_rooms);
-	std::vector<Room*> vec;
-	std::vector<std::pair<int, int>> positions;
-	std::vector<std::pair<unsigned int, unsigned int>> coords;
-	positions.push_back(std::make_pair(0,0));
-	coords.push_back(std::make_pair(pos.first + size.first/2, pos.second + size.second / 2));
-
-	unsigned int cpt = 0;
-	vec.push_back(seed);
-
-	const unsigned int constante = 20;
-
-	while(cpt < vec.size())
-	{
-		Room* piece = vec[cpt];
-		//sf::RectangleShape rec;
-		//rec.setPosition(static_cast<float>(coords[cpt].first - static_cast<int>(room_width / 2)), static_cast<float>(coords[cpt].second - static_cast<int>(room_height / 2)));
-		//rec.setSize(sf::Vector2f(static_cast<float>(room_width),static_cast<float>(room_height)));
-
-		//screen.draw(rec);
-
-		if(piece == nullptr) 
-		{
-			infos::log(RENDERING_PATH,"A room is empty in render_map, we will not render the rest of the map");
-			return;
-		}
-
-		//sf::RectangleShape line;
-		//line.setPosition(static_cast<float>(coords[cpt].first), static_cast<float>(coords[cpt].second));
-
-		if(piece->getNeighboor(NORTH) != nullptr)
-		{
-			if (std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first,positions[cpt].second - 1)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(NORTH));
-				positions.push_back(std::make_pair(positions[cpt].first,positions[cpt].second - 1));
-				//coords.push_back(std::make_pair(coords[cpt].first,coords[cpt].second - room_height - constante));
-			}
-			//line.setSize(sf::Vector2f(static_cast<float>(room_width / 8), static_cast<float>(-room_height) ));
-			//screen.draw(line);
-		}
-		if (piece->getNeighboor(SOUTH) != nullptr)
-		{
-			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first,positions[cpt].second + 1)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(SOUTH));
-				positions.push_back(std::make_pair(positions[cpt].first,positions[cpt].second + 1));
-				//coords.push_back(std::make_pair(coords[cpt].first,coords[cpt].second + room_height + constante));
-			}
-			//line.setSize(sf::Vector2f( static_cast<float>(room_width / 8), static_cast<float>(room_height) ));
-			//screen.draw(line);
-		}
-		if (piece->getNeighboor(WEST) != nullptr)
-		{
-			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first - 1,positions[cpt].second)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(WEST));
-				positions.push_back(std::make_pair(positions[cpt].first - 1,positions[cpt].second));
-				//coords.push_back(std::make_pair(coords[cpt].first - room_width - constante,coords[cpt].second));
-			}
-			//line.setSize(sf::Vector2f(static_cast<float>(-room_width), static_cast<float>(room_width /8) ));
-			//screen.draw(line);
-		}
-		if (piece->getNeighboor(EAST) != nullptr)
-		{
-			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first + 1,positions[cpt].second)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(EAST));
-				positions.push_back(std::make_pair(positions[cpt].first + 1,positions[cpt].second));
-				//coords.push_back(std::make_pair(coords[cpt].first + room_width + constante,coords[cpt].second));
-			}
-		}
-
-		++cpt;
-	}
-
-	int minf = std::min_element(positions.begin(),positions.end(),rendering::firstComp)->first;
-	int mins = std::min_element(positions.begin(),positions.end(),rendering::secondComp)->second;
-	int maxf = std::max_element(positions.begin(),positions.end(),rendering::firstComp)->first;
-	int maxs = std::max_element(positions.begin(),positions.end(),rendering::secondComp)->second;
-
-	const int room_height = (size.second )/  static_cast<int>(maxs-mins +1);
-	const int room_width = size.first / static_cast<int>(maxf - minf +1);
-
-	cpt = 0;
-	vec.clear();
-	vec.push_back(seed);
-	positions.clear();
-	positions.push_back(std::make_pair(0,0));
-	
-	while(cpt < vec.size())
-	{
-		Room* piece = vec[cpt];
-		sf::RectangleShape rec;
-		rec.setPosition(static_cast<float>(coords[cpt].first - static_cast<int>(room_width / 2)), static_cast<float>(coords[cpt].second - static_cast<int>(room_height / 2)));
-		rec.setSize(sf::Vector2f(static_cast<float>(room_width),static_cast<float>(room_height)));
-
-		screen.draw(rec);
-
-		if(piece == nullptr) 
-		{
-			infos::log(RENDERING_PATH,"A room is empty in render_map, we will not render the rest of the map");
-			return;
-		}
-
-		sf::RectangleShape line;
-		line.setPosition(static_cast<float>(coords[cpt].first), static_cast<float>(coords[cpt].second));
-
-		if(piece->getNeighboor(NORTH) != nullptr)
-		{
-			if (std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first,positions[cpt].second - 1)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(NORTH));
-				positions.push_back(std::make_pair(positions[cpt].first,positions[cpt].second - 1));
-				vec.push_back(piece->getNeighboor(NORTH));
-			//	positions.push_back(std::make_pair(positions[cpt].first,positions[cpt].second - 1));
-				coords.push_back(std::make_pair(coords[cpt].first,coords[cpt].second - room_height - constante));
-			}
-			
-			line.setSize(sf::Vector2f(static_cast<float>(room_width / 8), static_cast<float>(-room_height) ));
-			screen.draw(line);
-		}
-		if (piece->getNeighboor(SOUTH) != nullptr)
-		{
-		 
-			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first,positions[cpt].second + 1)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(SOUTH));
-				positions.push_back(std::make_pair(positions[cpt].first,positions[cpt].second + 1));
-				vec.push_back(piece->getNeighboor(SOUTH));
-				coords.push_back(std::make_pair(coords[cpt].first,coords[cpt].second + room_height + constante));
-			}
-			
-			line.setSize(sf::Vector2f( static_cast<float>(room_width / 8), static_cast<float>(room_height) ));
-			screen.draw(line);
-		}
-		if (piece->getNeighboor(WEST) != nullptr)
-		{
-			
-			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first - 1,positions[cpt].second)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(WEST));
-				positions.push_back(std::make_pair(positions[cpt].first - 1,positions[cpt].second));
-				vec.push_back(piece->getNeighboor(WEST));
-				//positions.push_back(std::make_pair(positions[cpt].first - 1,positions[cpt].second));
-				coords.push_back(std::make_pair(coords[cpt].first - room_width - constante,coords[cpt].second));
-			}
-			
-			line.setSize(sf::Vector2f(static_cast<float>(-room_width), static_cast<float>(room_width /8) ));
-			screen.draw(line);
-		}
-		if (piece->getNeighboor(EAST) != nullptr)
-		{
-			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first + 1,positions[cpt].second)) == positions.end())
-			{
-				//vec.push_back(piece->getNeighboor(EAST));
-				positions.push_back(std::make_pair(positions[cpt].first + 1,positions[cpt].second));
-			
-				vec.push_back(piece->getNeighboor(EAST));
-				//positions.push_back(std::make_pair(positions[cpt].first + 1,positions[cpt].second));
-				coords.push_back(std::make_pair(coords[cpt].first + room_width + constante,coords[cpt].second));
-			}
-			
-			line.setSize(sf::Vector2f(static_cast<float>(room_width), static_cast<float>(room_width / 8) ));
-			screen.draw(line);
-		}
-
-		++cpt;
-	}
-
-	screen.display();
-}
-*/
 
 bool rendering::firstComp(const std::pair<int,int>&  i1, const std::pair<int,int>&  i2)
 {
