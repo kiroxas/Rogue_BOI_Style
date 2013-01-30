@@ -186,11 +186,14 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 			line.setSize(sf::Vector2f(blank_width,line_size_h));
 			screen.draw(line);		
 		}
+	++cpt;
 		
 	}
 
 	screen.display();
 }
+
+/* Comparaisons Functions */
 
 bool rendering::firstComp(const std::pair<int,int>&  i1, const std::pair<int,int>&  i2)
 {
