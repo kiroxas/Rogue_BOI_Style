@@ -8,10 +8,9 @@ class NormalMazeGenerator : public AbstractMazeGenerator
 {
 	public :
 	/* Virtual Functions */
-	NormalMazeGenerator(unsigned int);
-	virtual std::unique_ptr<Maze> CreateMaze();
+	NormalMazeGenerator();
+	virtual std::unique_ptr<Maze> CreateMaze(unsigned int);
 private :
-	unsigned int level_number;
 };
 
 #endif
