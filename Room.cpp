@@ -1,16 +1,20 @@
+/* Room.cpp
+   Implementation file of a room
+   Author : Guillaume Mouton (Kiroxas)
+*/
+
 #include "Room.h"
 #include "Constantes.h"
 #include <vector>
+#include <algorithm>
 
 Room::Room(RoomType r,unsigned int n) : 
 	type(r),
 	number_doors(n),
 	canConnect(true)
 {
-	for(auto &x : neighboors)
-	{
-		x = nullptr;
-	}
+	auto func = [] () {return nullptr; };
+	std::generate(neighboors.begin(),neighboors.end(),func);
 }
 
 Room* Room::getNeighboor(Direction dir)
