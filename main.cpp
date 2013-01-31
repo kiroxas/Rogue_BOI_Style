@@ -16,8 +16,8 @@
 int main()
 {
 	srand ( time(NULL) );
-	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(3));
-	std::unique_ptr<Maze> maze(g->CreateMaze());
+	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator());
+	std::unique_ptr<Maze> maze(g->CreateMaze(3));
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
