@@ -147,7 +147,7 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 			//If north, the size is the width
 			//the (x,y) are located on the square above.
 			
-			x_line = x + (room_width/2) - (line_size_width / 2);
+			x_line = x + (room_width/2) - (line_size_w / 2);
 			y_line = y - blank_height;
 			line.setPosition(x_line,y_line);
 			line.setSize(sf::Vector2f(line_size_w,blank_height));
@@ -155,7 +155,7 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 		}
 		if(piece->getNeighboor(SOUTH) != nullptr)
 		{
-			x_line = x + (room_width/2) - (line_size_width / 2);
+			x_line = x + (room_width/2) - (line_size_w / 2);
 			y_line = y + room_height;
 			line.setPosition(x_line,y_line);
 			line.setSize(sf::Vector2f(line_size_w,blank_height));
@@ -164,7 +164,7 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 		if(piece->getNeighboor(EAST) != nullptr)
 		{
 			x_line = x + room_width;
-			y_line = y + room_height/2 + line_size_height/2;
+			y_line = y + room_height/2 + line_size_h/2;
 			line.setPosition(x_line,y_line);
 			line.setSize(sf::Vector2f(blank_width,line_size_h));
 			screen.draw(line);	
@@ -172,7 +172,7 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 		if(piece->getNeighboor(WEST) != nullptr)
 		{
 			x_line = x - blank_width;
-			y_line = y + room_height/2 + line_size_height/2;
+			y_line = y + room_height/2 + line_size_h/2;
 			line.setPosition(x_line,y_line);
 			line.setSize(sf::Vector2f(blank_width,line_size_h));
 			screen.draw(line);		

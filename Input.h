@@ -21,7 +21,7 @@ namespace Input
 	class GameInput
 	{
 	public :
-		GameInput(const sf::Input&);
+		GameInput(/*const sf::Input&*/);
 		void update(std::vector<sf::Event>);
 		int getPosX();
 		int getPosY();
@@ -31,29 +31,29 @@ namespace Input
 		bool isLeft();
 		bool isShoot();
 		bool isQuit();
-		bool isKeyDown(sf::Key::Code);
-		void cutKey(sf::Key::Code _c);
+		bool isKeyDown(sf::Keyboard::Key);
+		void cutKey(sf::Keyboard::Key);
 
 		void switchMode();
 
 	private :
 
 		void clearAll();
-		Entree& operator =(const GameInput&);
+		GameInput& operator =(const GameInput&);
 
-		std::map<sf::Key::Code, bool> clavier; 
+		std::map<sf::Keyboard::Key, bool> clavier; 
 		std::map<char, bool> souris;
 		std::vector<bool> joyButtons;
 		int posX, posY, relX, relY;
 		Input::InputType mode;
 
-		sf::Key::Code up;
-		sf::Key::Code down;
-		sf::Key::Code right;
-		sf::Key::Code left;
-		sf::Key::Code shoot;
+		sf::Keyboard::Key up;
+		sf::Keyboard::Key down;
+		sf::Keyboard::Key right;
+		sf::Keyboard::Key left;
+		sf::Keyboard::Key shoot;
 
-		const sf::Input& joyInput;
+		/*const sf::Input& joyInput;*/
 
 		bool upJoy;
 		bool downJoy;

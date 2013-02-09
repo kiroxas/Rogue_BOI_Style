@@ -7,7 +7,7 @@ class AbstractMazeGenerator
 {
 public :
 	/* Virtual Functions */
-	virtual std::unique_ptr<Maze> CreateMaze() = 0;
+	virtual std::unique_ptr<Maze> CreateMaze(unsigned int level_number) = 0;
 private :
 
 };
