@@ -181,7 +181,7 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 		
 	}
 
-	screen.display();
+	//screen.display();
 }
 
 /* Comparaisons Functions */
@@ -200,4 +200,23 @@ bool rendering::secondComp(const std::pair<int,int>&  i1, const std::pair<int,in
 		return true;
 
 	return false;
+}
+
+void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
+{
+	sf::RectangleShape rec;
+
+	rec.setFillColor(sf::Color(100,100,0,255));
+	rec.setPosition(pos.first,pos.second);
+	rec.setSize(sf::Vector2f(size.first,size.second));
+	screen.draw(rec);	
+}
+
+void rendering::render_level(const Maze* maze, sf::RenderWindow& window)
+{
+
+	rendering::render_room(NULL,window,std::make_pair(0,100),std::make_pair(800,500));
+	rendering::render_map(maze,window,std::make_pair(0,0),std::make_pair(400,100));
+
+	window.display();
 }

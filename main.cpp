@@ -12,6 +12,8 @@
 #include <memory>
 #include <time.h>
 #include <stdlib.h>
+#include "Input.h"
+#include <iostream>
 
 int main()
 {
@@ -21,7 +23,17 @@ int main()
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
-	rendering::render_map(maze.get(),window,std::make_pair(0,0),std::make_pair(800,600));
+	rendering::render_level(maze.get(),window);
 
-	system("pause");
+	Input::Input in(window);
+	Input::GameInput g_i;//(in.getGameInput());
+	sf::Event event; 
+
+	for(;;)
+	{
+		window.waitEvent(event);
+		g_i.update(event);
+		if(g_i.isShoot()) std::cout << "Shooting !!" << std::endl;
+		if(g_i.isQuit()) return 0;
+	}
 }

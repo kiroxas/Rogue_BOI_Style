@@ -7,7 +7,11 @@
 #define INPUT_H
 
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <map>
+#include <mutex>
+#include <thread>
 
 namespace Input
 {
@@ -22,16 +26,16 @@ namespace Input
 	{
 	public :
 		GameInput(/*const sf::Input&*/);
-		void update(std::vector<sf::Event>);
-		int getPosX();
-		int getPosY();
-		bool isUp();
-		bool isDown();
-		bool isRight();
-		bool isLeft();
-		bool isShoot();
-		bool isQuit();
-		bool isKeyDown(sf::Keyboard::Key);
+		void update(sf::Event);
+		int getPosX() const;
+		int getPosY() const;
+		bool isUp() const;
+		bool isDown() const;
+		bool isRight() const;
+		bool isLeft() const;
+		bool isShoot() const;
+		bool isQuit() const;
+		bool isKeyDown(sf::Keyboard::Key) const;
 		void cutKey(sf::Keyboard::Key);
 
 		void switchMode();
@@ -45,7 +49,7 @@ namespace Input
 		std::map<char, bool> souris;
 		std::vector<bool> joyButtons;
 		int posX, posY, relX, relY;
-		Input::InputType mode;
+		InputType mode;
 
 		sf::Keyboard::Key up;
 		sf::Keyboard::Key down;
@@ -54,6 +58,7 @@ namespace Input
 		sf::Keyboard::Key shoot;
 
 		/*const sf::Input& joyInput;*/
+		mutable std::mutex lock_input;
 
 		bool upJoy;
 		bool downJoy;
@@ -61,6 +66,19 @@ namespace Input
 		bool leftJoy;
 		int shootJoy;
 		int escapeJoy;
+	};
+
+	class Input
+	{
+	public :
+		Input(sf::RenderWindow&);
+		~Input();
+		const GameInput& getGameInput() const;
+	private :
+		sf::RenderWindow& screen;
+		GameInput g_in;
+		bool done;
+		std::thread th;
 	};
 }
 
