@@ -10,8 +10,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <map>
-#include <mutex>
 #include <thread>
+#include <atomic>
 
 namespace Input
 {
@@ -58,7 +58,6 @@ namespace Input
 		sf::Keyboard::Key shoot;
 
 		/*const sf::Input& joyInput;*/
-		mutable std::mutex lock_input;
 
 		bool upJoy;
 		bool downJoy;
@@ -76,7 +75,7 @@ namespace Input
 		const GameInput& getGameInput() const;
 	private :
 		sf::RenderWindow& screen;
-		GameInput g_in;
+		std::atomic<GameInput> g_in;
 		bool done;
 		std::thread th;
 	};
