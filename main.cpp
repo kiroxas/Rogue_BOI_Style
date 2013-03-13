@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "Input.h"
 #include <iostream>
+#include <atomic>
 
 int main()
 {
@@ -21,7 +22,7 @@ int main()
 	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator());
 	std::unique_ptr<Maze> maze(g->CreateMaze(3));
 
-	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+	std::atomic<sf::RenderWindow> window(sf::VideoMode(800, 600), "My window");
 
 	rendering::render_level(maze.get(),window);
 
