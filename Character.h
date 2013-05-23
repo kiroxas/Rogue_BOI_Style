@@ -5,6 +5,7 @@
 
 #include <utility>
 
+/* A base Class for all characters in the game, hero or foe */
 class Character
 {
   public :
