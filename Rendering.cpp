@@ -113,6 +113,7 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 	
 	const int line_size_h = blank_height * ::corridors_size;
 	const int line_size_w = blank_width * ::corridors_size;
+	const int line_size = std::max(line_size_h,line_size_w);
 	
 	cpt = 0;
 	/* Then, let's do the actual rendering */
@@ -147,34 +148,34 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 			//If north, the size is the width
 			//the (x,y) are located on the square above.
 			
-			x_line = x + (room_width/2) - (line_size_w / 2);
+			x_line = x + (room_width/2) - (line_size / 2);
 			y_line = y - blank_height;
 			line.setPosition(x_line,y_line);
-			line.setSize(sf::Vector2f(line_size_w,blank_height));
+			line.setSize(sf::Vector2f(line_size,blank_height));
 			screen.draw(line);
 		}
 		if(piece->getNeighboor(SOUTH) != nullptr)
 		{
-			x_line = x + (room_width/2) - (line_size_w / 2);
+			x_line = x + (room_width/2) - (line_size / 2);
 			y_line = y + room_height;
 			line.setPosition(x_line,y_line);
-			line.setSize(sf::Vector2f(line_size_w,blank_height));
+			line.setSize(sf::Vector2f(line_size,blank_height));
 			screen.draw(line);	
 		}
 		if(piece->getNeighboor(EAST) != nullptr)
 		{
 			x_line = x + room_width;
-			y_line = y + room_height/2 + line_size_h/2;
+			y_line = y + room_height/2 - line_size/2;
 			line.setPosition(x_line,y_line);
-			line.setSize(sf::Vector2f(blank_width,line_size_h));
+			line.setSize(sf::Vector2f(blank_width,line_size));
 			screen.draw(line);	
 		}
 		if(piece->getNeighboor(WEST) != nullptr)
 		{
 			x_line = x - blank_width;
-			y_line = y + room_height/2 + line_size_h/2;
+			y_line = y + room_height/2 - line_size/2;
 			line.setPosition(x_line,y_line);
-			line.setSize(sf::Vector2f(blank_width,line_size_h));
+			line.setSize(sf::Vector2f(blank_width,line_size));
 			screen.draw(line);		
 		}
 	++cpt;
