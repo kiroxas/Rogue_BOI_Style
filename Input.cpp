@@ -17,7 +17,6 @@ Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/posX(0
 
 void Input::GameInput::update(sf::Event ite)
 {
-	lock_input.lock();
 	 if (ite.type == sf::Event::KeyPressed)
 	 {
 		 clavier[ite.key.code] = true;
@@ -78,7 +77,6 @@ void Input::GameInput::update(sf::Event ite)
 
 				
 		 }
-		 lock_input.unlock();
 }
 
 void Input::GameInput::clearAll()
@@ -118,49 +116,32 @@ int Input::GameInput::getPosY() const
 
 bool Input::GameInput::isUp() const
 {
-	lock_input.lock();
-	bool res = ((mode == MouseKeyboard) && clavier.at(up)) || ((mode == Joystick) && upJoy);
-	lock_input.unlock();
-	return res;
+	return ((mode == MouseKeyboard) && clavier.at(up)) || ((mode == Joystick) && upJoy);
 }
 
 bool Input::GameInput::isDown() const
 {
-	lock_input.lock();
-	bool res =  ((mode == MouseKeyboard) && clavier.at(down)) || (( mode == Joystick) && downJoy);
-	lock_input.unlock();
-	return res;
+	return ((mode == MouseKeyboard) && clavier.at(down)) || (( mode == Joystick) && downJoy);
 }
 bool Input::GameInput::isRight() const
 {
-	lock_input.lock();
-	bool res =  ((mode == MouseKeyboard) && clavier.at(right)) || (( mode == Joystick) && rightJoy);
-	lock_input.unlock();
-	return res;
+	return ((mode == MouseKeyboard) && clavier.at(right)) || (( mode == Joystick) && rightJoy);
 }
 
 bool Input::GameInput::isLeft() const
 {
-	lock_input.lock();
-	bool res =  ((mode == MouseKeyboard) && clavier.at(left)) || (( mode == Joystick) && leftJoy);
-	lock_input.unlock();
-	return res;
+	return ((mode == MouseKeyboard) && clavier.at(left)) || (( mode == Joystick) && leftJoy);
 }
 
 bool Input::GameInput::isShoot() const
 {
-	lock_input.lock();
-	bool res =  ((mode == MouseKeyboard) && clavier.at(shoot)) || ((mode == Joystick) && joyButtons.at(shootJoy));
-	lock_input.unlock();
-	return res;
+
+	return ((mode == MouseKeyboard) && clavier.at(shoot)) || ((mode == Joystick) && joyButtons.at(shootJoy));
 }
 
 bool Input::GameInput::isQuit() const
 {
-	lock_input.lock();
-	bool res =  ((mode == MouseKeyboard) && clavier.at(sf::Keyboard::Key::Escape)) || ((mode == Joystick) && joyButtons.at(escapeJoy)) ;
-	lock_input.unlock();
-	return res ;
+	return ((mode == MouseKeyboard) && clavier.at(sf::Keyboard::Key::Escape)) || ((mode == Joystick) && joyButtons.at(escapeJoy)) ;
 }
 
 bool Input::GameInput::isKeyDown(sf::Keyboard::Key _c) const
