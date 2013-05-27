@@ -99,7 +99,7 @@ Maze::~Maze()
 	 return res;
  }
 
-// Go Home Map, your drunk !
+// Go Home Map, you're drunk !
  void Maze::GenerateDrunkStructure()
  {
 	 // Come on think of a good algorithm you moron !
