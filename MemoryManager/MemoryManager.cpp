@@ -1,7 +1,7 @@
 #include "MemoryManager.h"
 
 StackAllocator s(2000);
-//NormalAllocator n(50);
+NormalAllocator n(5000);
 
 NormalAllocator::NormalAllocator(unsigned int t_size)
 {
@@ -45,6 +45,8 @@ void* NormalAllocator::alloc(unsigned int t_size)
 		}
 	}
 
+	infos();
+	if(!ret) throw std::bad_alloc();
 	return ret;
 }
 
@@ -52,11 +54,11 @@ void NormalAllocator::free(void* to_delete)
 {
 	char* to_del = static_cast<char*>(to_delete);
 	//ok, let's make it reallocable
-	// is it a pointer allocated here ?
+	 //is it a pointer allocated here ?
 	if(allocated.find(to_del) == allocated.end());
 		return;
 
-	// first what's it's size ?
+	 //first what's it's size ?
 	const unsigned int size = allocated[to_del];
 	allocated.erase(to_del);
 
@@ -85,8 +87,26 @@ void NormalAllocator::free(void* to_delete)
 		}
 	}
 
-	// Can't allocate a bigger chunk, let's just reaalocate the small one then.
+	//Can't allocate a bigger chunk, let's just reaalocate the small one then.
 	manager[size].insert(to_del);
+	infos();
+}
+
+void NormalAllocator::infos() const
+{
+	std::cerr << "Manager :" << std::endl;
+	for(auto e : manager)
+	{
+		std::cerr << "- " << e.first << ": ";
+		for(auto c : e.second)
+			std::cerr << &c << " " ;
+		std::cerr << std::endl;
+	}
+	std::cerr << "Allocated :" << std::endl;
+	for(auto e : allocated)
+	{
+		std::cerr << "- " << &(e.first) << ":" << e.second << std::endl;
+	}
 }
 
 StackAllocator::~StackAllocator()
@@ -155,32 +175,28 @@ void StackAllocator::clear()
 
 void* operator new(size_t size)
 {
-	//std::cout << "In custom new for "<< size << std::endl;
-    //return n.alloc(size * sizeof(char));
-	return nullptr;
+    return n.alloc(size * sizeof(char));
 }
 
 void* operator new(size_t size, unsigned int align)
 {
-	//std::cout << "In custom new for "<< size << std::endl;
     return s.allocAligned(size * sizeof(char), align);
 }
 
 void operator delete (void* mem)
 {
 	std::cout << "Deleting "<< mem << std::endl;
-	//n.free(mem);
+	n.free(mem);
 }
 
 // Don’t forget the array version of new/delete
 void* operator new[](size_t size)
 {
 	std::cout << "In custom new[] for "<< size << std::endl;
-  // return n.alloc(size * sizeof(char));
-	return nullptr;
+    return n.alloc(size * sizeof(char));
 }
 
 void operator delete[](void* mem)
 {
-	//n.free(mem);
+	n.free(mem);
 }
