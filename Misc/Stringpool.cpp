@@ -9,8 +9,13 @@ int wstringToInt(const std::wstring& chaine) // TODO, template, needs to happen 
 	return cpt++;
 }
 
+void Stringpool::setLanguage(Language l)
+{
+	active_language = l;
+}
+
 Stringpool::Stringpool(const std::string& path) :
-	active_language(1)
+	active_language(Language::English)
 {
 	std::wifstream in(path);
 
@@ -25,7 +30,7 @@ Stringpool::Stringpool(const std::string& path) :
 		auto pos = line.find(L"'");
 		auto pos2 = line.find(L"'", pos+1);
 
-		int ind = wstringToInt(line.substr(pos+1, pos2-1-pos));
+		std::wstring ind = line.substr(pos+1, pos2-1-pos);
 		pos = line.find(L"'", pos2+1);
 
 		while(pos != std::wstring::npos)
@@ -36,4 +41,9 @@ Stringpool::Stringpool(const std::string& path) :
 		}
 		std::getline(in,line);
 	}
+}
+
+std::wstring Stringpool::getString(std::wstring ind)
+{
+	return pool[ind][active_language];
 }

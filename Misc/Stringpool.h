@@ -5,16 +5,24 @@
 #include <map>
 #include <vector>
 
+enum Language
+{
+	English = 0, 
+	French,
+	Japanese
+};
+
 class Stringpool
 {
 public :
 
 	Stringpool(const std::string& path);
-	std::wstring getString(std::size_t);
+	std::wstring getString(std::wstring);
+	void setLanguage(Language);
 
 private :
 
-	std::map<int,std::vector<std::wstring>> pool;
+	std::map<std::wstring,std::vector<std::wstring>> pool;
 	std::size_t active_language;
 };
 
