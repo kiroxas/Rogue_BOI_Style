@@ -6,12 +6,14 @@
 #include <utility>
 
 /* A base Class for all characters in the game, hero or foe */
-class Character
+class Character : : public sf::Drawable, public sf::Transformable
 {
   public :
 
 
   private :
+  
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 
-    std::pair<float,float> position;
+    sf::Texture m_texture;
 };
