@@ -12,6 +12,8 @@
 
 namespace infos
 {
+	const std::string sprite_path("Rogue_BOI_Style//data//sprite Sheets//");
+	const std::string pool_path(sprite_path + "pool_image.txt");
 	bool log(const std::string& path, const std::string& message, bool new_line = true);
 }
 

@@ -1,7 +1,7 @@
 #ifndef IMAGE_POOL_H
 #define IMAGE_POOL_H
 
-#include <Image.hpp>
+#include <SFML/Graphics/Image.hpp>
 #include <map>
 #include <string>
 
@@ -9,7 +9,7 @@ class ImagePool
 {
   public : 
   
-  Imagepool();
+  ImagePool();
   const sf::Image& getImage(const std::string& key);
   
   private :

@@ -75,9 +75,9 @@ namespace Input
 		const GameInput& getGameInput() const;
 	private :
 		sf::RenderWindow& screen;
-		std::atomic<GameInput> g_in;
+		GameInput g_in;
 		bool done;
-		std::thread th;
+		//std::thread th;
 	};
 }
 

@@ -158,16 +158,13 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 
 Input::Input::Input(sf::RenderWindow& sc) :
 	screen(sc),
-	done(false),
-	th([&]{  sf::Event event;  while(!done){ if (screen.pollEvent(event)) g_in.update(event); sf::sleep(sf::milliseconds(100));}})
+	done(false)
 {
-	//std::async(std::launch::async,  });
 }
 
 Input::Input::~Input()
 {
 	done = true;
-	th.join();
 }
 
 const Input::GameInput& Input::Input::getGameInput() const

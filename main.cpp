@@ -15,6 +15,7 @@
 #include "Input.h"
 #include <iostream>
 #include <atomic>
+#include "ImagePool.h"
 
 int main()
 {
@@ -22,17 +23,18 @@ int main()
 	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator());
 	std::unique_ptr<Maze> maze(g->CreateMaze(5));
 
-	std::atomic<sf::RenderWindow> window(sf::VideoMode(800, 600), "My window");
+	/*std::atomic<*/sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
 	rendering::render_level(maze.get(),window);
 
 	Input::Input in(window);
-	Input::GameInput g_i;//(in.getGameInput());
+	Input::GameInput g_i;
 	sf::Event event; 
+	ImagePool p;
 
 	for(;;)
 	{
-		window.waitEvent(event);
+		window.pollEvent(event);
 		g_i.update(event);
 		if(g_i.isShoot()) std::cout << "Shooting !!" << std::endl;
 		if(g_i.isQuit()) return 0;
