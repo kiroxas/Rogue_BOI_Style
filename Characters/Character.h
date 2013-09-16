@@ -29,6 +29,14 @@ struct State
 };
 
 
+/* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
+Class Controls
+{
+   State nextAction() = 0;
+};
+
+
+
 /* A base Class for all characters in the game, hero or foe */
 class Character : public sf::Drawable, public sf::Transformable
 {
@@ -41,4 +49,5 @@ class Character : public sf::Drawable, public sf::Transformable
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 
     CharacterAnimation m_animate;
+    std::unique_ptr<Controls> brain; // The "brain" of the entity, that will give me the next action
 };
