@@ -15,7 +15,7 @@ ImagePool::ImagePool()
 
 	while(!line.empty())
 	{
-		Images m;
+		Image m;
 		auto pos = line.find('\t');
 
 		std::string id = line.substr(0,pos);
