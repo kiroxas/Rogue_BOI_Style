@@ -3,6 +3,13 @@
 
 #include <Image.hpp>
 #include <Texture.hpp>
+#include "Character.h"
+
+struct AnimationState
+{
+  State state;
+  unsigned int animation_cpt;
+}
 
 class CharacterAnimation : 
 {
@@ -16,14 +23,14 @@ class CharacterAnimation :
     
     void update(); // Same as ++
     
-    void setAnimationState(const AnimationState); 
+    void setAnimationState(const AnimationState&); 
     
     const sf::Sprite& getSprite() const;
     
   private :
   
     unsigned int m_tick_counter;
-    Animationstate m_etat;
+    AnimationState m_etat;
     sf::Texture m_texture;
     sf::Sprite m_sprite;
     std::pair<unsigned int, unsigned int> m_sprite_size;
