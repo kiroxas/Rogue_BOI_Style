@@ -12,3 +12,8 @@ m_sprite_size(sprite_size)
     }
     
 }
+
+CharacterAnimation& CharacterAnimation::operator++()
+{
+	
+}
