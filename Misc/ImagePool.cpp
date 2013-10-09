@@ -15,15 +15,17 @@ ImagePool::ImagePool()
 
 	while(!line.empty())
 	{
+		Images m;
 		auto pos = line.find('\t');
 
 		std::string id = line.substr(0,pos);
-		std::string path = infos::sprite_path + line.substr(pos+1);
+		auto pos2 = line.find('\t',pos);
+		std::string path = infos::sprite_path + line.substr(pos+1,pos2);
 
-		sf::Image im;
-		im.loadFromFile(path);
+		m.image.loadFromFile(path);
+		m.info_path = line.substr(pos2);
 
-		pool[id] = std::move(im);
+		pool[id] = m;
 		std::getline(in,line);
 	}
 }
