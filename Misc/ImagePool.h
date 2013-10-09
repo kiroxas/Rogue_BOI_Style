@@ -5,16 +5,22 @@
 #include <map>
 #include <string>
 
+struct Image
+{
+  sf::Image image;
+  std::string info_path;
+};
+
 class ImagePool
 {
   public : 
   
   ImagePool();
-  const sf::Image& getImage(const std::string& key);
+  const Image& getImage(const std::string& key);
   
   private :
   
-  std::map<std::string,sf::Image> pool;
+  std::map<std::string,Image> pool;
 };
 
 #endif
