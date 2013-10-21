@@ -4,6 +4,8 @@
 #include <Image.hpp>
 #include <Texture.hpp>
 #include "Character.h"
+#include <string>
+#include <utility>
 
 struct AnimationState
 {
