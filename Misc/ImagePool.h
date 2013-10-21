@@ -5,10 +5,13 @@
 #include <map>
 #include <string>
 
-struct Image
+namespace KiroGame
 {
-  sf::Image image;
-  std::string info_path;
+  struct Image
+  {
+    sf::Image image;
+    std::string info_path;
+  };
 };
 
 class ImagePool
