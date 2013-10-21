@@ -15,7 +15,7 @@ class CharacterAnimation :
 {
   public :
     // Constructors
-    CharacterAnimation(const sf::Image& sprite_sheet, const AnimationState a, const std::pair<unsigned int, unsigned int>& sprite_size);
+    CharacterAnimation(const KiroGame::Image& sprite_sheet, const AnimationState a);
   
     // Operators
     CharacterAnimation& operator++(); // Continue the current animation
