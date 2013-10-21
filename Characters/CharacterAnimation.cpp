@@ -1,16 +1,31 @@
 #include "CharacterAnimation.h"
+#include <fstream>
+#include "Cnstantes.h"
 
-CharacterAnimation::CharacterAnimation(const sf::Image& sprite_sheet, 
-                                       const AnimationState a, 
-                                       const std::pair<unsigned int, unsigned int>& sprite_size) :
-m_etat(a),
-m_sprite_size(sprite_size)
+CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet, 
+                                       const AnimationState a):
+m_etat(a)
 {
-    if(!m_texture.loadFromImage(sprite_sheet))
+    if(!m_texture.loadFromImage(sprite_sheet.image))
     {
     	//Handle Eror
+    	infos::log(RENDERING_PATH,"Texture not loaded");
     }
     
+    
+    
+    std::ifstream info_file(sprite_sheet.infos_path);
+    
+    if(info_file.fail())
+    {
+    	infos::log(RENDERING_PATH,"Infos path not found : " + sprite_sheet.infos_path);
+    }
+    std::string item,item2;
+    
+    std::getline(info_file,item, ' ');
+    std::getline(info_file,item2,' ');
+    
+    sprite_size = std::make_pair(boost::lexical_cast<unsigned int>(item),boost::lexical_cast<unsigned int>(item2));
 }
 
 CharacterAnimation& CharacterAnimation::operator++()
