@@ -12,6 +12,7 @@ Input/*
 Maze/*
 Misc/*
 "Rendering Engine/*"
+main.cpp
 )
 
 add_executable(
