@@ -5,7 +5,24 @@
 #include "Input.h"
 #include <future>
 
-Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/posX(0),posY(0),relX(0),relY(0),up(sf::Keyboard::Key::Z),down(sf::Keyboard::S),right(sf::Keyboard::D),left(sf::Keyboard::Q),shoot(sf::Keyboard::Space),joyButtons(std::vector<bool>(15)),mode(InputType::MouseKeyboard),shootJoy(0),upJoy(false),downJoy(false),rightJoy(false),leftJoy(false),escapeJoy(7)
+Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/
+posX(0),
+posY(0),
+relX(0),
+relY(0),
+up(sf::Keyboard::Z),
+down(sf::Keyboard::S),
+right(sf::Keyboard::D),
+left(sf::Keyboard::Q),
+shoot(sf::Keyboard::Space),
+joyButtons(std::vector<bool>(15)),
+mode(InputType::MouseKeyboard),
+shootJoy(0),
+upJoy(false),
+downJoy(false),
+rightJoy(false),
+leftJoy(false),
+escapeJoy(7)
 {
 	clavier[up] = false;
 	clavier[down] = false;
