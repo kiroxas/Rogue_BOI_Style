@@ -4,22 +4,14 @@
 #include <SFML/Graphics/Image.hpp>
 #include <map>
 #include <string>
-
-namespace KiroGame
-{
-  struct Image
-  {
-    sf::Image image;
-    std::string info_path;
-  };
-};
+#include "Constantes.h"
 
 class ImagePool
 {
   public : 
   
   ImagePool();
-  const Image& getImage(const std::string& key);
+  const KiroGame::Image& getImage(const std::string& key);
   
   private :
   
