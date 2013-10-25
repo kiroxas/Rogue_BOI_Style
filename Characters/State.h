@@ -23,4 +23,10 @@ struct State
    ActionState m_action;
 };
 
+struct AnimationState
+{
+  State state;
+  unsigned int animation_cpt;
+};
+
 #endif
