@@ -5,6 +5,7 @@
 
 #include "CharacterAnimation.h"
 #include <utility>
+#include <Graphics.hpp>
 
 enum MovingState
 {
@@ -30,7 +31,7 @@ struct State
 
 
 /* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
-Class Controls
+class Controls
 {
    State nextAction() = 0;
 };
