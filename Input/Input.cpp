@@ -5,14 +5,14 @@
 #include "Input.h"
 #include <future>
 
-Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/posX(0),posY(0),relX(0),relY(0),up(sf::Keyboard::Key::Z),down(sf::Keyboard::Key::S),right(sf::Keyboard::Key::D),left(sf::Keyboard::Key::Q),shoot(sf::Keyboard::Key::Space),joyButtons(std::vector<bool>(15)),mode(InputType::MouseKeyboard),shootJoy(0),upJoy(false),downJoy(false),rightJoy(false),leftJoy(false),escapeJoy(7)
+Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/posX(0),posY(0),relX(0),relY(0),up(sf::Keyboard::Key::Z),down(sf::Keyboard::S),right(sf::Keyboard::D),left(sf::Keyboard::Q),shoot(sf::Keyboard::Space),joyButtons(std::vector<bool>(15)),mode(InputType::MouseKeyboard),shootJoy(0),upJoy(false),downJoy(false),rightJoy(false),leftJoy(false),escapeJoy(7)
 {
 	clavier[up] = false;
 	clavier[down] = false;
 	clavier[right] = false;
 	clavier[left] = false;
 	clavier[shoot] = false;
-	clavier[sf::Keyboard::Key::Escape] = false;
+	clavier[sf::Keyboard::Escape] = false;
 }
 
 void Input::GameInput::update(sf::Event ite)
@@ -141,7 +141,7 @@ bool Input::GameInput::isShoot() const
 
 bool Input::GameInput::isQuit() const
 {
-	return ((mode == MouseKeyboard) && clavier.at(sf::Keyboard::Key::Escape)) || ((mode == Joystick) && joyButtons.at(escapeJoy)) ;
+	return ((mode == MouseKeyboard) && clavier.at(sf::Keyboard::Escape)) || ((mode == Joystick) && joyButtons.at(escapeJoy)) ;
 }
 
 bool Input::GameInput::isKeyDown(sf::Keyboard::Key _c) const
