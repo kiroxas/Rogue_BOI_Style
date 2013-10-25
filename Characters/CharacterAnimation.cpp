@@ -1,6 +1,6 @@
 #include "CharacterAnimation.h"
 #include <fstream>
-#include "Cnstantes.h"
+#include "Constantes.h"
 
 CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet, 
                                        const AnimationState a):
