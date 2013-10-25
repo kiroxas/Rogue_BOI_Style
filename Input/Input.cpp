@@ -3,7 +3,6 @@
 */
 
 #include "Input.h"
-#include <future>
 
 Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/
 posX(0),
