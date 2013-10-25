@@ -33,7 +33,7 @@ struct State
 /* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
 class Controls
 {
-   State nextAction() = 0;
+   virtual State nextAction() = 0;
 };
 
 
