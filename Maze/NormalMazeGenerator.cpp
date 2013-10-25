@@ -1,5 +1,5 @@
 #include "NormalMazeGenerator.h"
-#include "Constantes.h"
+#include "../Misc/Constantes.h"
 
 
 NormalMazeGenerator::NormalMazeGenerator()

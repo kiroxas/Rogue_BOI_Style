@@ -1,5 +1,5 @@
 #include "DrunkMazeGenerator.h"
-#include "Constantes.h"
+#include "../Misc/Constantes.h"
 
 DrunkMazeGenerator::DrunkMazeGenerator(unsigned int number) :
 	level_number(number)
