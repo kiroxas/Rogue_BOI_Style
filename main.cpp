@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include "Input.h"
 #include <iostream>
-#include <atomic>
 #include "ImagePool.h"
 
 int main()
