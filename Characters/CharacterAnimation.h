@@ -4,6 +4,7 @@
 #include <Graphics.hpp>
 #include <string>
 #include <utility>
+#include "State.h"
 
 struct AnimationState
 {
