@@ -17,4 +17,13 @@ namespace infos
 	bool log(const std::string& path, const std::string& message, bool new_line = true);
 }
 
+namespace KiroGame
+{
+  struct Image
+  {
+    sf::Image image;
+    std::string info_path;
+  };
+};
+
 #endif
