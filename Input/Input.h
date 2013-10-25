@@ -10,8 +10,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <map>
-#include <thread>
-#include <atomic>
 
 namespace Input
 {
