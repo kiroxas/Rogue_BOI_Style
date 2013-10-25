@@ -13,7 +13,7 @@ m_etat(a)
     
     
     
-    std::ifstream info_file(sprite_sheet.info_path);
+    std::ifstream info_file(sprite_sheet.info_path.c_str());
     
     if(info_file.fail())
     {
