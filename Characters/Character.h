@@ -3,31 +3,13 @@
    author : Mouton Guillaume (Kiroxas)
 */
 
+#ifndef CHARACTER_H
+#define CHARACTER_H
+
 #include "CharacterAnimation.h"
 #include <utility>
 #include <Graphics.hpp>
-
-enum MovingState
-{
-   Stand_still = 0,
-   Walk_down,
-   Walk_up,
-   Walk_left,
-   Walk_right
-};
-
-enum ActionState
-{
-   Doing_nothing = 0,
-   Attacking,
-   Using_special_object
-};
-
-struct State
-{
-   MovingState m_movement;
-   ActionState m_action;
-};
+#include "State.h"
 
 
 /* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
@@ -52,3 +34,5 @@ class Character : public sf::Drawable, public sf::Transformable
     CharacterAnimation m_animate;
     std::unique_ptr<Controls> brain; // The "brain" of the entity, that will give me the next action
 };
+
+#endif
