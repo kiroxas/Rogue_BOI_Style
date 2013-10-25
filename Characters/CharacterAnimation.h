@@ -1,8 +1,7 @@
 #ifndef CHARACTER_ANIMATION_H
 #define CHARACTER_ANIMATION_H
 
-#include <Image.hpp>
-#include <Texture.hpp>
+#include <Graphics.hpp>
 #include "Character.h"
 #include <string>
 #include <utility>
