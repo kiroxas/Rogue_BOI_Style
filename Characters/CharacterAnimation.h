@@ -4,6 +4,7 @@
 #include <Graphics.hpp>
 #include <string>
 #include <utility>
+#include "../Misc/Constantes.h"
 #include "State.h"
 
 struct AnimationState
@@ -12,7 +13,7 @@ struct AnimationState
   unsigned int animation_cpt;
 };
 
-class CharacterAnimation : 
+class CharacterAnimation 
 {
   public :
     // Constructors
