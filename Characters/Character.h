@@ -9,6 +9,7 @@
 #include "CharacterAnimation.h"
 #include <utility>
 #include <Graphics.hpp>
+#include <memory>
 #include "State.h"
 
 
