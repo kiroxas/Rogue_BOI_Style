@@ -10,8 +10,6 @@ set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 include_directories(${boost_include_dir})
 link_directories(${boost_lib_dir})
 
-include_directories(${opengl_include_path})
-
 #Need SFML Library
 include_directories(${sfml_include_dir})
 link_directories(${sfml_lib_dir})
