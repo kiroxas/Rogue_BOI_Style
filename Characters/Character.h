@@ -11,6 +11,7 @@
 #include <Graphics.hpp>
 #include <memory>
 #include "State.h"
+#include "../Misc/Constantes.h"
 
 
 /* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
@@ -20,13 +21,12 @@ class Controls
 };
 
 
-
 /* A base Class for all characters in the game, hero or foe */
 class Character : public sf::Drawable, public sf::Transformable
 {
   public :
 
-   Character(const sf::Image& sprite_sheet);
+   Character(const KiroGame::Image& sprite_sheet);
 
   private :
   
