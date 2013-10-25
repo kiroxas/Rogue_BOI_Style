@@ -13,18 +13,18 @@ m_etat(a)
     
     
     
-    std::ifstream info_file(sprite_sheet.infos_path);
+    std::ifstream info_file(sprite_sheet.info_path);
     
     if(info_file.fail())
     {
-    	infos::log(RENDERING_PATH,"Infos path not found : " + sprite_sheet.infos_path);
+    	infos::log(RENDERING_PATH,"Infos path not found : " + sprite_sheet.info_path);
     }
     std::string item,item2;
     
     std::getline(info_file,item, ' ');
     std::getline(info_file,item2,' ');
     
-    sprite_size = std::make_pair(boost::lexical_cast<unsigned int>(item),boost::lexical_cast<unsigned int>(item2));
+    //sprite_size = std::make_pair(boost::lexical_cast<unsigned int>(item),boost::lexical_cast<unsigned int>(item2));
 }
 
 CharacterAnimation& CharacterAnimation::operator++()
