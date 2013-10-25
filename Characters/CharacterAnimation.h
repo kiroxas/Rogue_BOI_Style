@@ -2,7 +2,6 @@
 #define CHARACTER_ANIMATION_H
 
 #include <Graphics.hpp>
-#include "Character.h"
 #include <string>
 #include <utility>
 
