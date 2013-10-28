@@ -3,7 +3,7 @@
 
 #include "../Maze/Maze.h"
 #include <utility>
-#include <Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace rendering
 {
