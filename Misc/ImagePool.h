@@ -1,7 +1,6 @@
 #ifndef IMAGE_POOL_H
 #define IMAGE_POOL_H
 
-#include <SFML/Graphics/Image.hpp>
 #include <map>
 #include <string>
 #include "Constantes.h"
