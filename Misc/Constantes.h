@@ -2,7 +2,7 @@
 #define CONSTANTES_H
 
 #include <string>
-#include <Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 #define VERBOSE 
 #define MAZE_LOG_PATH "Maze_Generation.log"
