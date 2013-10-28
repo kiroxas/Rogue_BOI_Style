@@ -1,9 +1,9 @@
 #ifndef RENDERING_H
 #define RENDERING_H
 
-#include "Maze.h"
+#include "../Maze/Maze.h"
 #include <utility>
-#include <SFML/Graphics.hpp>
+#include <Graphics.hpp>
 
 namespace rendering
 {
