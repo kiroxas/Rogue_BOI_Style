@@ -1,7 +1,7 @@
 #ifndef CHARACTER_ANIMATION_H
 #define CHARACTER_ANIMATION_H
 
-#include <Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <string>
 #include <utility>
 #include "../Misc/Constantes.h"
