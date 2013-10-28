@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 2.6)
 project(KiroGame)
 
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_NAME KiroGame)
 
 file(
 GLOB_RECURSE
@@ -18,7 +19,7 @@ main.cpp
 )
 
 add_executable(
-KiroGame
+${EXECUTABLE_NAME}
 ${source_file}
 )
 
