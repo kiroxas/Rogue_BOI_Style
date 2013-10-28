@@ -8,7 +8,7 @@
 
 #include "CharacterAnimation.h"
 #include <utility>
-#include <Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <memory>
 #include "State.h"
 #include "../Misc/Constantes.h"
