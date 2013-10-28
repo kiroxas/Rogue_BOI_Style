@@ -1,9 +1,8 @@
 #ifndef CONSTANTES_H
 #define CONSTANTES_H
 
-#pragma warning(push, 0)
 #include <string>
-#pragma warning(pop)
+#include <Graphics.hpp>
 
 #define VERBOSE 
 #define MAZE_LOG_PATH "Maze_Generation.log"
