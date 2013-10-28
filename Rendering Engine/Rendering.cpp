@@ -4,12 +4,12 @@
 */
 
 #include "Rendering.h"
-#include "Room.h"
-#include "Constantes.h"
+#include "../Maze/Room.h"
+#include "../Misc/Constantes.h"
 
 #include <vector>
 #include <memory>
-#include <SFML/System/Vector2.hpp>
+#include <System/Vector2.hpp>
 #include <sstream>
 
 /* render_map
