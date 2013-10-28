@@ -15,7 +15,7 @@ class ImagePool
   
   private :
   
-  std::map<std::string,Image> pool;
+  std::map<std::string, KiroGame::Image> pool;
 };
 
 #endif
