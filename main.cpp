@@ -2,19 +2,24 @@
    We will handle the main loop of the game here
    Author : Guillaume Mouton (Kiroxas)
 */
-#include "AbstractMazeGenerator.h"
-#include "DrunkMazeGenerator.h"
-#include "NormalMazeGenerator.h"
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include "Rendering.h"
 
+/* User defined includes */
+#include "Maze/AbstractMazeGenerator.h"
+#include "Maze/NormalMazeGenerator.h"
+#include "Rendering Engine/Rendering.h"
+#include "Input/Input.h"
+#include "Misc/ImagePool.h"
+
+/* SFML includes */
+#include <Graphics.hpp>
+#include <System.hpp>
+
+/* STL includes */
 #include <memory>
 #include <time.h>
 #include <stdlib.h>
-#include "Input.h"
 #include <iostream>
-#include "ImagePool.h"
+
 
 int main()
 {
