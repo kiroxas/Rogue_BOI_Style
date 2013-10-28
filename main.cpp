@@ -11,8 +11,8 @@
 #include "Misc/ImagePool.h"
 
 /* SFML includes */
-#include <Graphics.hpp>
-#include <System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 
 /* STL includes */
 #include <memory>
