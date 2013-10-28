@@ -1,7 +1,6 @@
 #ifndef IMAGE_POOL_H
 #define IMAGE_POOL_H
 
-#include <SFML/Graphics/Image.hpp>
 #include <map>
 #include <string>
 #include "Constantes.h"
@@ -15,7 +14,7 @@ class ImagePool
   
   private :
   
-  std::map<std::string,Image> pool;
+  std::map<std::string, KiroGame::Image> pool;
 };
 
 #endif
