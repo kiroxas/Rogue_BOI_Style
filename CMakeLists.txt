@@ -13,7 +13,6 @@ link_directories(${boost_lib_dir})
 #Need SFML Library
 include_directories(${sfml_include_dir})
 link_directories(${sfml_lib_dir})
-set(CMAKE_EXE_LINKER_FLAGS "-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio")
 
 file(
 GLOB_RECURSE
@@ -33,7 +32,9 @@ ${source_file}
 
 target_link_libraries(
 KiroGame
-${boost_lib_name}
-${sfml_lib_name}
+lsfml-graphics 
+lsfml-window 
+lsfml-system 
+lsfml-audio
 )
 
