@@ -16,3 +16,6 @@ And you need to support (at least some of) C++11 features.
 This version just create a random layout for a maze and display it in a mini-map. <br /> 
 Actually working on the game architecture !
 
+You can compile this project on your plateforme, by cloning it, then run "cmake ." and then "make".
+The program executable should be in <the root folder where you cloned>/bin/Kirogame 
+
