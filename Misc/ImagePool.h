@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include "Constantes.h"
 
 class ImagePool
@@ -10,7 +11,8 @@ class ImagePool
   public : 
   
   ImagePool();
-  const KiroGame::Image& getImage(const std::string& key);
+  const KiroGame::Image& getImage(const std::string& key) const;
+  std::vector<std::string> getImagesName();
   
   private :
   

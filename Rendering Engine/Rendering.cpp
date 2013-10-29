@@ -207,7 +207,7 @@ void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std
 {
 	sf::RectangleShape rec;
 
-	rec.setFillColor(sf::Color(100,100,0,255));
+	rec.setFillColor(sf::Color(100,100,100,255));
 	rec.setPosition(pos.first,pos.second);
 	rec.setSize(sf::Vector2f(size.first,size.second));
 	screen.draw(rec);	

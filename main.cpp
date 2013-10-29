@@ -9,6 +9,7 @@
 #include "Rendering Engine/Rendering.h"
 #include "Input/Input.h"
 #include "Misc/ImagePool.h"
+#include "Characters/Character.h"
 
 /* SFML includes */
 #include <SFML/Graphics.hpp>
@@ -27,7 +28,7 @@ int main()
 	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator());
 	std::unique_ptr<Maze> maze(g->CreateMaze(5));
 
-	/*std::atomic<*/sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
 	rendering::render_level(maze.get(),window);
 
@@ -35,6 +36,13 @@ int main()
 	Input::GameInput g_i;
 	sf::Event event; 
 	ImagePool p;
+
+	auto r = p.getImagesName();
+
+	for(auto e : r)
+		std::cout << e << std::endl;
+
+	Character hero(p.getImage("trunk_sheet"));
 
 	for(;;)
 	{
