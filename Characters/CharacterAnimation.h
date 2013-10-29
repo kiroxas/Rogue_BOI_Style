@@ -21,7 +21,7 @@ class CharacterAnimation
     
     void setAnimationState(const AnimationState&); 
     
-    const sf::Sprite& getSprite() const;
+    sf::Sprite getSprite() const;
     
   private :
   

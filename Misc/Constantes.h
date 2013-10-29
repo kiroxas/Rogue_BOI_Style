@@ -23,6 +23,8 @@ namespace KiroGame
     sf::Image image;
     std::string info_path;
   };
+
+  const sf::Color transparent(0,255,0);
 };
 
 #endif

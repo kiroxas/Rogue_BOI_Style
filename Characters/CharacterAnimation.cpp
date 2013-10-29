@@ -10,9 +10,7 @@ m_etat(a)
     	//Handle Eror
     	infos::log(RENDERING_PATH,"Texture not loaded");
     }
-    
-    
-    
+    m_sprite.setTexture(m_texture);
     std::ifstream info_file(sprite_sheet.info_path.c_str());
     
     if(info_file.fail())
@@ -22,12 +20,19 @@ m_etat(a)
     std::string item,item2;
     
     std::getline(info_file,item, ' ');
-    std::getline(info_file,item2,' ');
+    std::getline(info_file,item2);
     
-    //sprite_size = std::make_pair(boost::lexical_cast<unsigned int>(item),boost::lexical_cast<unsigned int>(item2));
+    infos::log(RENDERING_PATH,"Creating Sprite : " + item + ", " + item2);
+    m_sprite_size = std::make_pair(std::stoi(item),std::stoi(item2));
+    m_sprite.setTextureRect(sf::IntRect(0,0,m_sprite_size.first,m_sprite_size.second));
 }
 
 CharacterAnimation& CharacterAnimation::operator++()
 {
 	
+}
+
+sf::Sprite CharacterAnimation::getSprite() const
+{
+    return m_sprite;
 }

@@ -1,1 +1,1 @@
-trunk_sheet	trunk.png
+trunk_sheet	trunk.png	trunk_info.txt

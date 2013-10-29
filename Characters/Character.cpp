@@ -7,4 +7,9 @@ brain(nullptr)
 {}
 
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{}
+{
+	sf::Sprite s = m_animate.getSprite();
+	s.setPosition(100,100);
+
+	target.draw(s, states);
+}

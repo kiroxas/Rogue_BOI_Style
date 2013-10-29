@@ -7,7 +7,7 @@
 bool infos::log(const std::string& path, const std::string& message, bool new_line)
 {
 #ifdef VERBOSE
-	std::ofstream log(path.c_str());
+	std::ofstream log(path.c_str(),std::ios_base::app);
 
 	if(log.fail()) return false;
 

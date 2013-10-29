@@ -37,13 +37,9 @@ int main()
 	sf::Event event; 
 	ImagePool p;
 
-	auto r = p.getImagesName();
-
-	for(auto e : r)
-		std::cout << e << std::endl;
-
 	Character hero(p.getImage("trunk_sheet"));
-
+	window.draw(hero);
+	window.display();
 	for(;;)
 	{
 		window.pollEvent(event);

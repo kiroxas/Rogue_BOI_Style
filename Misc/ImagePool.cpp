@@ -2,7 +2,6 @@
 #include <fstream>
 #include "Constantes.h"
 #include <string>
-#include <iostream>
 
 ImagePool::ImagePool()
 {
@@ -10,7 +9,7 @@ ImagePool::ImagePool()
 
 	if(in.fail()) 
 	{
-		std::cerr << "Unable to open " + infos::pool_path << std::endl;
+		infos::log(RENDERING_PATH,"Unable to open " + infos::pool_path);
 		return;
 	}
 
@@ -23,11 +22,15 @@ ImagePool::ImagePool()
 		auto pos = line.find('\t');
 
 		std::string id = line.substr(0,pos);
-		auto pos2 = line.find('\t',pos);
-		std::string path = infos::sprite_path + line.substr(pos+1,pos2);
+		auto pos2 = line.find('\t',pos+1);
+		std::string path = infos::sprite_path + line.substr(pos+1,pos2 -pos - 1);
 
-		m.image.loadFromFile(path);
-		m.info_path = line.substr(pos2);
+		if(!m.image.loadFromFile(path))
+		{
+			infos::log(RENDERING_PATH,"Unable to load from " + path);
+		}
+		m.image.createMaskFromColor(KiroGame::transparent);
+		m.info_path = infos::sprite_path + line.substr(pos2+1);
 
 		pool[id] = m;
 		std::getline(in,line);
