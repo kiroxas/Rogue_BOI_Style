@@ -17,5 +17,5 @@ This version just create a random layout for a maze and display it in a mini-map
 Actually working on the game architecture !
 
 You can compile this project on your plateforme, by cloning it, then run "cmake ." and then "make".
-The programma executable should be in <the root folder where you cloned>/bin/Kirogame 
+The program executable should be in <the root folder where you cloned>/bin/Kirogame 
 
