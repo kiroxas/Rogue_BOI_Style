@@ -1,1 +1,2 @@
 trunk_sheet	trunk.png	trunk_info.txt
+isaac	isaac.png	isaac_info.txt
