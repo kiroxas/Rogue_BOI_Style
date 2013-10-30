@@ -3,7 +3,9 @@
 
 CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet, 
                                        const AnimationState a):
-m_etat(a)
+m_etat(a),
+in_animation(false),
+m_tick_counter(0)
 {
     if(!m_texture.loadFromImage(sprite_sheet.image))
     {
@@ -25,12 +27,40 @@ m_etat(a)
     infos::log(RENDERING_PATH,"Creating Sprite : " + item + ", " + item2);
     m_sprite_size = std::make_pair(std::stoi(item),std::stoi(item2));
     m_sprite.setTextureRect(sf::IntRect(0,0,m_sprite_size.first,m_sprite_size.second));
+
+    for(int j = 0; j < 2; ++j)
+    {
+        for(int i = 0; i < 3; ++i)
+        {
+            std::getline(info_file,item, ' ');
+             m_animation_length.push_back(std::stoi(item));
+        }
+        std::getline(info_file,item);
+        m_animation_length.push_back(std::stoi(item));
+    }
 }
 
 CharacterAnimation& CharacterAnimation::operator++()
 {
-	
+	auto pos = m_sprite.getTextureRect();
+    int max = m_etat.state.movement;
+
+    if(++m_tick_counter >= m_animation_length[max])
+        m_tick_counter = 0;
+
+    pos.left = m_tick_counter * m_sprite_size.second;
+
+    m_sprite.setTextureRect(pos);
 }
+
+ void CharacterAnimation::RunAnimation(AnimationState a, bool looped)
+ {
+    // First we need to adjust our sprite on the sprite sheet
+    int correct_line = a.state.movement * 4;
+    m_tick_counter = 0;
+    m_sprite.setTextureRect(sf::IntRect(0,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
+    in_animation = true;
+ }
 
 sf::Sprite CharacterAnimation::getSprite() const
 {

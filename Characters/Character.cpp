@@ -6,6 +6,11 @@ m_animate(sprite_sheet,AnimationState()),
 brain(nullptr)
 {}
 
+void Character::update()
+{
+	++m_animate;
+}
+
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::Sprite s = m_animate.getSprite();

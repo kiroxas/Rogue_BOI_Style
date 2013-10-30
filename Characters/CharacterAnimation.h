@@ -22,6 +22,7 @@ class CharacterAnimation
     void setAnimationState(const AnimationState&); 
     
     sf::Sprite getSprite() const;
+    void RunAnimation(AnimationState, bool looped = false);
     
   private :
   
@@ -30,6 +31,8 @@ class CharacterAnimation
     sf::Texture m_texture;
     sf::Sprite m_sprite;
     std::pair<unsigned int, unsigned int> m_sprite_size;
+    std::vector<int> m_animation_length;
+    bool in_animation;
 };
 
 

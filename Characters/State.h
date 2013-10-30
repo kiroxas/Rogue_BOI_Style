@@ -4,6 +4,9 @@
 enum MovingState
 {
    Stand_still = 0,
+   Stand_still_up,
+   Stand_still_left,
+   Stand_still_right,
    Walk_down,
    Walk_up,
    Walk_left,
@@ -19,8 +22,8 @@ enum ActionState
 
 struct State
 {
-   MovingState m_movement;
-   ActionState m_action;
+   MovingState movement;
+   ActionState action;
 };
 
 struct AnimationState
