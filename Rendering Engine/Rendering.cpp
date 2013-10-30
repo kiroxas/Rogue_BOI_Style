@@ -218,6 +218,4 @@ void rendering::render_level(const Maze* maze, sf::RenderWindow& window)
 
 	rendering::render_room(NULL,window,std::make_pair(0,100),std::make_pair(800,500));
 	rendering::render_map(maze,window,std::make_pair(0,0),std::make_pair(400,100));
-
-	window.display();
 }
