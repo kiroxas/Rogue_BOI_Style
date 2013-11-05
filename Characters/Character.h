@@ -35,6 +35,7 @@ class Character : public sf::Drawable, public sf::Transformable
   
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 
+    State m_state;
     CharacterAnimation m_animate;
     Controls* brain; // The "brain" of the entity, that will give me the next action
 };

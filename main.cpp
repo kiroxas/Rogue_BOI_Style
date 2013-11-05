@@ -29,7 +29,7 @@ int main()
 	std::unique_ptr<Maze> maze(g->CreateMaze(5));
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Rogue BOI Style");
-	window.setFramerateLimit(30);
+	window.setFramerateLimit(60);
 
 	Input::Input in(window);
 	Input::GameInput g_i;

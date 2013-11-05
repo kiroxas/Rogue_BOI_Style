@@ -5,19 +5,30 @@ Character::Character(const KiroGame::Image& sprite_sheet) :
 m_animate(sprite_sheet,AnimationState()),
 brain(nullptr)
 {
-	AnimationState a;
-	a.state.movement = Stand_still;
-	m_animate.RunAnimation(a,true);
+	m_state.movement = Walk;
+	m_state.dir = NORTH;
+	//m_animate.RunAnimation(m_state,true);
 	setPosition(100,200);
 }
 
 void Character::Move(int x, int y)
 {
 	auto pos = getPosition();
-	pos.x += x;
-	pos.y += y;
+	pos.x += 2*x;
+	pos.y += 2*y;
 
 	setPosition(pos);
+
+	if(x == -1)
+		m_state.dir = WEST;
+	else if(x == 1)
+		m_state.dir = EAST;
+	else if(y == -1)
+		m_state.dir = NORTH;
+	else if(y == 1)
+		m_state.dir = SOUTH;
+
+	m_animate.AdjustAnimation(m_state);
 }
 
 void Character::update()
@@ -27,7 +38,7 @@ void Character::update()
 
 void Character::stopAnimation()
 {
-	m_animate.switchAnimationLoop();
+	//m_animate.switchAnimationLoop();
 }
 
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const

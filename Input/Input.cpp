@@ -39,10 +39,8 @@ void Input::GameInput::ListenToMove(std::function<void(int,int)> a)
 
 void Input::GameInput::triggerMove(int x, int y)
 {
-	infos::log(RENDERING_PATH,"Triggered Move");
 	for(auto e : moveFuncs)
 	{
-		infos::log(RENDERING_PATH,"Moving");
 		e(x,y);
 	}
 }

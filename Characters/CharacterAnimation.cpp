@@ -64,27 +64,26 @@ void CharacterAnimation::update()
         ++(*this);
 }
 
-void CharacterAnimation::switchAnimationLoop()
+void CharacterAnimation::setAnimationState(const State& a)
 {
-    if(m_loop)
+    m_etat.state = a;
+    m_etat.animation_cpt = 0;
+}
+
+ void CharacterAnimation::AdjustAnimation(State a)
+ {
+    // First we need to adjust our sprite on the sprite sheet
+    if(a != m_etat.state)
     {
-        m_loop = false;
+        int correct_line = a.movement * 4 + a.dir;
+        m_sprite.setTextureRect(sf::IntRect(0,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
+        m_etat.state = a;
+        m_etat.animation_cpt = 0;
     }
     else
     {
-        m_loop = true;
-        in_animation = true;
+        m_etat.animation_cpt++;
     }
-}
-
- void CharacterAnimation::RunAnimation(AnimationState a, bool looped)
- {
-    // First we need to adjust our sprite on the sprite sheet
-    int correct_line = a.state.movement * 4;
-    m_tick_counter = 0;
-    m_sprite.setTextureRect(sf::IntRect(0,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
-    in_animation = true;
-    m_loop = looped;
  }
 
 sf::Sprite CharacterAnimation::getSprite() const

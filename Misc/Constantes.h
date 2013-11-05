@@ -16,7 +16,7 @@ namespace infos
 	bool log(const std::string& path, const std::string& message, bool new_line = true);
 }
 
-enum Direction{NORTH = 0,  EAST,SOUTH,WEST};
+enum Direction{ SOUTH = 0, NORTH,EAST,WEST};
 
 namespace KiroGame
 {

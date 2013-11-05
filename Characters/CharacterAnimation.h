@@ -19,11 +19,10 @@ class CharacterAnimation
     
     void update(); 
     
-    void setAnimationState(const AnimationState&); 
-    void switchAnimationLoop();
+    void setAnimationState(const State&); 
     
     sf::Sprite getSprite() const;
-    void RunAnimation(AnimationState, bool looped = false);
+    void AdjustAnimation(State);
     
   private :
   

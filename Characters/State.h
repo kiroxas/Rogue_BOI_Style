@@ -19,6 +19,15 @@ struct State
    Movement movement;
    Direction dir;
    ActionState action;
+
+   bool operator==(const State& a)
+   {
+      return (movement == a.movement && dir == a.dir && action == a.action);
+   }
+   bool operator!=(const State& a)
+   {
+      return !(*this == a);
+   }
 };
 
 struct AnimationState
