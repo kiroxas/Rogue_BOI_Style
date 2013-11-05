@@ -37,13 +37,15 @@ int main()
 	ImagePool p;
 
 	Character hero(p.getImage("isaac"));
+	auto func = std::bind(&Character::Move, &hero, std::placeholders::_1, std::placeholders::_2);
+	g_i.ListenToMove(func);
 
 	for(;;)
 	{
 		window.clear();
 		window.pollEvent(event);
 		g_i.update(event);
-		if(g_i.isShoot()) std::cout << "Shooting !!" << std::endl;
+		if(g_i.isShoot()) hero.stopAnimation();
 		if(g_i.isQuit()) return 0;
 		hero.update();
 

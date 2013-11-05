@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <map>
+#include <functional>
 
 namespace Input
 {
@@ -37,9 +38,11 @@ namespace Input
 		void cutKey(sf::Keyboard::Key);
 
 		void switchMode();
+		void ListenToMove(std::function<void(int,int)>);
 
 	private :
 
+		void triggerMove(int x, int y);
 		void clearAll();
 		GameInput& operator =(const GameInput&);
 
@@ -48,6 +51,7 @@ namespace Input
 		std::vector<bool> joyButtons;
 		int posX, posY, relX, relY;
 		InputType mode;
+		std::vector<std::function<void(int,int)>> moveFuncs;
 
 		sf::Keyboard::Key up;
 		sf::Keyboard::Key down;

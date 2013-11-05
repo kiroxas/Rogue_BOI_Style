@@ -16,6 +16,8 @@ namespace infos
 	bool log(const std::string& path, const std::string& message, bool new_line = true);
 }
 
+enum Direction{NORTH = 0,  EAST,SOUTH,WEST};
+
 namespace KiroGame
 {
   struct Image

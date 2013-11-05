@@ -28,6 +28,8 @@ class Character : public sf::Drawable, public sf::Transformable
 
    Character(const KiroGame::Image& sprite_sheet);
    void update();
+   void stopAnimation();
+   void Move(int x, int y);
 
   private :
   

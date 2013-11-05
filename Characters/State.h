@@ -1,16 +1,10 @@
 #ifndef STATE_H
 #define STATE_H
 
-enum MovingState
+enum Movement
 {
    Stand_still = 0,
-   Stand_still_up,
-   Stand_still_left,
-   Stand_still_right,
-   Walk_down,
-   Walk_up,
-   Walk_left,
-   Walk_right
+   Walk
 };
 
 enum ActionState
@@ -22,7 +16,8 @@ enum ActionState
 
 struct State
 {
-   MovingState movement;
+   Movement movement;
+   Direction dir;
    ActionState action;
 };
 

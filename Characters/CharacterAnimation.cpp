@@ -5,7 +5,8 @@ CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet,
                                        const AnimationState a):
 m_etat(a),
 in_animation(false),
-m_tick_counter(0)
+m_tick_counter(0),
+m_loop(false)
 {
     if(!m_texture.loadFromImage(sprite_sheet.image))
     {
@@ -46,11 +47,34 @@ CharacterAnimation& CharacterAnimation::operator++()
     int max = m_etat.state.movement;
 
     if(++m_tick_counter >= m_animation_length[max])
+    {
         m_tick_counter = 0;
+        if(!m_loop)
+            in_animation = false;
+    }
 
     pos.left = m_tick_counter * m_sprite_size.second;
 
     m_sprite.setTextureRect(pos);
+}
+
+void CharacterAnimation::update()
+{
+    if(in_animation)
+        ++(*this);
+}
+
+void CharacterAnimation::switchAnimationLoop()
+{
+    if(m_loop)
+    {
+        m_loop = false;
+    }
+    else
+    {
+        m_loop = true;
+        in_animation = true;
+    }
 }
 
  void CharacterAnimation::RunAnimation(AnimationState a, bool looped)
@@ -60,6 +84,7 @@ CharacterAnimation& CharacterAnimation::operator++()
     m_tick_counter = 0;
     m_sprite.setTextureRect(sf::IntRect(0,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
     in_animation = true;
+    m_loop = looped;
  }
 
 sf::Sprite CharacterAnimation::getSprite() const

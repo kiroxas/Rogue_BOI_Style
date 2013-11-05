@@ -3,6 +3,7 @@
 */
 
 #include "Input.h"
+#include "../Misc/Constantes.h"
 
 Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/
 posX(0),
@@ -31,12 +32,27 @@ escapeJoy(7)
 	clavier[sf::Keyboard::Escape] = false;
 }
 
+void Input::GameInput::ListenToMove(std::function<void(int,int)> a)
+{
+	moveFuncs.push_back(a);
+}
+
+void Input::GameInput::triggerMove(int x, int y)
+{
+	infos::log(RENDERING_PATH,"Triggered Move");
+	for(auto e : moveFuncs)
+	{
+		infos::log(RENDERING_PATH,"Moving");
+		e(x,y);
+	}
+}
+
 void Input::GameInput::update(sf::Event ite)
 {
 	 if (ite.type == sf::Event::KeyPressed)
 	 {
 		 clavier[ite.key.code] = true;
-		}
+	 }
 
 		 else if (ite.type == sf::Event::KeyReleased)
 		 {
@@ -93,6 +109,14 @@ void Input::GameInput::update(sf::Event ite)
 
 				
 		 }
+		 if(isUp())
+		 	triggerMove(0,-1);
+		 if(isDown())
+		 	triggerMove(0,1);
+		 if(isRight())
+		 	triggerMove(1,0);
+		 if(isLeft())
+		 	triggerMove(-1,0);
 }
 
 void Input::GameInput::clearAll()
@@ -151,7 +175,6 @@ bool Input::GameInput::isLeft() const
 
 bool Input::GameInput::isShoot() const
 {
-
 	return ((mode == MouseKeyboard) && clavier.at(shoot)) || ((mode == Joystick) && joyButtons.at(shootJoy));
 }
 

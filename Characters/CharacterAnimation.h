@@ -17,9 +17,10 @@ class CharacterAnimation
     CharacterAnimation& operator++(); // Continue the current animation
     CharacterAnimation& operator++(int);
     
-    void update(); // Same as ++
+    void update(); 
     
     void setAnimationState(const AnimationState&); 
+    void switchAnimationLoop();
     
     sf::Sprite getSprite() const;
     void RunAnimation(AnimationState, bool looped = false);
@@ -33,6 +34,7 @@ class CharacterAnimation
     std::pair<unsigned int, unsigned int> m_sprite_size;
     std::vector<int> m_animation_length;
     bool in_animation;
+    bool m_loop;
 };
 
 
