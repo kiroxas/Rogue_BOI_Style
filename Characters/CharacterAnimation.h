@@ -26,7 +26,7 @@ class CharacterAnimation
     
   private :
   
-    unsigned int m_tick_counter;
+    sf::Clock m_clock;
     AnimationState m_etat;
     sf::Texture m_texture;
     sf::Sprite m_sprite;

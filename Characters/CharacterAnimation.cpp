@@ -5,7 +5,6 @@ CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet,
                                        const AnimationState a):
 m_etat(a),
 in_animation(false),
-m_tick_counter(0),
 m_loop(false)
 {
     if(!m_texture.loadFromImage(sprite_sheet.image))
@@ -46,14 +45,7 @@ CharacterAnimation& CharacterAnimation::operator++()
 	auto pos = m_sprite.getTextureRect();
     int max = m_etat.state.movement;
 
-    if(++m_tick_counter >= m_animation_length[max])
-    {
-        m_tick_counter = 0;
-        if(!m_loop)
-            in_animation = false;
-    }
-
-    pos.left = m_tick_counter * m_sprite_size.second;
+    pos.left = m_etat.animation_cpt * m_sprite_size.second;
 
     m_sprite.setTextureRect(pos);
 }
@@ -75,15 +67,26 @@ void CharacterAnimation::setAnimationState(const State& a)
     // First we need to adjust our sprite on the sprite sheet
     if(a != m_etat.state)
     {
-        int correct_line = a.movement * 4 + a.dir;
-        m_sprite.setTextureRect(sf::IntRect(0,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
         m_etat.state = a;
         m_etat.animation_cpt = 0;
     }
     else
     {
-        m_etat.animation_cpt++;
+        if(m_clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
+        {
+            m_etat.animation_cpt++;
+            if(m_etat.animation_cpt > m_animation_length[m_etat.state.movement * 4 + m_etat.state.dir])
+                m_etat.animation_cpt = 0;
+        }
     }
+
+    if(m_clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
+    {
+        int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
+        m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
+        m_clock.restart();
+    }
+
  }
 
 sf::Sprite CharacterAnimation::getSprite() const
