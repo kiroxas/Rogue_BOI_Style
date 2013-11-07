@@ -39,6 +39,7 @@ int main()
 	Character hero(p.getImage("isaac"));
 	auto func = std::bind(&Character::Move, &hero, std::placeholders::_1, std::placeholders::_2);
 	g_i.ListenToMove(func);
+	sf::Clock clock;
 
 	for(;;)
 	{
@@ -47,11 +48,11 @@ int main()
 		g_i.update(event);
 		if(g_i.isShoot()) hero.stopAnimation();
 		if(g_i.isQuit()) return 0;
-		hero.update();
 
 		rendering::render_level(maze.get(),window);
 
 		window.draw(hero);
 		window.display();
+		clock.restart();
 	}
 }

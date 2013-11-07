@@ -36,6 +36,8 @@ namespace Input
 		bool isQuit() const;
 		bool isKeyDown(sf::Keyboard::Key) const;
 		void cutKey(sf::Keyboard::Key);
+		void lockJoystick(unsigned int joystickId);
+		void lockKeyboard();
 
 		void switchMode();
 		void ListenToMove(std::function<void(int,int)>);
@@ -45,6 +47,7 @@ namespace Input
 		void triggerMove(int x, int y);
 		void clearAll();
 		GameInput& operator =(const GameInput&);
+		bool isJoystickEvent(sf::Event::EventType) const;
 
 		std::map<sf::Keyboard::Key, bool> clavier; 
 		std::map<char, bool> souris;
@@ -67,6 +70,9 @@ namespace Input
 		bool leftJoy;
 		int shootJoy;
 		int escapeJoy;
+
+		unsigned int JoyId;
+		bool locked;
 	};
 
 	class Input

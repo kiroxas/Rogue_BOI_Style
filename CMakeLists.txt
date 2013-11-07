@@ -15,6 +15,7 @@ Input/*
 Maze/*
 Misc/*
 "Rendering Engine/*"
+Views/*
 main.cpp
 )
 

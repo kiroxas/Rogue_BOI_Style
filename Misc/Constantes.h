@@ -27,7 +27,7 @@ namespace KiroGame
   };
 
   const sf::Color transparent(0,255,0);
-  const sf::Time elapsed_animation_time = sf::seconds(0.15);
+  const sf::Time elapsed_animation_time = sf::seconds(0.1);
 };
 
 #endif

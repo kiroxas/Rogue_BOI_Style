@@ -22,7 +22,8 @@ upJoy(false),
 downJoy(false),
 rightJoy(false),
 leftJoy(false),
-escapeJoy(7)
+escapeJoy(7),
+locked(false)
 {
 	clavier[up] = false;
 	clavier[down] = false;
@@ -132,6 +133,9 @@ void Input::GameInput::clearAll()
 
 void Input::GameInput::switchMode()
 {
+	if(locked)
+		return;
+
 	if (mode == MouseKeyboard)
 	{
 		mode = Joystick;
@@ -140,6 +144,28 @@ void Input::GameInput::switchMode()
 	{
 		mode = MouseKeyboard;
 	}
+}
+
+void Input::GameInput::lockJoystick(unsigned int   joystickId)
+{
+	mode = Joystick;
+	JoyId = joystickId;
+	locked = true;
+}
+
+void Input::GameInput::lockKeyboard()
+{
+	mode = MouseKeyboard;
+	locked = true;
+}
+
+
+bool Input::GameInput::isJoystickEvent(sf::Event::EventType t) const
+{
+	return t == sf::Event::JoystickButtonPressed 
+		|| t == sf::Event::JoystickButtonReleased
+		|| t == sf::Event::JoystickMoved 
+		|| t == sf::Event::JoystickConnected;
 }
 
 int Input::GameInput::getPosX() const
