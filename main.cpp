@@ -33,12 +33,17 @@ int main()
 
 	Input::Input in(window);
 	Input::GameInput g_i;
+	Input::GameInput g_i2;
+	g_i2.rebindUp(sf::Keyboard::P);
 	sf::Event event; 
 	ImagePool p;
 
 	Character hero(p.getImage("isaac"));
+	Character foe(p.getImage("isaac"));
 	auto func = std::bind(&Character::Move, &hero, std::placeholders::_1, std::placeholders::_2);
+	auto func2 = std::bind(&Character::Move, &foe, std::placeholders::_1, std::placeholders::_2);
 	g_i.ListenToMove(func);
+	g_i2.ListenToMove(func2);
 	sf::Clock clock;
 
 	for(;;)
@@ -46,12 +51,14 @@ int main()
 		window.clear();
 		window.pollEvent(event);
 		g_i.update(event);
+		g_i2.update(event);
 		if(g_i.isShoot()) hero.stopAnimation();
 		if(g_i.isQuit()) return 0;
 
 		rendering::render_level(maze.get(),window);
 
 		window.draw(hero);
+		window.draw(foe);
 		window.display();
 		clock.restart();
 	}

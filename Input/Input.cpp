@@ -46,8 +46,17 @@ void Input::GameInput::triggerMove(int x, int y)
 	}
 }
 
-void Input::GameInput::update(sf::Event ite)
+void Input::GameInput::update(const sf::Event& ite)
 {
+	 if(!locked && isJoystickEvent(ite.type) && mode == MouseKeyboard)
+	 {
+	 	mode = Joystick;
+	 }
+	 else if(!locked && isMouseKeyboardEvent(ite.type) && mode == Joystick)
+	 {
+	 	mode = MouseKeyboard;
+	 }
+
 	 if (ite.type == sf::Event::KeyPressed)
 	 {
 		 clavier[ite.key.code] = true;
@@ -146,6 +155,15 @@ void Input::GameInput::switchMode()
 	}
 }
 
+bool Input::GameInput::rebindUp(const sf::Keyboard::Key& e )
+{
+	if(mode == Joystick)
+		return true;
+	up = e;
+	clavier[up] = false;
+	return false;
+}
+
 void Input::GameInput::lockJoystick(unsigned int   joystickId)
 {
 	mode = Joystick;
@@ -166,6 +184,15 @@ bool Input::GameInput::isJoystickEvent(sf::Event::EventType t) const
 		|| t == sf::Event::JoystickButtonReleased
 		|| t == sf::Event::JoystickMoved 
 		|| t == sf::Event::JoystickConnected;
+}
+
+bool Input::GameInput::isMouseKeyboardEvent(sf::Event::EventType t) const
+{
+	return t == sf::Event::KeyPressed
+		|| t == sf::Event::KeyReleased
+		|| t == sf::Event::MouseWheelMoved 
+		|| t == sf::Event::MouseButtonPressed
+		|| t == sf::Event::MouseButtonReleased;
 }
 
 int Input::GameInput::getPosX() const
@@ -216,8 +243,6 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 {
 	clavier[_c] = false;
 }
-
-#include <iostream>
 
 Input::Input::Input(sf::RenderWindow& sc) :
 	screen(sc),

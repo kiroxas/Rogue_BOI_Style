@@ -24,13 +24,18 @@ Maze::~Maze()
 	 chizu.push_back(std::make_pair(0,0));
 	 unsigned int cpt = 1;
 
+	 std::random_device rd;
+	 std::mt19937 generator(rd());
+  	 std::bernoulli_distribution distribution(0.5);
+
 	 while(cpt < m_numberOfRooms)
 	 {
-		 std::pair<int,int> coord = chizu[rand() % chizu.size()]; // Get a pos in the map
+	 	 std::uniform_int_distribution<int> int_distribution(0,chizu.size()-1);
+		 std::pair<int,int> coord = chizu[int_distribution(generator)]; // Get a pos in the map
 
-		 if(rand() % 2)
+		 if(distribution(generator))
 		 {
-			 if(rand()%2)
+			 if(distribution(generator))
 			 {
 				 coord.first++;
 			 }
@@ -41,7 +46,7 @@ Maze::~Maze()
 		 }
 		 else
 		 {
-			 if(rand()%2)
+			 if(distribution(generator))
 			 {
 				 coord.second++;
 			 }

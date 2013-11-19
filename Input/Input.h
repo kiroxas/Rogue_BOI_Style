@@ -25,7 +25,7 @@ namespace Input
 	{
 	public :
 		GameInput(/*const sf::Input&*/);
-		void update(sf::Event);
+		void update(const sf::Event&);
 		int getPosX() const;
 		int getPosY() const;
 		bool isUp() const;
@@ -41,6 +41,7 @@ namespace Input
 
 		void switchMode();
 		void ListenToMove(std::function<void(int,int)>);
+		bool rebindUp(const sf::Keyboard::Key&);
 
 	private :
 
@@ -48,6 +49,7 @@ namespace Input
 		void clearAll();
 		GameInput& operator =(const GameInput&);
 		bool isJoystickEvent(sf::Event::EventType) const;
+		bool isMouseKeyboardEvent(sf::Event::EventType) const;
 
 		std::map<sf::Keyboard::Key, bool> clavier; 
 		std::map<char, bool> souris;
