@@ -16,6 +16,6 @@ This version just create a random layout for a maze and display it in a mini-map
 that you can move around with ugly animations.<br /> 
 
 You can compile this project on your plateforme, by cloning it, then run "cmake ." and then "make".
-You need to install SFML 2.0 on your own, but cmake should be able to detect its presence by itself (so no
+You need to install SFML 2.0 on your own, but cmake should be able to detect its presence by itself (so no editing a configuration file for you)
 The program executable should be in <the root folder where you cloned>/bin/Kirogame 
 
