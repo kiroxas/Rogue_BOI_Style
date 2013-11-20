@@ -5,16 +5,15 @@
 #include "Input.h"
 #include "../Misc/Constantes.h"
 
-Input::GameInput::GameInput(/*const sf::Input& _in*/) : /*joyInput(_in),*/
+Input::GameInput::GameInput(sf::Keyboard::Key _up, sf::Keyboard::Key _down, sf::Keyboard::Key _left, sf::Keyboard::Key _right) :
 posX(0),
 posY(0),
 relX(0),
 relY(0),
-up(sf::Keyboard::Z),
-down(sf::Keyboard::S),
-right(sf::Keyboard::D),
-left(sf::Keyboard::Q),
-shoot(sf::Keyboard::Space),
+up(_up),
+down(_down),
+right(_right),
+left(_left),
 joyButtons(std::vector<bool>(15)),
 mode(MouseKeyboard),
 shootJoy(0),
@@ -32,6 +31,10 @@ locked(false)
 	clavier[shoot] = false;
 	clavier[sf::Keyboard::Escape] = false;
 }
+
+Input::GameInput::GameInput() : 
+GameInput(sf::Keyboard::Z,sf::Keyboard::S,sf::Keyboard::Q,sf::Keyboard::D)
+{}
 
 void Input::GameInput::ListenToMove(std::function<void(int,int)> a)
 {

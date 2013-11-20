@@ -17,49 +17,45 @@
 
 /* STL includes */
 #include <memory>
-#include <time.h>
-#include <stdlib.h>
-#include <iostream>
 
 
 int main()
 {
-	srand ( time(NULL) );
-	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator());
-	std::unique_ptr<Maze> maze(g->CreateMaze(5));
-
+	/* Creation of the window */
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Rogue BOI Style");
 	window.setFramerateLimit(60);
 
-	Input::Input in(window);
-	Input::GameInput g_i;
-	Input::GameInput g_i2;
-	g_i2.rebindUp(sf::Keyboard::P);
-	sf::Event event; 
-	ImagePool p;
+	/* Creation of the maze */
+	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator());
+	std::unique_ptr<Maze> maze(g->CreateMaze(5));
 
-	Character hero(p.getImage("isaac"));
-	Character foe(p.getImage("isaac"));
-	auto func = std::bind(&Character::Move, &hero, std::placeholders::_1, std::placeholders::_2);
-	auto func2 = std::bind(&Character::Move, &foe, std::placeholders::_1, std::placeholders::_2);
+	ImagePool pool;
+
+	Input::GameInput g_i;
+	Input::GameInput g_i2(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Left,sf::Keyboard::Right);
+
+	std::vector<std::unique_ptr<Character>> characters;
+	characters.emplace_back(new Character(pool.getImage("isaac")));
+	characters.emplace_back(new Character(pool.getImage("isaac")));
+	
+	auto func = std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2);
+	auto func2 = std::bind(&Character::Move, characters[1].get(), std::placeholders::_1, std::placeholders::_2);
 	g_i.ListenToMove(func);
 	g_i2.ListenToMove(func2);
-	sf::Clock clock;
 
-	for(;;)
+	sf::Event event; 
+	bool running = true;
+
+	while(running)
 	{
-		window.clear();
 		window.pollEvent(event);
 		g_i.update(event);
 		g_i2.update(event);
-		if(g_i.isShoot()) hero.stopAnimation();
-		if(g_i.isQuit()) return 0;
 
-		rendering::render_level(maze.get(),window);
+		if(g_i.isQuit()) running = false;
 
-		window.draw(hero);
-		window.draw(foe);
+		window.clear();
+		rendering::render_level(characters,maze.get(),window);
 		window.display();
-		clock.restart();
 	}
 }

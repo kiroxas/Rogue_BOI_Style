@@ -213,9 +213,15 @@ void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std
 	screen.draw(rec);	
 }
 
-void rendering::render_level(const Maze* maze, sf::RenderWindow& window)
+void rendering::render_characters(const std::vector<std::unique_ptr<Character>>& c, sf::RenderWindow& w)
 {
+	for(const auto& e : c)
+		w.draw(*(e.get()));
+}
 
+void rendering::render_level(const std::vector<std::unique_ptr<Character>>& c, const Maze* maze, sf::RenderWindow& window)
+{
 	rendering::render_room(NULL,window,std::make_pair(0,100),std::make_pair(800,500));
 	rendering::render_map(maze,window,std::make_pair(0,0),std::make_pair(400,100));
+	rendering::render_characters(c,window);
 }

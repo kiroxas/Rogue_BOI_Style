@@ -25,6 +25,7 @@ namespace Input
 	{
 	public :
 		GameInput(/*const sf::Input&*/);
+		GameInput(sf::Keyboard::Key up, sf::Keyboard::Key down, sf::Keyboard::Key left, sf::Keyboard::Key right);
 		void update(const sf::Event&);
 		int getPosX() const;
 		int getPosY() const;
