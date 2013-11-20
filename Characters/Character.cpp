@@ -14,8 +14,8 @@ brain(nullptr)
 void Character::Move(int x, int y)
 {
 	auto pos = getPosition();
-	pos.x += 2*x;
-	pos.y += 2*y;
+    pos.x += 2*x;
+    pos.y += 2*y;
 
 	setPosition(pos);
 
@@ -37,9 +37,7 @@ void Character::update()
 }
 
 void Character::stopAnimation()
-{
-	//m_animate.switchAnimationLoop();
-}
+{}
 
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

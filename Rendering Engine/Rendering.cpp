@@ -216,7 +216,7 @@ void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std
 void rendering::render_characters(const std::vector<std::unique_ptr<Character>>& c, sf::RenderWindow& w)
 {
 	for(const auto& e : c)
-		w.draw(*(e.get()));
+		w.draw(*e);
 }
 
 void rendering::render_level(const std::vector<std::unique_ptr<Character>>& c, const Maze* maze, sf::RenderWindow& window)

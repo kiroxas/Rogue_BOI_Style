@@ -20,11 +20,11 @@ struct State
    Direction dir;
    ActionState action;
 
-   bool operator==(const State& a)
+   bool operator==(const State& a) const
    {
       return (movement == a.movement && dir == a.dir && action == a.action);
    }
-   bool operator!=(const State& a)
+   bool operator!=(const State& a) const
    {
       return !(*this == a);
    }

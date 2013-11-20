@@ -22,7 +22,7 @@ class CharacterAnimation
     void setAnimationState(const State&); 
     
     sf::Sprite getSprite() const;
-    void AdjustAnimation(State);
+    void AdjustAnimation(const State&);
     
   private :
   

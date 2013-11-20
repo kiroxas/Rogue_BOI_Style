@@ -53,6 +53,7 @@ int main()
 		g_i2.update(event);
 
 		if(g_i.isQuit()) running = false;
+		if(g_i.isShoot()) maze = g->CreateMaze(5);
 
 		window.clear();
 		rendering::render_level(characters,maze.get(),window);

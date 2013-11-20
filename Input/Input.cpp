@@ -14,6 +14,7 @@ up(_up),
 down(_down),
 right(_right),
 left(_left),
+shoot(sf::Keyboard::Space),
 joyButtons(std::vector<bool>(15)),
 mode(MouseKeyboard),
 shootJoy(0),
@@ -250,8 +251,7 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 Input::Input::Input(sf::RenderWindow& sc) :
 	screen(sc),
 	done(false)
-{
-}
+{}
 
 Input::Input::~Input()
 {

@@ -25,7 +25,7 @@ Maze::~Maze()
 	 unsigned int cpt = 1;
 
 	 std::random_device rd;
-	 std::mt19937 generator(rd());
+	 static std::mt19937 generator(rd());
   	 std::bernoulli_distribution distribution(0.5);
 
 	 while(cpt < m_numberOfRooms)

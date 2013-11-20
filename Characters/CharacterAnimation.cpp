@@ -62,7 +62,7 @@ void CharacterAnimation::setAnimationState(const State& a)
     m_etat.animation_cpt = 0;
 }
 
- void CharacterAnimation::AdjustAnimation(State a)
+ void CharacterAnimation::AdjustAnimation(const State& a)
  {
     // First we need to adjust our sprite on the sprite sheet
     if(a != m_etat.state)
