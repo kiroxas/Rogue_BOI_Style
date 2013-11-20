@@ -7,15 +7,15 @@ More informations about BOI here : http://bindingofisaac.wikia.com/wiki/The_Bind
 Edmund's blog : http://edmundm.com/  <br /> 
 And you can buy it here : http://store.steampowered.com/app/113200/
 
-You'll need SFML 2.0 and Boost to compile this. <br />
+You'll need SFML 2.0  <br />
 SFML : http://www.sfml-dev.org/index-fr.php <br />
-Boost : http://www.boost.org/ 
 
-And you need to support (at least some of) C++11 features.
+And you need a compiler that support C++11 features (Gcc 4.8 and older, clang 3.3 and older or visual 2010 and older).
 
-This version just create a random layout for a maze and display it in a mini-map. <br /> 
-Actually working on the game architecture !
+This version just create a random layout for a maze and display it in a mini-map. Show two characters on the screen,
+that you can move around with ugly animations.<br /> 
 
 You can compile this project on your plateforme, by cloning it, then run "cmake ." and then "make".
+You need to install SFML 2.0 on your own, but cmake should be able to detect its presence by itself (so no
 The program executable should be in <the root folder where you cloned>/bin/Kirogame 
 
