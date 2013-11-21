@@ -122,7 +122,11 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 
 	for(auto p : positions)
 	{
+		Room* piece = vec[cpt];
+		auto in = maze->getCurrentRoom();
 		sf::RectangleShape rec;
+		if(piece == in)
+			rec.setFillColor(KiroGame::transparent);
 		const unsigned int rank_w = abs(minf - p.first);
 		const unsigned int rank_h = abs(mins - p.second);
 		const float x = pos.first + rank_w * room_width + (rank_w + 1) * blank_width;
@@ -134,7 +138,6 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 		
 		sf::RectangleShape line; // For corridors between rooms
 		
-		Room* piece = vec[cpt];
 		if(piece == nullptr) 
 		{
 			infos::log(RENDERING_PATH,"A room is null in render_map, we will not render the rest of the map");
@@ -210,7 +213,8 @@ void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std
 	rec.setFillColor(sf::Color(100,100,100,255));
 	rec.setPosition(pos.first,pos.second);
 	rec.setSize(sf::Vector2f(size.first,size.second));
-	screen.draw(rec);	
+	screen.draw(rec);
+	screen.draw(*room);	
 }
 
 void rendering::render_characters(const std::vector<std::unique_ptr<Character>>& c, sf::RenderWindow& w)
@@ -221,7 +225,7 @@ void rendering::render_characters(const std::vector<std::unique_ptr<Character>>&
 
 void rendering::render_level(const std::vector<std::unique_ptr<Character>>& c, const Maze* maze, sf::RenderWindow& window)
 {
-	rendering::render_room(NULL,window,std::make_pair(0,100),std::make_pair(800,500));
+	rendering::render_room(maze->getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size);
 	rendering::render_map(maze,window,std::make_pair(0,0),std::make_pair(400,100));
 	rendering::render_characters(c,window);
 }

@@ -23,6 +23,7 @@ class CharacterAnimation
     
     sf::Sprite getSprite() const;
     void AdjustAnimation(const State&);
+    std::pair<unsigned int, unsigned int> getSize() const;
     
   private :
   

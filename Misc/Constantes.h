@@ -3,6 +3,7 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <utility>
 
 #define VERBOSE 
 #define MAZE_LOG_PATH "Maze_Generation.log"
@@ -28,6 +29,8 @@ namespace KiroGame
 
   const sf::Color transparent(0,255,0);
   const sf::Time elapsed_animation_time = sf::seconds(0.1);
+  const std::pair<int,int> room_pos(std::make_pair(0,100));
+  const std::pair<int,int> room_size(std::make_pair(800,500));
 };
 
 #endif

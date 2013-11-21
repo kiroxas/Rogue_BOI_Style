@@ -3,12 +3,13 @@
 
 #include <memory>
 #include "Room.h"
+#include "../Misc/ImagePool.h"
 
 class RoomFactory
 {
 public :
 	//VirtualFunctions
-	virtual std::unique_ptr<Room> CreateRoom(RoomType,unsigned int);
+	virtual std::unique_ptr<Room> CreateRoom(RoomType,unsigned int,const ImagePool&);
 };
 
 #endif

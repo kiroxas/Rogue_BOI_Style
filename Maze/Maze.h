@@ -9,6 +9,7 @@
 
 #include "Room.h"
 #include "RoomFactory.h"
+#include "../Misc/ImagePool.h"
 
 #define MAX_IND 10000
 
@@ -18,7 +19,7 @@ class Maze
 
 public :
 	/* Constructeurs */
-	explicit Maze(unsigned int);
+	explicit Maze(unsigned int, const ImagePool&);
 
 	/* Destructeur */
 	virtual ~Maze();
@@ -27,12 +28,15 @@ public :
 	virtual void GenerateDrunkStructure();
 	Room* getSeedRoom() const;
 	unsigned int getNumberRooms() const;
+	Room* getCurrentRoom() const;
 
 private :
 
 	unsigned int m_numberOfRooms;
 	myMaze m_maze;
+	unsigned int my_room;
 	RoomFactory god_room;
+	const ImagePool& pool;
 };
 
 std::set<unsigned int> find_biggest_connection(const std::vector<std::pair<unsigned int,unsigned int>>&);

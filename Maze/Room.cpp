@@ -8,13 +8,13 @@
 #include <vector>
 #include <algorithm>
 
-Room::Room(RoomType r,unsigned int n) : 
+Room::Room(RoomType r,unsigned int n,const ImagePool& p) : 
 	type(r),
 	number_doors(n),
-	canConnect(true)
+	canConnect(true),
+	pool(p)
 {
-	auto func = [] () {return nullptr; };
-	std::generate(neighboors.begin(),neighboors.end(),func);
+	std::generate(neighboors.begin(),neighboors.end(),[](){return nullptr; });
 }
 
 Room* Room::getNeighboor(Direction dir)
@@ -64,6 +64,49 @@ bool Room::Connect(Room* r1, Room* r2, Direction dir)
 	r2->checkConnect();
 
 	return true;
+}
+
+void Room::Fill()
+{
+	// First lets place Doors !
+	
+		if(neighboors[NORTH] != nullptr)
+		{
+			elements.emplace_back(new Character(pool.getImage("door")));
+			auto y = KiroGame::room_pos.second;
+			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (elements.back()->getSize().first / 2);
+			elements.back()->setPosition(x,y);
+		}
+		if(neighboors[SOUTH] != nullptr)
+		{
+			elements.emplace_back(new Character(pool.getImage("door")));
+			auto y = KiroGame::room_pos.second + KiroGame::room_size.second - elements.back()->getSize().second;
+			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (elements.back()->getSize().first / 2);
+			elements.back()->setPosition(x,y);
+		}
+		if(neighboors[EAST] != nullptr)
+		{
+			elements.emplace_back(new Character(pool.getImage("door")));
+			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (elements.back()->getSize().second / 2);
+			auto x = KiroGame::room_pos.first + KiroGame::room_size.first - elements.back()->getSize().first;
+			elements.back()->setPosition(x,y);
+		}
+		if(neighboors[WEST] != nullptr)
+		{
+			elements.emplace_back(new Character(pool.getImage("door")));
+			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (elements.back()->getSize().second / 2);;
+			auto x = KiroGame::room_pos.first;
+			elements.back()->setPosition(x,y);
+		}
+	
+}
+
+void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inherited from sf::Drawable
+{
+	for(auto& e : elements)
+	{
+		target.draw(*e);
+	}
 }
 
 Direction opposite(Direction dir)

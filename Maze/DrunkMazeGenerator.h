@@ -8,10 +8,11 @@ class DrunkMazeGenerator : public AbstractMazeGenerator
 {
 	public :
 	/* Virtual Functions */
-	DrunkMazeGenerator(unsigned int);
+	DrunkMazeGenerator(unsigned int,const ImagePool& p);
 	virtual std::unique_ptr<Maze> CreateMaze();
 private :
 	unsigned int level_number;
+	const ImagePool& pool;
 };
 
 #endif

@@ -93,3 +93,8 @@ sf::Sprite CharacterAnimation::getSprite() const
 {
     return m_sprite;
 }
+
+std::pair<unsigned int, unsigned int> CharacterAnimation::getSize() const
+{
+    return m_sprite_size;
+}

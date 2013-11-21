@@ -46,3 +46,8 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 	target.draw(s, states);
 }
+
+std::pair<unsigned int, unsigned int> Character::getSize() const
+{
+	return m_animate.getSize();
+}

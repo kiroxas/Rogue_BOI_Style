@@ -7,9 +7,10 @@
 #include <iterator>
 #include <array>
 
-Maze::Maze(unsigned int number) :
+Maze::Maze(unsigned int number, const ImagePool& p) :
 	m_numberOfRooms(number),
-	m_maze(myMaze(number))
+	m_maze(myMaze(number)),
+	pool(p)
 {}
 
 Maze::~Maze()
@@ -19,14 +20,15 @@ Maze::~Maze()
  void Maze::GenerateGraphStructure()
  {
 	 // We first create the seed room
-	  m_maze.at(0) = god_room.CreateRoom(EMPTY,4);
+	 m_maze.at(0) = god_room.CreateRoom(EMPTY,4,pool);
+	 my_room = 0;
 	 std::vector<std::pair<int,int>> chizu;
 	 chizu.push_back(std::make_pair(0,0));
 	 unsigned int cpt = 1;
 
-	 std::random_device rd;
+	 static std::random_device rd;
 	 static std::mt19937 generator(rd());
-  	 std::bernoulli_distribution distribution(0.5);
+  	 static std::bernoulli_distribution distribution(0.5);
 
 	 while(cpt < m_numberOfRooms)
 	 {
@@ -59,7 +61,7 @@ Maze::~Maze()
 		 if(std::find(chizu.begin(),chizu.end(),coord) != chizu.end()) continue;
 
 		 std::array<unsigned int, 4> res = find_neighboors(chizu,coord);
-		 m_maze.at(cpt) = god_room.CreateRoom(EMPTY,4);
+		 m_maze.at(cpt) = god_room.CreateRoom(EMPTY,4,pool);
 		 unsigned int dir = 0;
 
 		 for(auto& x : res)
@@ -72,6 +74,11 @@ Maze::~Maze()
 		 }
 		 chizu.push_back(coord);
 		 ++cpt;
+	 }
+
+	 for(auto& e : m_maze)
+	 {
+	 	e->Fill();
 	 }
  }
 
@@ -114,12 +121,12 @@ Maze::~Maze()
 	 std::vector<std::pair<unsigned int, unsigned int>> connections;
 
 	 // First We create the Boss Room
-	 m_maze.at(0) = god_room.CreateRoom(BOSS,1);
+	 m_maze.at(0) = god_room.CreateRoom(BOSS,1,pool);
 	 rooms_to_connect.insert(0);
 
 	 for(unsigned int i = 1; i < m_numberOfRooms; ++i)
 	 {
-		 m_maze[i] = god_room.CreateRoom(EMPTY,4);
+		 m_maze[i] = god_room.CreateRoom(EMPTY,4,pool);
 		 rooms_to_connect.insert(i);
 	 }
 
@@ -241,3 +248,8 @@ Maze::~Maze()
  {
 	 return m_numberOfRooms;
  }
+
+Room* Maze::getCurrentRoom() const
+{
+	return m_maze[my_room].get();
+}

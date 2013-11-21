@@ -17,6 +17,7 @@
 
 /* STL includes */
 #include <memory>
+#include <random>
 
 
 int main()
@@ -25,23 +26,27 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Rogue BOI Style");
 	window.setFramerateLimit(60);
 
-	/* Creation of the maze */
-	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator());
-	std::unique_ptr<Maze> maze(g->CreateMaze(5));
-
 	ImagePool pool;
+
+	/* Creation of the maze */
+	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(pool));
+	std::unique_ptr<Maze> maze(g->CreateMaze(5));
 
 	Input::GameInput g_i;
 	Input::GameInput g_i2(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Left,sf::Keyboard::Right);
 
 	std::vector<std::unique_ptr<Character>> characters;
 	characters.emplace_back(new Character(pool.getImage("isaac")));
-	characters.emplace_back(new Character(pool.getImage("isaac")));
+	characters.emplace_back(new Character(pool.getImage("angel_door")));
 	
 	auto func = std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2);
 	auto func2 = std::bind(&Character::Move, characters[1].get(), std::placeholders::_1, std::placeholders::_2);
 	g_i.ListenToMove(func);
-	g_i2.ListenToMove(func2);
+	//g_i2.ListenToMove(func2);
+
+	std::random_device rd;
+	std::mt19937 generator(rd());
+	std::uniform_int_distribution<int> int_distribution(0,10);
 
 	sf::Event event; 
 	bool running = true;
@@ -53,7 +58,7 @@ int main()
 		g_i2.update(event);
 
 		if(g_i.isQuit()) running = false;
-		if(g_i.isShoot()) maze = g->CreateMaze(5);
+		if(g_i.isShoot()) maze = g->CreateMaze(int_distribution(generator));
 
 		window.clear();
 		rendering::render_level(characters,maze.get(),window);

@@ -1,2 +1,5 @@
 trunk_sheet	trunk.png	trunk_info.txt
 isaac	isaac.png	isaac_info.txt
+rock	rock.png	rock_info.txt
+door	door.png	door_info.txt
+angel_door	angel_door.png	door_info.txt

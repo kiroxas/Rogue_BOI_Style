@@ -30,6 +30,7 @@ class Character : public sf::Drawable, public sf::Transformable
    void update();
    void stopAnimation();
    void Move(int x, int y);
+   std::pair<unsigned int, unsigned int> getSize() const;
 
   private :
   
