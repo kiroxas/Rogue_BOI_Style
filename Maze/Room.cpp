@@ -79,22 +79,22 @@ void Room::Fill()
 		}
 		if(neighboors[SOUTH] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door")));
-			auto y = KiroGame::room_pos.second + KiroGame::room_size.second - elements.back()->getSize().second;
-			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (elements.back()->getSize().first / 2);
+			elements.emplace_back(new Character(pool.getImage("angel_door"),180));
+			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; // - elements.back()->getSize().second;
+			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (elements.back()->getSize().first / 2);
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[EAST] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door")));
+			elements.emplace_back(new Character(pool.getImage("door"), 90));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (elements.back()->getSize().second / 2);
-			auto x = KiroGame::room_pos.first + KiroGame::room_size.first - elements.back()->getSize().first;
+			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; // - elements.back()->getSize().first;
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[WEST] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door")));
-			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (elements.back()->getSize().second / 2);;
+			elements.emplace_back(new Character(pool.getImage("door"), 270));
+			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (elements.back()->getSize().second / 2);;
 			auto x = KiroGame::room_pos.first;
 			elements.back()->setPosition(x,y);
 		}
@@ -103,6 +103,13 @@ void Room::Fill()
 
 void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inherited from sf::Drawable
 {
+	sf::RectangleShape rec;
+
+	rec.setFillColor(sf::Color(100,100,100,255));
+	rec.setPosition(KiroGame::room_pos.first,KiroGame::room_pos.second);
+	rec.setSize(sf::Vector2f(KiroGame::room_size.first,KiroGame::room_size.second));
+	target.draw(rec);
+
 	for(auto& e : elements)
 	{
 		target.draw(*e);

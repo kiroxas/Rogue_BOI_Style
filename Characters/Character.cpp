@@ -1,8 +1,8 @@
 #include "Character.h"
 #include "../Misc/Constantes.h"
 
-Character::Character(const KiroGame::Image& sprite_sheet) :
-m_animate(sprite_sheet,AnimationState()),
+Character::Character(const KiroGame::Image& sprite_sheet, float rotation) :
+m_animate(sprite_sheet,AnimationState(),rotation),
 brain(nullptr)
 {
 	m_state.movement = Walk;

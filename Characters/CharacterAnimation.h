@@ -11,7 +11,7 @@ class CharacterAnimation
 {
   public :
     // Constructors
-    CharacterAnimation(const KiroGame::Image& sprite_sheet, const AnimationState a);
+    CharacterAnimation(const KiroGame::Image& sprite_sheet, const AnimationState a, float rotation = 0);
   
     // Operators
     CharacterAnimation& operator++(); // Continue the current animation
@@ -35,6 +35,7 @@ class CharacterAnimation
     std::vector<int> m_animation_length;
     bool in_animation;
     bool m_loop;
+    float angle;
 };
 
 

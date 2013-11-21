@@ -2,10 +2,12 @@
 #include <fstream>
 
 CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet, 
-                                       const AnimationState a):
+                                       const AnimationState a,
+                                       const float rotation):
 m_etat(a),
 in_animation(false),
-m_loop(false)
+m_loop(false),
+angle(rotation)
 {
     if(!m_texture.loadFromImage(sprite_sheet.image))
     {
@@ -27,6 +29,8 @@ m_loop(false)
     infos::log(RENDERING_PATH,"Creating Sprite : " + item + ", " + item2);
     m_sprite_size = std::make_pair(std::stoi(item),std::stoi(item2));
     m_sprite.setTextureRect(sf::IntRect(0,0,m_sprite_size.first,m_sprite_size.second));
+    //m_sprite.setOrigin(m_sprite_size.first /2, m_sprite_size.second /2);
+    m_sprite.setRotation(angle);
 
     for(int j = 0; j < 2; ++j)
     {
@@ -48,6 +52,7 @@ CharacterAnimation& CharacterAnimation::operator++()
     pos.left = m_etat.animation_cpt * m_sprite_size.second;
 
     m_sprite.setTextureRect(pos);
+    m_sprite.setRotation(angle);
 }
 
 void CharacterAnimation::update()
@@ -84,6 +89,7 @@ void CharacterAnimation::setAnimationState(const State& a)
     {
         int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
         m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
+        m_sprite.setRotation(angle);
         m_clock.restart();
     }
 

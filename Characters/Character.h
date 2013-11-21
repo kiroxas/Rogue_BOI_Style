@@ -26,7 +26,7 @@ class Character : public sf::Drawable, public sf::Transformable
 {
   public :
 
-   Character(const KiroGame::Image& sprite_sheet);
+   Character(const KiroGame::Image& sprite_sheet, float rotation = 0);
    void update();
    void stopAnimation();
    void Move(int x, int y);

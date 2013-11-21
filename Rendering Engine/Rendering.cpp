@@ -208,12 +208,6 @@ bool rendering::secondComp(const std::pair<int,int>&  i1, const std::pair<int,in
 
 void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
 {
-	sf::RectangleShape rec;
-
-	rec.setFillColor(sf::Color(100,100,100,255));
-	rec.setPosition(pos.first,pos.second);
-	rec.setSize(sf::Vector2f(size.first,size.second));
-	screen.draw(rec);
 	screen.draw(*room);	
 }
 

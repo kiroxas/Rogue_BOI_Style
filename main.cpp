@@ -23,7 +23,7 @@
 int main()
 {
 	/* Creation of the window */
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Rogue BOI Style");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Rogue BOI Style",sf::Style::Resize);
 	window.setFramerateLimit(60);
 
 	ImagePool pool;
@@ -37,10 +37,10 @@ int main()
 
 	std::vector<std::unique_ptr<Character>> characters;
 	characters.emplace_back(new Character(pool.getImage("isaac")));
-	characters.emplace_back(new Character(pool.getImage("angel_door")));
+	//characters.emplace_back(new Character(pool.getImage("angel_door")));
 	
 	auto func = std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2);
-	auto func2 = std::bind(&Character::Move, characters[1].get(), std::placeholders::_1, std::placeholders::_2);
+	//auto func2 = std::bind(&Character::Move, characters[1].get(), std::placeholders::_1, std::placeholders::_2);
 	g_i.ListenToMove(func);
 	//g_i2.ListenToMove(func2);
 
