@@ -54,18 +54,14 @@ int main()
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i2),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Character::animate,characters[1].get()));
+	callbacks.emplace_back([&](){if(g_i.isShoot()) maze = g->CreateMaze(int_distribution(generator));});
+	callbacks.emplace_back([&](){if(g_i.isQuit()) running = false;});
 
 	while(running)
 	{
 		window.pollEvent(event);
 		for(auto& e : callbacks)
 			e();
-
-		if(g_i.isQuit()) running = false;
-		if(g_i.isShoot()) 
-		{
-			maze = g->CreateMaze(int_distribution(generator));
-		}
 
 		window.clear();
 		rendering::render_level(characters,maze.get(),window);
