@@ -36,8 +36,10 @@ void Character::update()
 	m_animate.update();
 }
 
-void Character::stopAnimation()
-{}
+void Character::animate()
+{
+	m_animate.animate();
+}
 
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

@@ -18,7 +18,7 @@ class CharacterAnimation
     CharacterAnimation& operator++(int);
     
     void update(); 
-    
+    void animate();
     void setAnimationState(const State&); 
     
     sf::Sprite getSprite() const;

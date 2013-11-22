@@ -28,7 +28,7 @@ class Character : public sf::Drawable, public sf::Transformable
 
    Character(const KiroGame::Image& sprite_sheet, float rotation = 0, float scale = 1);
    void update();
-   void stopAnimation();
+   void animate();
    void Move(int x, int y);
    std::pair<unsigned int, unsigned int> getSize() const;
 

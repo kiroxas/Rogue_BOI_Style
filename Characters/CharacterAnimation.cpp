@@ -58,6 +58,16 @@ CharacterAnimation& CharacterAnimation::operator++()
     m_sprite.setScale(scale,scale);
 }
 
+void CharacterAnimation::animate()
+{
+    static sf::Clock clock;
+    if(clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
+    {
+        update();
+        clock.restart();
+    }
+}
+
 void CharacterAnimation::update()
 {
         m_etat.animation_cpt++;

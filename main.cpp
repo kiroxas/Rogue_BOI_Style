@@ -50,18 +50,21 @@ int main()
 
 	sf::Event event; 
 	bool running = true;
+	std::vector<std::function<void()>> callbacks;
+	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
+	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i2),std::ref(event)));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[1].get()));
 
 	while(running)
 	{
 		window.pollEvent(event);
-		g_i.update(event);
-		g_i2.update(event);
+		for(auto& e : callbacks)
+			e();
 
 		if(g_i.isQuit()) running = false;
 		if(g_i.isShoot()) 
 		{
 			maze = g->CreateMaze(int_distribution(generator));
-			characters[1]->update();
 		}
 
 		window.clear();
