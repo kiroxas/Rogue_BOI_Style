@@ -37,7 +37,7 @@ int main()
 
 	std::vector<std::unique_ptr<Character>> characters;
 	characters.emplace_back(new Character(pool.getImage("isaac")));
-	//characters.emplace_back(new Character(pool.getImage("angel_door")));
+	characters.emplace_back(new Character(pool.getImage("fire")));
 	
 	auto func = std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2);
 	//auto func2 = std::bind(&Character::Move, characters[1].get(), std::placeholders::_1, std::placeholders::_2);
@@ -58,7 +58,11 @@ int main()
 		g_i2.update(event);
 
 		if(g_i.isQuit()) running = false;
-		if(g_i.isShoot()) maze = g->CreateMaze(int_distribution(generator));
+		if(g_i.isShoot()) 
+		{
+			maze = g->CreateMaze(int_distribution(generator));
+			characters[1]->update();
+		}
 
 		window.clear();
 		rendering::render_level(characters,maze.get(),window);

@@ -3,11 +3,13 @@
 
 CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet, 
                                        const AnimationState a,
-                                       const float rotation):
+                                       const float rotation,
+                                       float _scale):
 m_etat(a),
 in_animation(false),
 m_loop(false),
-angle(rotation)
+angle(rotation),
+scale(_scale)
 {
     if(!m_texture.loadFromImage(sprite_sheet.image))
     {
@@ -31,6 +33,7 @@ angle(rotation)
     m_sprite.setTextureRect(sf::IntRect(0,0,m_sprite_size.first,m_sprite_size.second));
     //m_sprite.setOrigin(m_sprite_size.first /2, m_sprite_size.second /2);
     m_sprite.setRotation(angle);
+    m_sprite.setScale(scale,scale);
 
     for(int j = 0; j < 2; ++j)
     {
@@ -49,15 +52,17 @@ CharacterAnimation& CharacterAnimation::operator++()
 	auto pos = m_sprite.getTextureRect();
     int max = m_etat.state.movement;
 
-    pos.left = m_etat.animation_cpt * m_sprite_size.second;
-
-    m_sprite.setTextureRect(pos);
+    int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
+    m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
     m_sprite.setRotation(angle);
+    m_sprite.setScale(scale,scale);
 }
 
 void CharacterAnimation::update()
 {
-    if(in_animation)
+        m_etat.animation_cpt++;
+        if(m_etat.animation_cpt >= m_animation_length[m_etat.state.movement * 4 + m_etat.state.dir])
+            m_etat.animation_cpt = 0;
         ++(*this);
 }
 
@@ -80,7 +85,7 @@ void CharacterAnimation::setAnimationState(const State& a)
         if(m_clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
         {
             m_etat.animation_cpt++;
-            if(m_etat.animation_cpt > m_animation_length[m_etat.state.movement * 4 + m_etat.state.dir])
+            if(m_etat.animation_cpt >= m_animation_length[m_etat.state.movement * 4 + m_etat.state.dir])
                 m_etat.animation_cpt = 0;
         }
     }
@@ -90,6 +95,7 @@ void CharacterAnimation::setAnimationState(const State& a)
         int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
         m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
         m_sprite.setRotation(angle);
+        m_sprite.setScale(scale,scale);
         m_clock.restart();
     }
 
