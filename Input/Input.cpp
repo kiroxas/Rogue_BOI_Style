@@ -228,9 +228,14 @@ bool Input::GameInput::isLeft() const
 	return ((mode == MouseKeyboard) && clavier.at(left)) || (( mode == Joystick) && leftJoy);
 }
 
-bool Input::GameInput::isShoot() const
+bool Input::GameInput::isShoot() 
 {
-	return ((mode == MouseKeyboard) && clavier.at(shoot)) || ((mode == Joystick) && joyButtons.at(shootJoy));
+	bool res = ((mode == MouseKeyboard) && clavier.at(shoot)) || ((mode == Joystick) && joyButtons.at(shootJoy));
+
+	if(mode == MouseKeyboard) cutKey(shoot);
+	else joyButtons.at(shoot) = false;
+
+	return res;
 }
 
 bool Input::GameInput::isQuit() const

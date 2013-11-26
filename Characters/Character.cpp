@@ -31,6 +31,11 @@ void Character::Move(int x, int y)
 	m_animate.AdjustAnimation(m_state);
 }
 
+void Character::shoot()
+{
+	bullets.emplace_back(Bullets(std::make_pair(getPosition().x,getPosition().y),m_state.dir));
+}
+
 void Character::update()
 {
 	m_animate.update();
@@ -47,6 +52,17 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	states.transform = getTransform();
 
 	target.draw(s, states);
+
+	for(auto& e : bullets)
+	{
+		e.update();
+	}
+	auto func = [](Bullets& e){return !e.getGlobalBounds().intersects(KiroGame::RoomRect);};
+	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),func),bullets.end());
+	for(auto& e : bullets)
+	{
+		target.draw(e);
+	}
 }
 
 std::pair<unsigned int, unsigned int> Character::getSize() const

@@ -12,6 +12,8 @@
 #include <memory>
 #include "State.h"
 #include "../Misc/Constantes.h"
+#include "Bullets.h"
+#include <vector>
 
 
 /* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
@@ -31,6 +33,7 @@ class Character : public sf::Drawable, public sf::Transformable
    void animate();
    void Move(int x, int y);
    std::pair<unsigned int, unsigned int> getSize() const;
+   void shoot();
 
   private :
   
@@ -39,6 +42,7 @@ class Character : public sf::Drawable, public sf::Transformable
     State m_state;
     CharacterAnimation m_animate;
     Controls* brain; // The "brain" of the entity, that will give me the next action
+    mutable std::vector<Bullets> bullets;
 };
 
 #endif

@@ -220,6 +220,5 @@ void rendering::render_characters(const std::vector<std::unique_ptr<Character>>&
 void rendering::render_level(const std::vector<std::unique_ptr<Character>>& c, const Maze* maze, sf::RenderWindow& window)
 {
 	rendering::render_room(maze->getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size);
-	rendering::render_map(maze,window,std::make_pair(0,0),std::make_pair(400,100));
 	rendering::render_characters(c,window);
 }

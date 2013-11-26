@@ -39,10 +39,7 @@ int main()
 	characters.emplace_back(new Character(pool.getImage("isaac")));
 	characters.emplace_back(new Character(pool.getImage("fire")));
 	
-	auto func = std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2);
-	//auto func2 = std::bind(&Character::Move, characters[1].get(), std::placeholders::_1, std::placeholders::_2);
-	g_i.ListenToMove(func);
-	//g_i2.ListenToMove(func2);
+	g_i.ListenToMove(std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2));
 
 	std::random_device rd;
 	std::mt19937 generator(rd());
@@ -54,8 +51,10 @@ int main()
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i2),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Character::animate,characters[1].get()));
-	callbacks.emplace_back([&](){if(g_i.isShoot()) maze = g->CreateMaze(int_distribution(generator));});
+	callbacks.emplace_back([&](){if(g_i.isShoot()) characters[0]->shoot();});
 	callbacks.emplace_back([&](){if(g_i.isQuit()) running = false;});
+
+	rendering::render_map(maze.get(),window,std::make_pair(0,0),std::make_pair(400,100));
 
 	while(running)
 	{
@@ -63,7 +62,7 @@ int main()
 		for(auto& e : callbacks)
 			e();
 
-		window.clear();
+		//window.clear();
 		rendering::render_level(characters,maze.get(),window);
 		window.display();
 	}

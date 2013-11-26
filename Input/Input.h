@@ -33,7 +33,7 @@ namespace Input
 		bool isDown() const;
 		bool isRight() const;
 		bool isLeft() const;
-		bool isShoot() const;
+		bool isShoot();
 		bool isQuit() const;
 		bool isKeyDown(sf::Keyboard::Key) const;
 		void cutKey(sf::Keyboard::Key);

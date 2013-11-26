@@ -31,6 +31,7 @@ namespace KiroGame
   const sf::Time elapsed_animation_time = sf::seconds(0.1);
   const std::pair<int,int> room_pos(std::make_pair(0,100));
   const std::pair<int,int> room_size(std::make_pair(800,500));
+  const sf::FloatRect RoomRect(room_pos.first,room_pos.second,room_size.first,room_size.second);
 };
 
 #endif

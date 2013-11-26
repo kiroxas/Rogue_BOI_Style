@@ -1,5 +1,6 @@
 #include "CharacterAnimation.h"
 #include <fstream>
+#include <random>
 
 CharacterAnimation::CharacterAnimation(const KiroGame::Image& sprite_sheet, 
                                        const AnimationState a,
@@ -61,8 +62,12 @@ CharacterAnimation& CharacterAnimation::operator++()
 void CharacterAnimation::animate()
 {
     static sf::Clock clock;
+    static std::random_device rd;
+    static std::mt19937 generator(rd());
+    static std::uniform_int_distribution<int> int_distribution(0,255);
     if(clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
     {
+        m_sprite.setColor(sf::Color(int_distribution(generator),int_distribution(generator),int_distribution(generator)));
         update();
         clock.restart();
     }
