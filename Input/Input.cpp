@@ -129,6 +129,10 @@ void Input::GameInput::update(const sf::Event& ite)
 		 	triggerMove(1,0);
 		 if(isLeft())
 		 	triggerMove(-1,0);
+		 if(isShoot())
+		 	triggerShoot();
+		 if(isQuit())
+		 	triggerQuit();
 }
 
 void Input::GameInput::clearAll()
@@ -266,6 +270,28 @@ Input::Input::~Input()
 const Input::GameInput& Input::Input::getGameInput() const
 {
 	return g_in;
+}
+
+void Input::GameInput::ListenToShoot(std::function<void()> f)
+{
+	shootFuncs.emplace_back(f);
+}
+
+void Input::GameInput::ListenToQuit(std::function<void()> f)
+{
+	quitFuncs.emplace_back(f);
+}
+
+void Input::GameInput::triggerQuit()
+{
+	for(auto&e : quitFuncs)
+		e();
+}
+
+void Input::GameInput::triggerShoot()
+{
+	for(auto&e : shootFuncs)
+		e();
 }
 
 

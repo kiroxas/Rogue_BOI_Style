@@ -10,6 +10,7 @@
 #include "Input/Input.h"
 #include "Misc/ImagePool.h"
 #include "Characters/Character.h"
+#include "Characters/Static_Entity.h"
 
 /* SFML includes */
 #include <SFML/Graphics.hpp>
@@ -18,6 +19,8 @@
 /* STL includes */
 #include <memory>
 #include <random>
+#include <thread>
+#include <chrono>
 
 
 int main()
@@ -27,43 +30,71 @@ int main()
 	window.setFramerateLimit(60);
 
 	ImagePool pool;
-
-	/* Creation of the maze */
-	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(pool));
-	std::unique_ptr<Maze> maze(g->CreateMaze(5));
-
-	Input::GameInput g_i;
-	Input::GameInput g_i2(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Left,sf::Keyboard::Right);
-
-	std::vector<std::unique_ptr<Character>> characters;
-	characters.emplace_back(new Character(pool.getImage("isaac")));
-	characters.emplace_back(new Character(pool.getImage("fire")));
-	
-	g_i.ListenToMove(std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2));
-
 	std::random_device rd;
 	std::mt19937 generator(rd());
 	std::uniform_int_distribution<int> int_distribution(0,10);
 
-	sf::Event event; 
+	/* Creation of the maze */
+	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(pool));
+	std::unique_ptr<Maze> maze(g->CreateMaze(int_distribution(generator)));
+
+	Input::GameInput g_i(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Left,sf::Keyboard::Right);
+
+	std::vector<std::unique_ptr<Character>> characters;
+	characters.emplace_back(new Character(pool.getImage("isaac")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+
 	bool running = true;
+	
+	g_i.ListenToMove(std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2));
+	g_i.ListenToShoot(std::bind(&Character::shoot, characters[0].get()));
+	g_i.ListenToQuit([&running](){running = false;});
+
+	sf::Event event; 
+	
 	std::vector<std::function<void()>> callbacks;
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
-	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i2),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Character::animate,characters[1].get()));
-	callbacks.emplace_back([&](){if(g_i.isShoot()) characters[0]->shoot();});
-	callbacks.emplace_back([&](){if(g_i.isQuit()) running = false;});
+	callbacks.emplace_back(std::bind(&Character::animate,characters[2].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[3].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[4].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[5].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[6].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[7].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[8].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[9].get()));
+	callbacks.emplace_back(std::bind(&Character::animate,characters[10].get()));
 
 	rendering::render_map(maze.get(),window,std::make_pair(0,0),std::make_pair(400,100));
-
+	sf::Clock c;
 	while(running)
 	{
-		window.pollEvent(event);
-		for(auto& e : callbacks)
-			e();
+		//if(c.getElapsedTime() >= sf::milliseconds(25))
+		//{
+			window.pollEvent(event);
+			for(auto& e : callbacks)
+				e();
 
-		//window.clear();
-		rendering::render_level(characters,maze.get(),window);
-		window.display();
+			//window.clear();
+			rendering::render_level(characters,maze.get(),window);
+			window.display();
+			c.restart();
+		//}
+		//else
+			//std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	}
 }

@@ -29,13 +29,13 @@ class Character : public sf::Drawable, public sf::Transformable
   public :
 
    Character(const KiroGame::Image& sprite_sheet, float rotation = 0, float scale = 1);
-   void update();
-   void animate();
-   void Move(int x, int y);
-   std::pair<unsigned int, unsigned int> getSize() const;
-   void shoot();
+   virtual void update();
+   virtual void animate();
+   virtual void Move(int x, int y);
+   virtual std::pair<unsigned int, unsigned int> getSize() const;
+   virtual void shoot();
 
-  private :
+  protected :
   
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 

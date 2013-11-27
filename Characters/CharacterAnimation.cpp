@@ -61,15 +61,14 @@ CharacterAnimation& CharacterAnimation::operator++()
 
 void CharacterAnimation::animate()
 {
-    static sf::Clock clock;
     static std::random_device rd;
     static std::mt19937 generator(rd());
     static std::uniform_int_distribution<int> int_distribution(0,255);
-    if(clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
+    if(m_clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
     {
         m_sprite.setColor(sf::Color(int_distribution(generator),int_distribution(generator),int_distribution(generator)));
         update();
-        clock.restart();
+        m_clock.restart();
     }
 }
 
@@ -108,6 +107,8 @@ void CharacterAnimation::setAnimationState(const State& a)
     if(m_clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
     {
         int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
+        if(m_animation_length[correct_line] == 0)
+            correct_line = 0;
         m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
         m_sprite.setRotation(angle);
         m_sprite.setScale(scale,scale);

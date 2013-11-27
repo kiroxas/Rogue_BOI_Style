@@ -42,11 +42,15 @@ namespace Input
 
 		void switchMode();
 		void ListenToMove(std::function<void(int,int)>);
+		void ListenToShoot(std::function<void()>);
+		void ListenToQuit(std::function<void()>);
 		bool rebindUp(const sf::Keyboard::Key&);
 
 	private :
 
 		void triggerMove(int x, int y);
+		void triggerShoot();
+		void triggerQuit();
 		void clearAll();
 		GameInput& operator =(const GameInput&);
 		bool isJoystickEvent(sf::Event::EventType) const;
@@ -58,6 +62,8 @@ namespace Input
 		int posX, posY, relX, relY;
 		InputType mode;
 		std::vector<std::function<void(int,int)>> moveFuncs;
+		std::vector<std::function<void()>> shootFuncs;
+		std::vector<std::function<void()>> quitFuncs;
 
 		sf::Keyboard::Key up;
 		sf::Keyboard::Key down;

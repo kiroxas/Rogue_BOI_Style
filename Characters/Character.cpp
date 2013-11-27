@@ -5,10 +5,13 @@ Character::Character(const KiroGame::Image& sprite_sheet, float rotation, float 
 m_animate(sprite_sheet,AnimationState(),rotation,scale),
 brain(nullptr)
 {
-	m_state.movement = Walk;
-	m_state.dir = NORTH;
+	m_state.movement = Stand_still;
+	m_state.dir = SOUTH;
 	//m_animate.RunAnimation(m_state,true);
-	setPosition(100,200);
+	static std::random_device rd;
+	static std::mt19937 generator(rd());
+	static std::uniform_int_distribution<int> int_distribution(0,600);
+	setPosition(int_distribution(generator),int_distribution(generator));
 }
 
 void Character::Move(int x, int y)
@@ -27,6 +30,8 @@ void Character::Move(int x, int y)
 		m_state.dir = NORTH;
 	else if(y == 1)
 		m_state.dir = SOUTH;
+
+	m_state.movement = Walk;
 
 	m_animate.AdjustAnimation(m_state);
 }
@@ -57,8 +62,8 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		e.update();
 	}
-	auto func = [](Bullets& e){return !e.getGlobalBounds().intersects(KiroGame::RoomRect);};
-	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),func),bullets.end());
+	
+	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](Bullets& e){return !e.getGlobalBounds().intersects(KiroGame::RoomRect);}),bullets.end());
 	for(auto& e : bullets)
 	{
 		target.draw(e);
