@@ -24,7 +24,7 @@ class Controls
 
 
 /* A base Class for all characters in the game, hero or foe */
-class Character : public Hittable, public sf::Transformable
+class Character : public Hittable, public sf::Drawable
 {
   public :
 

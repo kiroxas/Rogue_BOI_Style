@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-struct Hittable : public sf::Drawable
+struct Hittable : public sf::Transformable 
 {
 	using healthType = unsigned long long;
 
