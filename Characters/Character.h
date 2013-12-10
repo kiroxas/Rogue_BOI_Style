@@ -8,7 +8,7 @@
 
 #include "CharacterAnimation.h"
 #include <utility>
-#include <SFML/Graphics.hpp>
+#include "Hittable.h"
 #include <memory>
 #include "State.h"
 #include "../Misc/Constantes.h"
@@ -24,7 +24,7 @@ class Controls
 
 
 /* A base Class for all characters in the game, hero or foe */
-class Character : public sf::Drawable, public sf::Transformable
+class Character : public Hittable, public sf::Transformable
 {
   public :
 
@@ -34,6 +34,9 @@ class Character : public sf::Drawable, public sf::Transformable
    virtual void Move(int x, int y);
    virtual std::pair<unsigned int, unsigned int> getSize() const;
    virtual void shoot();
+   virtual ~Character();
+   healthType getDamage() const;
+   void collide(Hittable*);
 
   protected :
   

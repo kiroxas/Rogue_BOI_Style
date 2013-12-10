@@ -74,3 +74,13 @@ std::pair<unsigned int, unsigned int> Character::getSize() const
 {
 	return m_animate.getSize();
 }
+
+Hittable::healthType Character::getDamage() const
+{
+	return attack;
+}
+
+void Character::collide(Hittable*) 
+{}
+
+Character::~Character(){}
