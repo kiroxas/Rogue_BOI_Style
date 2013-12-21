@@ -58,7 +58,7 @@ namespace Input
 
 		std::map<sf::Keyboard::Key, bool> clavier; 
 		std::map<char, bool> souris;
-		std::vector<bool> joyButtons;
+		std::map<unsigned int,bool> joyButtons;
 		int posX, posY, relX, relY;
 		InputType mode;
 		std::vector<std::function<void(int,int)>> moveFuncs;

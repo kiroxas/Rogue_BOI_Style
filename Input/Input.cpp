@@ -15,7 +15,6 @@ down(_down),
 right(_right),
 left(_left),
 shoot(sf::Keyboard::Space),
-joyButtons(std::vector<bool>(15)),
 mode(MouseKeyboard),
 shootJoy(0),
 upJoy(false),
@@ -52,7 +51,7 @@ void Input::GameInput::triggerMove(int x, int y)
 
 void Input::GameInput::update(const sf::Event& ite)
 {
-	 if(!locked && isJoystickEvent(ite.type) && mode == MouseKeyboard)
+	 /*if(!locked && isJoystickEvent(ite.type) && mode == MouseKeyboard)
 	 {
 	 	mode = Joystick;
 	 }
@@ -60,7 +59,7 @@ void Input::GameInput::update(const sf::Event& ite)
 	 {
 	 	mode = MouseKeyboard;
 	 }
-
+	 */
 	 if (ite.type == sf::Event::KeyPressed)
 	 {
 		 clavier[ite.key.code] = true;
@@ -87,12 +86,12 @@ void Input::GameInput::update(const sf::Event& ite)
 
 		 else if (ite.type == sf::Event::JoystickButtonPressed)
 		 {
-			 joyButtons.at(ite.joystickButton.button) = true;
+			 joyButtons[ite.joystickButton.button] = true;
 		 }
 
 		 else if(ite.type == sf::Event::JoystickButtonPressed)
 		 {
-			 joyButtons.at(ite.joystickButton.button) = false;
+			 joyButtons[ite.joystickButton.button] = false;
 		 }
 
 		 else if (ite.type == sf::Event::JoystickMoved)
@@ -137,14 +136,14 @@ void Input::GameInput::update(const sf::Event& ite)
 
 void Input::GameInput::clearAll()
 {
-	for (std::map<sf::Keyboard::Key, bool>::iterator ite = clavier.begin(); ite != clavier.end(); ++ite)
+	for (auto& ite : clavier)
 	{
-		ite->second = false;
+		ite.second = false;
 	}
 
-	for (std::map<char, bool>::iterator ite = souris.begin(); ite != souris.end(); ++ite)
+	for (auto& ite : souris)
 	{
-		ite->second = false;
+		ite.second = false;
 	}
 }
 
@@ -234,17 +233,21 @@ bool Input::GameInput::isLeft() const
 
 bool Input::GameInput::isShoot() 
 {
-	bool res = ((mode == MouseKeyboard) && clavier.at(shoot)) || ((mode == Joystick) && joyButtons.at(shootJoy));
+	bool res = ((mode == MouseKeyboard) && clavier.at(shoot)) || ((mode == Joystick) && joyButtons[shootJoy]);
 
 	if(mode == MouseKeyboard) cutKey(shoot);
-	else joyButtons.at(shoot) = false;
+	else joyButtons[shoot] = false;
 
 	return res;
 }
 
 bool Input::GameInput::isQuit() const
 {
-	return ((mode == MouseKeyboard) && clavier.at(sf::Keyboard::Escape)) || ((mode == Joystick) && joyButtons.at(escapeJoy)) ;
+	try
+	{
+	return ((mode == MouseKeyboard) && clavier.at(sf::Keyboard::Escape)) || ((mode == Joystick) && (joyButtons.find(escapeJoy) != joyButtons.end() && joyButtons.at(escapeJoy))) ;
+}
+catch(...){return false;}
 }
 
 bool Input::GameInput::isKeyDown(sf::Keyboard::Key _c) const

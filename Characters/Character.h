@@ -15,14 +15,6 @@
 #include "Bullets.h"
 #include <vector>
 
-
-/* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
-class Controls
-{
-   virtual State nextAction() = 0;
-};
-
-
 /* A base Class for all characters in the game, hero or foe */
 class Character : public sf::Drawable, public sf::Transformable
 {
@@ -41,7 +33,6 @@ class Character : public sf::Drawable, public sf::Transformable
 
     State m_state;
     CharacterAnimation m_animate;
-    Controls* brain; // The "brain" of the entity, that will give me the next action
     mutable std::vector<Bullets> bullets;
 };
 
