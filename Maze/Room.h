@@ -6,6 +6,7 @@
 #include "../Misc/Constantes.h"
 #include <memory>
 #include "../Characters/Character.h"
+#include "../Characters/CollisionManager.h"
 #include "../Misc/ImagePool.h"
 #include <SFML/Graphics.hpp>
 
@@ -14,7 +15,7 @@ enum RoomType{EMPTY = 0, BOSS};
 class Room : public sf::Drawable
 {
 public :
-	explicit Room(RoomType,unsigned int,const ImagePool& p);
+	explicit Room(RoomType,unsigned int,const ImagePool& p,CollisionManager& c);
 	std::vector<Direction> Connectible();
 	static bool Connect(Room*, Room*, Direction);
 	Room* getNeighboor(Direction);
@@ -31,6 +32,7 @@ private :
 	RoomType type;
 	std::vector<std::unique_ptr<Character>> elements;
 	const ImagePool& pool;
+	CollisionManager& c;
 };
 
 Direction opposite(Direction dir);

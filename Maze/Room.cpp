@@ -8,11 +8,12 @@
 #include <vector>
 #include <algorithm>
 
-Room::Room(RoomType r,unsigned int n,const ImagePool& p) : 
+Room::Room(RoomType r,unsigned int n,const ImagePool& p,CollisionManager& _c) : 
 	type(r),
 	number_doors(n),
 	canConnect(true),
-	pool(p)
+	pool(p),
+	c(_c)
 {
 	std::generate(neighboors.begin(),neighboors.end(),[](){return nullptr; });
 }
@@ -72,28 +73,28 @@ void Room::Fill()
 	
 		if(neighboors[NORTH] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door")));
+			elements.emplace_back(new Character(pool.getImage("door"),c));
 			auto y = KiroGame::room_pos.second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (elements.back()->getSize().first / 2);
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[SOUTH] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("angel_door"),180));
+			elements.emplace_back(new Character(pool.getImage("angel_door"),c,180));
 			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; // - elements.back()->getSize().second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (elements.back()->getSize().first / 2);
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[EAST] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door"), 90));
+			elements.emplace_back(new Character(pool.getImage("door"), c,90));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (elements.back()->getSize().second / 2);
 			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; // - elements.back()->getSize().first;
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[WEST] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door"), 270));
+			elements.emplace_back(new Character(pool.getImage("door"), c,270));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (elements.back()->getSize().second / 2);;
 			auto x = KiroGame::room_pos.first;
 			elements.back()->setPosition(x,y);
