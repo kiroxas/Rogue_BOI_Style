@@ -3,8 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 
+class CollisionManager;
+
 struct Hittable : public sf::Transformable 
 {
+	Hittable(const CollisionManager& e) : col(e){}
 	using healthType = unsigned long long;
 
 	virtual healthType getDamage() const =0;
@@ -13,6 +16,7 @@ struct Hittable : public sf::Transformable
 	protected :
 	healthType health;
 	healthType attack; 
+	const CollisionManager& col;
 };
 
 

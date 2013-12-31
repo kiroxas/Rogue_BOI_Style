@@ -11,6 +11,7 @@
 #include "Misc/ImagePool.h"
 #include "Characters/Character.h"
 #include "Characters/Static_Entity.h"
+#include "Characters/CollisionManager.h"
 
 /* SFML includes */
 #include <SFML/Graphics.hpp>
@@ -40,9 +41,11 @@ int main()
 
 	Input::GameInput g_i(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Left,sf::Keyboard::Right);
 
+	CollisionManager collision;
+
 	std::vector<std::unique_ptr<Character>> characters;
-	characters.emplace_back(new Character(pool.getImage("isaac")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Character(pool.getImage("isaac"),collision));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire"),collision));
 
 	bool running = true;
 	
