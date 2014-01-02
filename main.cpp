@@ -11,6 +11,7 @@
 #include "Misc/ImagePool.h"
 #include "Characters/Character.h"
 #include "Characters/Static_Entity.h"
+#include "Characters/CollisionManager.h"
 
 /* SFML includes */
 #include <SFML/Graphics.hpp>
@@ -40,23 +41,11 @@ int main()
 
 	Input::GameInput g_i(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Left,sf::Keyboard::Right);
 
+	CollisionManager collision;
+
 	std::vector<std::unique_ptr<Character>> characters;
-	characters.emplace_back(new Character(pool.getImage("isaac")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
-	characters.emplace_back(new Static_Entity(pool.getImage("fire")));
+	characters.emplace_back(new Character(pool.getImage("isaac"),collision));
+	characters.emplace_back(new Static_Entity(pool.getImage("fire"),collision));
 
 	bool running = true;
 	
@@ -69,32 +58,16 @@ int main()
 	std::vector<std::function<void()>> callbacks;
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Character::animate,characters[1].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[2].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[3].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[4].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[5].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[6].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[7].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[8].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[9].get()));
-	callbacks.emplace_back(std::bind(&Character::animate,characters[10].get()));
 
 	rendering::render_map(maze.get(),window,std::make_pair(0,0),std::make_pair(400,100));
-	sf::Clock c;
+
 	while(running)
 	{
-		//if(c.getElapsedTime() >= sf::milliseconds(25))
-		//{
 			window.pollEvent(event);
 			for(auto& e : callbacks)
 				e();
 
-			//window.clear();
 			rendering::render_level(characters,maze.get(),window);
 			window.display();
-			c.restart();
-		//}
-		//else
-			//std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	}
 }
