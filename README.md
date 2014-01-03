@@ -1,5 +1,7 @@
 # Rogue_BOI_Style
 
+[![Build Status](https://travis-ci.org/kiroxas/Rogue_BOI_Style.png?branch=master)](https://travis-ci.org/kiroxas/Rogue_BOI_Style)
+
 [Installation](https://github.com/kiroxas/Rogue_BOI_Style#installation)
 | [Documentation](https://github.com/kiroxas/Rogue_BOI_Style#Documentation)
 
