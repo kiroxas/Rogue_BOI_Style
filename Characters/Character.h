@@ -37,7 +37,6 @@ class Character : public Hittable, public sf::Drawable
 
     State m_state;
     CharacterAnimation m_animate;
-    Controls* brain; // The "brain" of the entity, that will give me the next action
     mutable std::vector<Bullets> bullets;
     const CollisionManager& c;
 };
