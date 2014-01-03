@@ -3,7 +3,7 @@ compiler:
   - clang
   - gcc
 before_install:
-- sudo apt-add-repository ppa:sonkun/sfml-development
+- yes | sudo apt-add-repository ppa:sonkun/sfml-development
 - sudo apt-get update
 install:
 - sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev
