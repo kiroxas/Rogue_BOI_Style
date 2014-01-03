@@ -1,6 +1,6 @@
 # Rogue_BOI_Style
 
-[![Build Status](https://travis-ci.org/kiroxas/Rogue_BOI_Style.png?branch=master)](https://travis-ci.org/kiroxas/Rogue_BOI_Style)
+Build on gcc 4.8 && clang 3.2 : [![Build Status](https://travis-ci.org/kiroxas/Rogue_BOI_Style.png?branch=master)](https://travis-ci.org/kiroxas/Rogue_BOI_Style)
 
 [Installation](https://github.com/kiroxas/Rogue_BOI_Style#installation)
 | [Documentation](https://github.com/kiroxas/Rogue_BOI_Style#Documentation)
@@ -20,7 +20,7 @@ that you can move around with ugly animations.
 
 You'll need [SFML 2.0](http://www.sfml-dev.org/index-fr.php) 
 
-And you need a compiler that supports C++11 features (Gcc 4.8 and newer, clang 3.3 and newer or visual 2010 and newer).
+And you need a compiler that supports C++11 features (Gcc 4.8 and newer, clang 3.2 and newer or visual 2010 and newer).
 
 You can compile this project on your plateform, by cloning it, then run "cmake ." and then "make".*
 You need to install SFML 2.0 on your own, but cmake should be able to detect its presence by itself (so no editing a configuration file for you).*
