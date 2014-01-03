@@ -52,14 +52,14 @@ void Input::GameInput::triggerMove(int x, int y)
 
 void Input::GameInput::update(const sf::Event& ite)
 {
-	 if(!locked && isJoystickEvent(ite.type) && mode == MouseKeyboard)
+	 /*if(!locked && isJoystickEvent(ite.type) && mode == MouseKeyboard)
 	 {
 	 	mode = Joystick;
 	 }
 	 else if(!locked && isMouseKeyboardEvent(ite.type) && mode == Joystick)
 	 {
 	 	mode = MouseKeyboard;
-	 }
+	 }*/
 
 	 if (ite.type == sf::Event::KeyPressed)
 	 {

@@ -3,15 +3,17 @@
 
 #include "AbstractMazeGenerator.h"
 #include "Maze.h"
+#include "../Characters/CollisionManager.h"
 
 class NormalMazeGenerator : public AbstractMazeGenerator
 {
 	public :
 	/* Virtual Functions */
-	NormalMazeGenerator(const ImagePool& p);
+	NormalMazeGenerator(const ImagePool& p, CollisionManager& c);
 	virtual std::unique_ptr<Maze> CreateMaze(unsigned int);
 private :
 	const ImagePool& pool;
+	CollisionManager& c;
 };
 
 #endif

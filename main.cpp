@@ -31,17 +31,16 @@ int main()
 	window.setFramerateLimit(60);
 
 	ImagePool pool;
+	CollisionManager collision;
 	std::random_device rd;
 	std::mt19937 generator(rd());
 	std::uniform_int_distribution<int> int_distribution(0,10);
 
 	/* Creation of the maze */
-	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(pool));
+	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(pool,collision));
 	std::unique_ptr<Maze> maze(g->CreateMaze(int_distribution(generator)));
 
 	Input::GameInput g_i(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Left,sf::Keyboard::Right);
-
-	CollisionManager collision;
 
 	std::vector<std::unique_ptr<Character>> characters;
 	characters.emplace_back(new Character(pool.getImage("isaac"),collision));

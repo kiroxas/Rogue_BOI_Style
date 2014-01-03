@@ -16,14 +16,6 @@
 #include <vector>
 #include "CollisionManager.h"
 
-
-/* I want a baseClass for Inputs and AI (for example) for being able to switch the too */
-class Controls
-{
-   virtual State nextAction() = 0;
-};
-
-
 /* A base Class for all characters in the game, hero or foe */
 class Character : public Hittable, public sf::Drawable
 {
@@ -45,8 +37,8 @@ class Character : public Hittable, public sf::Drawable
 
     State m_state;
     CharacterAnimation m_animate;
-    Controls* brain; // The "brain" of the entity, that will give me the next action
     mutable std::vector<Bullets> bullets;
+    const CollisionManager& c;
 };
 
 #endif

@@ -4,7 +4,7 @@
 Character::Character(const KiroGame::Image& sprite_sheet, const CollisionManager& e,float rotation, float scale) :
 Hittable(e),
 m_animate(sprite_sheet,AnimationState(),rotation,scale),
-brain(nullptr)
+c(e)
 {
 	m_state.movement = Stand_still;
 	m_state.dir = SOUTH;
@@ -14,15 +14,23 @@ brain(nullptr)
 	static std::uniform_int_distribution<int> int_distribution(0,600);
 	setPosition(int_distribution(generator),int_distribution(generator));
 	col.registerEntity(this);
+	health = 1;
+	attack = 1;
 }
 
 void Character::Move(int x, int y)
 {
 	auto pos = getPosition();
-    pos.x += 2*x;
-    pos.y += 2*y;
+	auto old_pos = pos;
+	pos.x += 2*x;
+	pos.y += 2*y;
 
 	setPosition(pos);
+	if(!c.canIMove(this))
+	{
+		setPosition(old_pos);
+		return;
+	}
 
 	if(x == -1)
 		m_state.dir = WEST;
@@ -82,7 +90,9 @@ Hittable::healthType Character::getDamage() const
 	return attack;
 }
 
-void Character::collide(Hittable*) 
-{}
+void Character::collide(Hittable* h) 
+{
+	health -= h->getDamage();
+}
 
 Character::~Character(){}
