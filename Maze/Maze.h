@@ -10,6 +10,7 @@
 #include "Room.h"
 #include "RoomFactory.h"
 #include "../Misc/ImagePool.h"
+#include "../Characters/CollisionManager.h"
 
 #define MAX_IND 10000
 
@@ -19,7 +20,7 @@ class Maze
 
 public :
 	/* Constructeurs */
-	explicit Maze(unsigned int, const ImagePool&);
+	explicit Maze(unsigned int, const ImagePool&,CollisionManager& c);
 
 	/* Destructeur */
 	virtual ~Maze();
@@ -37,6 +38,7 @@ private :
 	unsigned int my_room;
 	RoomFactory god_room;
 	const ImagePool& pool;
+	CollisionManager& c;
 };
 
 std::set<unsigned int> find_biggest_connection(const std::vector<std::pair<unsigned int,unsigned int>>&);

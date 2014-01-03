@@ -58,8 +58,13 @@ void Input::GameInput::update(const sf::Event& ite)
 	 else if(!locked && isMouseKeyboardEvent(ite.type) && mode == Joystick)
 	 {
 	 	mode = MouseKeyboard;
+<<<<<<< HEAD
 	 }
 	 */
+=======
+	 }*/
+
+>>>>>>> dad1074ab4affeb4c38bea76c78958c2d7af5a31
 	 if (ite.type == sf::Event::KeyPressed)
 	 {
 		 clavier[ite.key.code] = true;
