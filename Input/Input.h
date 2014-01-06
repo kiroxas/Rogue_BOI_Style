@@ -83,20 +83,5 @@ namespace Input
 		unsigned int JoyId;
 		bool locked;
 	};
-
-	class Input
-	{
-	public :
-		Input(sf::RenderWindow&);
-		~Input();
-		const GameInput& getGameInput() const;
-	private :
-		sf::RenderWindow& screen;
-		GameInput g_in;
-		bool done;
-		//std::thread th;
-	};
-}
-
-
+};
 #endif

@@ -1,8 +1,6 @@
 #include "Constantes.h"
 
-#pragma warning(push, 0)
 #include <fstream>
-#pragma warning(pop)
 
 bool infos::log(const std::string& path, const std::string& message, bool new_line)
 {

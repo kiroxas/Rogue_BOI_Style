@@ -260,21 +260,6 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 	clavier[_c] = false;
 }
 
-Input::Input::Input(sf::RenderWindow& sc) :
-	screen(sc),
-	done(false)
-{}
-
-Input::Input::~Input()
-{
-	done = true;
-}
-
-const Input::GameInput& Input::Input::getGameInput() const
-{
-	return g_in;
-}
-
 void Input::GameInput::ListenToShoot(std::function<void()> f)
 {
 	shootFuncs.emplace_back(f);

@@ -9,9 +9,9 @@
 #include <algorithm>
 
 Room::Room(RoomType r,unsigned int n,const ImagePool& p,CollisionManager& _c) : 
-	type(r),
 	number_doors(n),
 	canConnect(true),
+	type(r),
 	pool(p),
 	c(_c)
 {
