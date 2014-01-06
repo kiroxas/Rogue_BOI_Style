@@ -1,11 +1,9 @@
 #ifndef MAZE_H
 #define MAZE_H
 
-#pragma warning(push, 0)
 #include <memory>
 #include <vector>
 #include <set>
-#pragma warning(pop)
 
 #include "Room.h"
 #include "RoomFactory.h"

@@ -33,7 +33,7 @@ struct State
 struct AnimationState
 {
   State state;
-  unsigned int animation_cpt;
+  int animation_cpt;
 };
 
 #endif
