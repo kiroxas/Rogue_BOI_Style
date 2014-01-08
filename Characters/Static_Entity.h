@@ -6,6 +6,7 @@
 #ifndef STATIC_ENTITY_H
 #define STATIC_ENTITY_H
 
+#include <SFML/Graphics.hpp>
 #include "Character.h"
 
 class Static_Entity : public Character

@@ -15,6 +15,7 @@
 #include "Bullets.h"
 #include <vector>
 #include "CollisionManager.h"
+#include <SFML/Graphics.hpp>
 
 /* A base Class for all characters in the game, hero or foe */
 class Character : public Hittable, public sf::Drawable
@@ -27,8 +28,9 @@ class Character : public Hittable, public sf::Drawable
    virtual void Move(int x, int y);
    virtual std::pair<unsigned int, unsigned int> getSize() const;
    virtual void shoot();
+   virtual sf::FloatRect getGlobalBounds() const;
    virtual ~Character();
-   healthType getDamage() const;
+   virtual healthType getDamage() const;
    void collide(Hittable*);
 
   protected :

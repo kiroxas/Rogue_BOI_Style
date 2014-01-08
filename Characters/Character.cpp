@@ -8,7 +8,6 @@ c(e)
 {
 	m_state.movement = Stand_still;
 	m_state.dir = SOUTH;
-	//m_animate.RunAnimation(m_state,true);
 	static std::random_device rd;
 	static std::mt19937 generator(rd());
 	static std::uniform_int_distribution<int> int_distribution(0,600);
@@ -96,3 +95,10 @@ void Character::collide(Hittable* h)
 }
 
 Character::~Character(){}
+
+sf::FloatRect Character::getGlobalBounds() const
+{
+	sf::Sprite s(m_animate.getSprite());
+	s.setPosition(getPosition());
+	return s.getGlobalBounds();
+}

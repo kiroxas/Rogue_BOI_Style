@@ -14,10 +14,9 @@ class Bullets : public sf::Drawable, Hittable
 
 	Bullets(std::pair<int, int> pos, Direction dir,const CollisionManager& e);
 	void update();
-	sf::FloatRect getGlobalBounds()	const;
-	bool fake() const;
 	Hittable::healthType getDamage() const;
 	void collide(Hittable*);
+	virtual sf::FloatRect getGlobalBounds() const; 
 
 	private :
   

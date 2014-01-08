@@ -1,6 +1,8 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "../Misc/Constantes.h"
+
 enum Movement
 {
    Stand_still = 0,

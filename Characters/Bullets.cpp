@@ -35,10 +35,6 @@ sf::FloatRect Bullets::getGlobalBounds() const
 	return bullet.getGlobalBounds();
 }
 
-bool Bullets::fake() const
-{
-	return false;
-}
 
 void Bullets::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -55,3 +51,4 @@ void Bullets::collide(Hittable*)
 {
 
 }
+

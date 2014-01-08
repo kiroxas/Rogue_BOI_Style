@@ -12,8 +12,10 @@ bool CollisionManager::canIMove(const Hittable* me) const
 		if(e == me)
 			continue;
 		
-		//if(e-> getPosition())
-		//{}
+		if(me->getGlobalBounds().intersects(e->getGlobalBounds()))
+		{
+			return false;
+		}
 	}
 	
 	return true;
