@@ -1,7 +1,8 @@
 #include "Bullets.h"
 #include "CollisionManager.h"
+#include <iostream>
 
-Bullets::Bullets(std::pair<int,int> pos, Direction dir,const CollisionManager& e) :
+Bullets::Bullets(std::pair<int,int> pos, Direction dir,const CollisionManager* e) :
 Hittable(e),
 m_dir(dir)
 {
@@ -11,22 +12,34 @@ m_dir(dir)
 	bullet.setRadius(7);
 	bullet.setFillColor(sf::Color::Blue);
 	bullet.setOutlineColor(sf::Color::Red);
-	col.registerEntity(this);
+	if(col)
+	{
+	   col->registerEntity(this);
+	}
 }
 
 void Bullets::update()
 {
-	auto pos = bullet.getPosition();
-
-	switch(m_dir)
+	if(!isDead())
 	{
-		case NORTH : pos.y -= 4; break;
-		case SOUTH : pos.y += 4; break;
-		case EAST : pos.x += 4; break;
-		case WEST : pos.x -= 4; break;
-	}
+		auto pos = bullet.getPosition();
+		auto old_pos = pos;
 
-	bullet.setPosition(pos);
+		switch(m_dir)
+		{
+			case NORTH : pos.y -= 4; break;
+			case SOUTH : pos.y += 4; break;
+			case EAST : pos.x += 4; break;
+			case WEST : pos.x -= 4; break;
+		}
+	
+		bullet.setPosition(pos);
+
+		if(col && !col->canIMove(this))
+		{
+			setPosition(old_pos);
+		}	
+	}	
 }
 
 
@@ -47,8 +60,15 @@ Hittable::healthType Bullets::getDamage() const
 	return attack;
 }
 
-void Bullets::collide(Hittable*)
+void Bullets::collide(const Hittable*)
 {
+	health = 0;
+	if(col)
+	   col->unregisterEntity(this);
+}
 
+bool Bullets::isDead() const
+{
+	return health == 0;
 }
 

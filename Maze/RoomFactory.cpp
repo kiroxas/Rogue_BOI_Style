@@ -1,6 +1,6 @@
 #include "RoomFactory.h"
 
-std::unique_ptr<Room> RoomFactory::CreateRoom(RoomType type,unsigned int number,const ImagePool& p,CollisionManager& c)
+std::unique_ptr<Room> RoomFactory::CreateRoom(RoomType type,unsigned int number,const ImagePool& p)
 {
-	return std::unique_ptr<Room>(new Room(type, number,p,c));
+	return std::unique_ptr<Room>(new Room(type, number,p));
 }

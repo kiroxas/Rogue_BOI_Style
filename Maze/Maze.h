@@ -18,7 +18,7 @@ class Maze
 
 public :
 	/* Constructeurs */
-	explicit Maze(unsigned int, const ImagePool&,CollisionManager& c);
+	explicit Maze(unsigned int, const ImagePool&);
 
 	/* Destructeur */
 	virtual ~Maze();
@@ -36,7 +36,6 @@ private :
 	unsigned int my_room;
 	RoomFactory god_room;
 	const ImagePool& pool;
-	CollisionManager& c;
 };
 
 std::set<unsigned int> find_biggest_connection(const std::vector<std::pair<unsigned int,unsigned int>>&);

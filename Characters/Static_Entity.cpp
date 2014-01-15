@@ -1,7 +1,11 @@
 #include "Static_Entity.h"
 
-Static_Entity::Static_Entity(const KiroGame::Image& sprite_sheet, const CollisionManager& e,float rotation, float scale) :
+Static_Entity::Static_Entity(const KiroGame::Image& sprite_sheet, CollisionManager* e,float rotation, float scale) :
 Character(sprite_sheet,e,rotation,scale)
+{}
+
+Static_Entity::Static_Entity(const KiroGame::Image& sprite_sheet,float rotation, float scale) :
+Character(sprite_sheet,rotation,scale)
 {}
 
 void Static_Entity::Move(int x, int y)

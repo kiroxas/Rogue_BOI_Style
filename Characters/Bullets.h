@@ -8,15 +8,16 @@
 
 class CollisionManager;
 
-class Bullets : public sf::Drawable, Hittable
+class Bullets : public Hittable, public sf::Drawable
 {
 	public :
 
-	Bullets(std::pair<int, int> pos, Direction dir,const CollisionManager& e);
+	Bullets(std::pair<int, int> pos, Direction dir,const CollisionManager* e = nullptr);
 	void update();
 	Hittable::healthType getDamage() const;
-	void collide(Hittable*);
+	void collide(const Hittable*);
 	virtual sf::FloatRect getGlobalBounds() const; 
+	bool isDead() const;
 
 	private :
   

@@ -22,7 +22,8 @@ class Character : public Hittable, public sf::Drawable
 {
   public :
 
-   Character(const KiroGame::Image& sprite_sheet, const CollisionManager& e,float rotation = 0, float scale = 1);
+   Character(const KiroGame::Image& sprite_sheet,CollisionManager* e,float rotation = 0, float scale = 1);
+   Character(const KiroGame::Image& sprite_sheet,float rotation = 0, float scale = 0);
    virtual void update();
    virtual void animate();
    virtual void Move(int x, int y);
@@ -31,16 +32,16 @@ class Character : public Hittable, public sf::Drawable
    virtual sf::FloatRect getGlobalBounds() const;
    virtual ~Character();
    virtual healthType getDamage() const;
-   void collide(Hittable*);
+   void collide(const Hittable*);
 
   protected :
   
+    Character& operator=(Character&&) =delete;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 
     State m_state;
     CharacterAnimation m_animate;
-    mutable std::vector<Bullets> bullets;
-    const CollisionManager& c;
+    mutable std::vector<std::unique_ptr<Bullets>> bullets;
 };
 
 #endif

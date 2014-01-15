@@ -5,15 +5,16 @@
 
 #include "Room.h"
 #include "../Misc/Constantes.h"
+#include "../Characters/Static_Entity.h"
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
-Room::Room(RoomType r,unsigned int n,const ImagePool& p,CollisionManager& _c) : 
+Room::Room(RoomType r,unsigned int n,const ImagePool& p) : 
 	number_doors(n),
 	canConnect(true),
 	type(r),
-	pool(p),
-	c(_c)
+	pool(p)
 {
 	std::generate(neighboors.begin(),neighboors.end(),[](){return nullptr; });
 }
@@ -73,28 +74,28 @@ void Room::Fill()
 	
 		if(neighboors[NORTH] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door"),c));
+			elements.emplace_back(new Static_Entity(pool.getImage("door")));
 			auto y = KiroGame::room_pos.second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (elements.back()->getSize().first / 2);
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[SOUTH] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("angel_door"),c,180));
+			elements.emplace_back(new Static_Entity(pool.getImage("angel_door"),180));
 			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; // - elements.back()->getSize().second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (elements.back()->getSize().first / 2);
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[EAST] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door"), c,90));
+			elements.emplace_back(new Static_Entity(pool.getImage("door"),90));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (elements.back()->getSize().second / 2);
 			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; // - elements.back()->getSize().first;
 			elements.back()->setPosition(x,y);
 		}
 		if(neighboors[WEST] != nullptr)
 		{
-			elements.emplace_back(new Character(pool.getImage("door"), c,270));
+			elements.emplace_back(new Static_Entity(pool.getImage("door"),270));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (elements.back()->getSize().second / 2);;
 			auto x = KiroGame::room_pos.first;
 			elements.back()->setPosition(x,y);
@@ -114,6 +115,14 @@ void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inhe
 	for(auto& e : elements)
 	{
 		target.draw(*e);
+	}
+}
+
+void Room::assignCM(CollisionManager* c)
+{
+	for(auto& e : elements)
+	{
+		e->assignCM(c);
 	}
 }
 

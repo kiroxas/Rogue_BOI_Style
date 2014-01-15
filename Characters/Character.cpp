@@ -1,10 +1,9 @@
 #include "Character.h"
 #include "../Misc/Constantes.h"
 
-Character::Character(const KiroGame::Image& sprite_sheet, const CollisionManager& e,float rotation, float scale) :
+Character::Character(const KiroGame::Image& sprite_sheet,CollisionManager* e,float rotation, float scale) :
 Hittable(e),
-m_animate(sprite_sheet,AnimationState(),rotation,scale),
-c(e)
+m_animate(sprite_sheet,AnimationState(),rotation,scale)
 {
 	m_state.movement = Stand_still;
 	m_state.dir = SOUTH;
@@ -12,10 +11,28 @@ c(e)
 	static std::mt19937 generator(rd());
 	static std::uniform_int_distribution<int> int_distribution(0,600);
 	setPosition(int_distribution(generator),int_distribution(generator));
-	col.registerEntity(this);
+	if(col)
+	   col->registerEntity(this);
 	health = 1;
 	attack = 1;
 }
+
+Character::Character(const KiroGame::Image& sprite_sheet,float rotation, float scale) :
+Hittable(),
+m_animate(sprite_sheet,AnimationState(),rotation,scale)
+{
+	m_state.movement = Stand_still;
+	m_state.dir = SOUTH;
+	static std::random_device rd;
+	static std::mt19937 generator(rd());
+	static std::uniform_int_distribution<int> int_distribution(0,600);
+	setPosition(int_distribution(generator),int_distribution(generator));
+	if(col)
+	   col->registerEntity(this);
+	health = 1;
+	attack = 1;
+}
+
 
 void Character::Move(int x, int y)
 {
@@ -25,7 +42,7 @@ void Character::Move(int x, int y)
 	pos.y += 2*y;
 
 	setPosition(pos);
-	if(!c.canIMove(this))
+	if(col && !col->canIMove(this))
 	{
 		setPosition(old_pos);
 		return;
@@ -47,7 +64,16 @@ void Character::Move(int x, int y)
 
 void Character::shoot()
 {
-	bullets.emplace_back(Bullets(std::make_pair(getPosition().x,getPosition().y),m_state.dir,col));
+	int x = getPosition().x,y = getPosition().y;
+	auto size = m_animate.getSize();
+	switch(m_state.dir)
+	{
+	   case WEST : x -= 7; break;
+	   case EAST : x += size.first; break;
+	   case NORTH : y -= 7; break;
+	   case SOUTH : y += size.second;
+	}
+	bullets.emplace_back(new Bullets(std::make_pair(x,y),m_state.dir,col));
 }
 
 void Character::update()
@@ -69,13 +95,14 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 	for(auto& e : bullets)
 	{
-		e.update();
+		e->update();
 	}
 	
-	//bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](Bullets& e){return !e.getGlobalBounds().intersects(KiroGame::RoomRect);}),bullets.end());
+	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){return e->isDead();}),bullets.end());
+	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){return !e->getGlobalBounds().intersects(KiroGame::RoomRect);}),bullets.end());
 	for(auto& e : bullets)
 	{
-		target.draw(e);
+		target.draw(*e);
 	}
 }
 
@@ -89,7 +116,7 @@ Hittable::healthType Character::getDamage() const
 	return attack;
 }
 
-void Character::collide(Hittable* h) 
+void Character::collide(const Hittable* h) 
 {
 	health -= h->getDamage();
 }
