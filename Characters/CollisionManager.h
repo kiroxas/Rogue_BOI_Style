@@ -3,7 +3,7 @@
 
 #include <vector>
 
-class Hittable;
+struct Hittable;
 
 class CollisionManager
 {
