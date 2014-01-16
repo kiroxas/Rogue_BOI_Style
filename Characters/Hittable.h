@@ -20,6 +20,7 @@ struct Hittable : public sf::Transformable
 	healthType health;
 	healthType attack; 
 	const CollisionManager* col;
+	bool registered;
 };
 
 

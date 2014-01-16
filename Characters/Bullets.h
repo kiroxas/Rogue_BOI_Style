@@ -13,11 +13,13 @@ class Bullets : public Hittable, public sf::Drawable
 	public :
 
 	Bullets(std::pair<int, int> pos, Direction dir,const CollisionManager* e = nullptr);
+	~Bullets();
 	void update();
 	Hittable::healthType getDamage() const;
 	void collide(const Hittable*);
 	virtual sf::FloatRect getGlobalBounds() const; 
 	bool isDead() const;
+	void die();
 
 	private :
   

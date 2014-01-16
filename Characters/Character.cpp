@@ -68,9 +68,9 @@ void Character::shoot()
 	auto size = m_animate.getSize();
 	switch(m_state.dir)
 	{
-	   case WEST : x -= 7; break;
+	   case WEST : x -= 10; break;
 	   case EAST : x += size.first; break;
-	   case NORTH : y -= 7; break;
+	   case NORTH : y -= 10; break;
 	   case SOUTH : y += size.second;
 	}
 	bullets.emplace_back(new Bullets(std::make_pair(x,y),m_state.dir,col));
@@ -97,9 +97,10 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		e->update();
 	}
+
+	std::for_each(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){if(e.get() && !e->getGlobalBounds().intersects(KiroGame::RoomRect)) e->die(); });
+	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){if(!e.get()) return true; return e->isDead();}),bullets.end());
 	
-	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){return e->isDead();}),bullets.end());
-	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){return !e->getGlobalBounds().intersects(KiroGame::RoomRect);}),bullets.end());
 	for(auto& e : bullets)
 	{
 		target.draw(*e);

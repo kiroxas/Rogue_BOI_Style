@@ -15,7 +15,14 @@ m_dir(dir)
 	if(col)
 	{
 	   col->registerEntity(this);
+	   registered = true;
 	}
+}
+
+Bullets::~Bullets()
+{
+   if(registered && col)
+	 col->unregisterEntity(this);
 }
 
 void Bullets::update()
@@ -63,12 +70,16 @@ Hittable::healthType Bullets::getDamage() const
 void Bullets::collide(const Hittable*)
 {
 	health = 0;
-	if(col)
-	   col->unregisterEntity(this);
 }
 
 bool Bullets::isDead() const
 {
 	return health == 0;
+}
+
+void Bullets::die()
+{
+	std::cout << "Die !" << std::endl;
+	health = 0;
 }
 
