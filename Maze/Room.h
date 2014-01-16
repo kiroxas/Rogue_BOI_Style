@@ -22,11 +22,13 @@ public :
 	Room* getNeighboor(Direction);
 	void Fill();
 	void assignCM(CollisionManager*);
+	void registerCallbacks(std::vector<std::function<void()>>&);
 
 private :
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 	bool canHasNeighboor();
 	void checkConnect();
+	
 
 	unsigned int number_doors;
 	std::array<Room*,4> neighboors;
@@ -34,6 +36,7 @@ private :
 	RoomType type;
 	std::vector<std::unique_ptr<Character>> elements;
 	const ImagePool& pool;
+	std::vector<std::function<void()>> callbacks;
 };
 
 Direction opposite(Direction dir);

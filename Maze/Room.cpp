@@ -100,6 +100,16 @@ void Room::Fill()
 			auto x = KiroGame::room_pos.first;
 			elements.back()->setPosition(x,y);
 		}
+
+static std::random_device rd;
+static std::mt19937 generator(rd());
+static std::uniform_int_distribution<int> int_distribution(0,6);
+
+for(int i = 0, end  = int_distribution(generator); i < end; ++i)
+{
+   elements.emplace_back(new Static_Entity(pool.getImage("fire")));
+   callbacks.emplace_back(std::bind(&Character::animate,elements.back().get()));
+}
 	
 }
 
@@ -124,6 +134,12 @@ void Room::assignCM(CollisionManager* c)
 	{
 		e->assignCM(c);
 	}
+}
+
+void Room::registerCallbacks(std::vector<std::function<void()>>& f)
+{
+	for(auto e : callbacks)
+		f.push_back(e);
 }
 
 Direction opposite(Direction dir)
