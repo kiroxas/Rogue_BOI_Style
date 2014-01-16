@@ -10,8 +10,6 @@
 #include "../Misc/ImagePool.h"
 #include "../Characters/CollisionManager.h"
 
-#define MAX_IND 10000
-
 class Maze 
 {
 	typedef std::vector<std::unique_ptr<Room>> myMaze;
