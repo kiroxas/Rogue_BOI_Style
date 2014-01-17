@@ -43,8 +43,11 @@ int main()
 
 	CollisionManager* collision = new CollisionManager();
 	std::vector<std::unique_ptr<Character>> characters;
+	std::vector<std::function<void()>> callbacks;
+
+	maze->getCurrentRoom()->assignCM(collision);
+	maze->getCurrentRoom()->registerCallbacks(callbacks);
 	characters.emplace_back(new Character(pool.getImage("isaac"),collision));
-	//characters.emplace_back(new Static_Entity(pool.getImage("fire"),collision));
 
 	bool running = true;
 	
@@ -54,13 +57,10 @@ int main()
 
 	sf::Event event; 
 	
-	std::vector<std::function<void()>> callbacks;
+	
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
-	//callbacks.emplace_back(std::bind(&Character::animate,characters[1].get()));
 
 	rendering::render_map(maze.get(),window,std::make_pair(0,0),std::make_pair(400,100));
-	maze->getCurrentRoom()->assignCM(collision);
-	maze->getCurrentRoom()->registerCallbacks(callbacks);
 
 	while(running)
 	{

@@ -9,30 +9,22 @@ m_animate(sprite_sheet,AnimationState(),rotation,scale)
 	m_state.dir = SOUTH;
 	static std::random_device rd;
 	static std::mt19937 generator(rd());
-	static std::uniform_int_distribution<int> int_distribution(0,600);
-	setPosition(int_distribution(generator),int_distribution(generator));
+	static std::uniform_int_distribution<int> x_distribution(KiroGame::room_pos.first,KiroGame::room_pos.first + KiroGame::room_size.first);
+	static std::uniform_int_distribution<int> y_distribution(KiroGame::room_pos.second,KiroGame::room_pos.second + KiroGame::room_size.second);
+	setPosition(x_distribution(generator),y_distribution(generator));
 	if(col)
-	   col->registerEntity(this);
+	{
+ 	   col->registerEntity(this);
+	   while(!col->canIMove(this))
+		setPosition(x_distribution(generator),y_distribution(generator));
+	}
 	health = 1;
 	attack = 1;
 }
 
 Character::Character(const KiroGame::Image& sprite_sheet,float rotation, float scale) :
-Hittable(),
-m_animate(sprite_sheet,AnimationState(),rotation,scale)
-{
-	m_state.movement = Stand_still;
-	m_state.dir = SOUTH;
-	static std::random_device rd;
-	static std::mt19937 generator(rd());
-	static std::uniform_int_distribution<int> int_distribution(0,600);
-	setPosition(int_distribution(generator),int_distribution(generator));
-	if(col)
-	   col->registerEntity(this);
-	health = 1;
-	attack = 1;
-}
-
+Character(sprite_sheet,nullptr,rotation,scale)
+{}
 
 void Character::Move(int x, int y)
 {
