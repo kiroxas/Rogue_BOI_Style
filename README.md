@@ -28,4 +28,4 @@ The program executable should be in <the root folder where you cloned>/bin/Kirog
 
 ## ScreenShots
 
-![First and ugly screen, using Binding of Isaac sprites](https://github.com/kiroxas/kiroxas.github.io/blob/master/RogueScreen.png)
+![First and ugly screen, using Binding of Isaac sprites](https://raw.github.com/kiroxas/kiroxas.github.io/blob/master/RogueScreen.png)
