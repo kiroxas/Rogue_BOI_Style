@@ -25,3 +25,7 @@ And you need a compiler that supports C++11 features (Gcc 4.8 and newer, clang 3
 You can compile this project on your plateform, by cloning it, then run "cmake ." and then "make".*
 You need to install SFML 2.0 on your own, but cmake should be able to detect its presence by itself (so no editing a configuration file for you).*
 The program executable should be in <the root folder where you cloned>/bin/Kirogame 
+
+## ScreenShots
+
+![First and ugly screen, using Binding of Isaac sprites](https://github.com/kiroxas/kiroxas.github.io/blob/master/RogueScreen.png)
