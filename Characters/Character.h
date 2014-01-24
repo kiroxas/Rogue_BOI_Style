@@ -33,6 +33,7 @@ class Character : public Hittable, public sf::Drawable
    virtual ~Character();
    virtual healthType getDamage() const;
    void collide(const Hittable*);
+   void setCorrectPosition();
 
   protected :
   

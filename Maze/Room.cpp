@@ -103,7 +103,7 @@ void Room::Fill()
 
 static std::random_device rd;
 static std::mt19937 generator(rd());
-static std::uniform_int_distribution<int> int_distribution(0,6);
+static std::uniform_int_distribution<int> int_distribution(0,30);
 
 for(int i = 0, end  = int_distribution(generator); i < end; ++i)
 {
@@ -122,6 +122,13 @@ void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inhe
 	rec.setSize(sf::Vector2f(KiroGame::room_size.first,KiroGame::room_size.second));
 	target.draw(rec);
 
+	sf::RectangleShape rec2;
+
+	rec2.setFillColor(sf::Color(150,150,150,255));
+	rec2.setPosition(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.second);
+	rec2.setSize(sf::Vector2f(KiroGame::inner_room_size.first,KiroGame::inner_room_size.second));
+	target.draw(rec2);	
+
 	for(auto& e : elements)
 	{
 		target.draw(*e);
@@ -133,6 +140,7 @@ void Room::assignCM(CollisionManager* c)
 	for(auto& e : elements)
 	{
 		e->assignCM(c);
+		e->setCorrectPosition();
 	}
 }
 

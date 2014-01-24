@@ -10,14 +10,13 @@ m_animate(sprite_sheet,AnimationState(),rotation,scale)
 	m_state.dir = SOUTH;
 	static std::random_device rd;
 	static std::mt19937 generator(rd());
-	static std::uniform_int_distribution<int> x_distribution(KiroGame::room_pos.first,KiroGame::room_pos.first + KiroGame::room_size.first);
-	static std::uniform_int_distribution<int> y_distribution(KiroGame::room_pos.second,KiroGame::room_pos.second + KiroGame::room_size.second);
+	static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
+	static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
 	setPosition(x_distribution(generator),y_distribution(generator));
 	if(col)
 	{
  	   col->registerEntity(this);
-	   while(!col->canIMove(this))
-		setPosition(x_distribution(generator),y_distribution(generator));
+	   setCorrectPosition();
 	}
 	health = 1;
 	attack = 1;
@@ -27,9 +26,22 @@ Character::Character(const KiroGame::Image& sprite_sheet,float rotation, float s
 Character(sprite_sheet,nullptr,rotation,scale)
 {}
 
+void Character::setCorrectPosition()
+{
+   if(!col) return;
+
+	static std::random_device rd;
+	static std::mt19937 generator(rd());
+	static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
+	static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
+
+   while(!col->canIMove(this) || !getGlobalBounds().intersects(KiroGame::inner_RoomRect))
+		setPosition(x_distribution(generator),y_distribution(generator));
+    
+}
+
 void Character::Move(int x, int y)
 {
-std::cout << "In Move : " << x << " " << y << std::endl;
 	auto pos = getPosition();
 	auto old_pos = pos;
 	pos.x += 2*x;
@@ -82,6 +94,7 @@ void Character::animate()
 
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	if(isDead()) return;
 	sf::Sprite s = m_animate.getSprite();
 	states.transform = getTransform();
 
@@ -92,7 +105,7 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		e->update();
 	}
 
-	std::for_each(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){if(e.get() && !e->getGlobalBounds().intersects(KiroGame::RoomRect)) e->die(); });
+	std::for_each(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){if(e.get() && !e->getGlobalBounds().intersects(KiroGame::inner_RoomRect)) e->die(); });
 	bullets.erase(std::remove_if(bullets.begin(),bullets.end(),[](const std::unique_ptr<Bullets>& e){if(!e.get()) return true; return e->isDead();}),bullets.end());
 	
 	for(auto& e : bullets)
@@ -113,7 +126,9 @@ Hittable::healthType Character::getDamage() const
 
 void Character::collide(const Hittable* h) 
 {
+	if(isDead()) return;
 	health -= h->getDamage();
+	if(isDead() && col) col->unregisterEntity(this);
 }
 
 Character::~Character(){}

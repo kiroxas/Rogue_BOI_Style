@@ -15,6 +15,7 @@ struct Hittable : public sf::Transformable
 	virtual healthType getDamage() const =0;
 	virtual void collide(const Hittable*) =0;
 	virtual sf::FloatRect getGlobalBounds() const =0; 
+	virtual bool isDead() const {return health == 0;}
 
 	protected :
 	healthType health;
