@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <map>
-#include <functional>
+#include "../Misc/Listener.h"
 
 namespace Input
 {
@@ -21,7 +21,7 @@ namespace Input
 		Joystick
 	};
 
-	class GameInput
+	class GameInput : public Listener
 	{
 	public :
 		GameInput(/*const sf::Input&*/);
@@ -41,16 +41,10 @@ namespace Input
 		void lockKeyboard();
 
 		void switchMode();
-		void ListenToMove(std::function<void(int,int)>);
-		void ListenToShoot(std::function<void()>);
-		void ListenToQuit(std::function<void()>);
 		bool rebindUp(const sf::Keyboard::Key&);
 
 	private :
 
-		void triggerMove(int x, int y);
-		void triggerShoot();
-		void triggerQuit();
 		void clearAll();
 		GameInput& operator =(const GameInput&);
 		bool isJoystickEvent(sf::Event::EventType) const;
@@ -61,9 +55,6 @@ namespace Input
 		std::map<unsigned int,bool> joyButtons;
 		int posX, posY, relX, relY;
 		InputType mode;
-		std::vector<std::function<void(int,int)>> moveFuncs;
-		std::vector<std::function<void()>> shootFuncs;
-		std::vector<std::function<void()>> quitFuncs;
 
 		sf::Keyboard::Key up;
 		sf::Keyboard::Key down;

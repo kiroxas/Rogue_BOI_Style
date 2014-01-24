@@ -36,19 +36,6 @@ Input::GameInput::GameInput() :
 GameInput(sf::Keyboard::Z,sf::Keyboard::S,sf::Keyboard::Q,sf::Keyboard::D)
 {}
 
-void Input::GameInput::ListenToMove(std::function<void(int,int)> a)
-{
-	moveFuncs.push_back(a);
-}
-
-void Input::GameInput::triggerMove(int x, int y)
-{
-	for(auto e : moveFuncs)
-	{
-		e(x,y);
-	}
-}
-
 void Input::GameInput::update(const sf::Event& ite)
 {
 	 /*if(!locked && isJoystickEvent(ite.type) && mode == MouseKeyboard)
@@ -260,26 +247,6 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 	clavier[_c] = false;
 }
 
-void Input::GameInput::ListenToShoot(std::function<void()> f)
-{
-	shootFuncs.emplace_back(f);
-}
 
-void Input::GameInput::ListenToQuit(std::function<void()> f)
-{
-	quitFuncs.emplace_back(f);
-}
-
-void Input::GameInput::triggerQuit()
-{
-	for(auto&e : quitFuncs)
-		e();
-}
-
-void Input::GameInput::triggerShoot()
-{
-	for(auto&e : shootFuncs)
-		e();
-}
 
 

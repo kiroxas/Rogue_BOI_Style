@@ -79,7 +79,6 @@ bool Bullets::isDead() const
 
 void Bullets::die()
 {
-	std::cout << "Die !" << std::endl;
 	health = 0;
 }
 

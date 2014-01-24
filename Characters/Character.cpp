@@ -1,5 +1,6 @@
 #include "Character.h"
 #include "../Misc/Constantes.h"
+#include <iostream>
 
 Character::Character(const KiroGame::Image& sprite_sheet,CollisionManager* e,float rotation, float scale) :
 Hittable(e),
@@ -28,6 +29,7 @@ Character(sprite_sheet,nullptr,rotation,scale)
 
 void Character::Move(int x, int y)
 {
+std::cout << "In Move : " << x << " " << y << std::endl;
 	auto pos = getPosition();
 	auto old_pos = pos;
 	pos.x += 2*x;
