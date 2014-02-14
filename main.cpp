@@ -13,6 +13,7 @@
 #include "Characters/Static_Entity.h"
 #include "Characters/CollisionManager.h"
 #include "Characters/Ai.h"
+#include "Misc/GameInfo.h"
 
 /* SFML includes */
 #include <SFML/Graphics.hpp>
@@ -32,6 +33,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Rogue BOI Style",sf::Style::Resize);
 	window.setFramerateLimit(60);
 
+	GameInfo stats;
 	ImagePool pool;
 	std::random_device rd;
 	std::mt19937 generator(rd());
@@ -69,7 +71,6 @@ int main()
 
 	sf::Event event; 
 	
-	
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Ai::update,std::ref(ai)));
 
@@ -81,7 +82,7 @@ int main()
 			for(auto& e : callbacks)
 				e();
 
-			rendering::render_level(characters,maze.get(),window);
+			rendering::render_level(characters,maze.get(),window,stats);
 			window.display();
 	}
 }
