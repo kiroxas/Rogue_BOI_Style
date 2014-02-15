@@ -1,23 +1,26 @@
 #include "GameInfo.h"
 
-GameInfo::GameInfo() :
-start_time(std::chrono::steady_clock::now())
+GameInfo::GameInfo()
 {}
 
-const GameInfo::time& GameInfo::getStartTime() const
+sf::Time GameInfo::GetElapsedTime() const
 {
-   return start_time;
-}
-
-GameInfo::duration GameInfo::GetElapsedTime() const
-{
-   return clock::now() - start_time;
+   return clock.getElapsedTime();
 }
 
 std::string GameInfo::GetFormattedElapsed() const
 {
-  auto ti = GetElapsedTime();
-  auto sec = std::chrono::duration_cast<std::chrono::seconds>(ti);
-  return std::to_string(sec.count()) + ":" + 
-                  std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(ti).count() - (sec.count() * 1000));
+  auto sec = GetElapsedTime().asSeconds();
+  return std::to_string(sec) + ":" + 
+                  std::to_string(GetElapsedTime().asMilliseconds() - (sec * 1000));
+}
+
+ void GameInfo::setFps(float f)
+{
+   fps = f;
+}
+
+float GameInfo::getFps() const
+{
+   return fps;
 }

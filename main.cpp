@@ -75,14 +75,17 @@ int main()
 	callbacks.emplace_back(std::bind(&Ai::update,std::ref(ai)));
 
 	rendering::render_map(maze.get(),window,std::make_pair(0,0),std::make_pair(400,100));
+	sf::Clock clock;
 
 	while(running)
 	{
+			
 			window.pollEvent(event);
 			for(auto& e : callbacks)
 				e();
 
 			rendering::render_level(characters,maze.get(),window,stats);
 			window.display();
+			stats.setFps(1.0f / clock.restart().asSeconds());
 	}
 }

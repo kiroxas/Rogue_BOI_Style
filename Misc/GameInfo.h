@@ -3,21 +3,22 @@
 
 #include <chrono>
 #include <string>
+#include <SFML/System/Clock.hpp>
 
 /* Class that stores all sort of informations on the game session */
 class GameInfo
 {
 public :
-  using clock = std::chrono::steady_clock;
-  using time = std::chrono::time_point<clock>;
-  using duration = std::chrono::duration<clock::rep,clock::period>;
   GameInfo();
-  const time& getStartTime() const;
-  duration GetElapsedTime() const;
+ 
+  sf::Time GetElapsedTime() const;
   std::string GetFormattedElapsed() const;
+  void setFps(float);
+  float getFps() const;
 private :
 
-  time start_time;
+  sf::Clock clock;
+  float fps;
 };
 
 #endif

@@ -226,6 +226,10 @@ void rendering::render_time(sf::RenderWindow& screen,const GameInfo& stats)
    text.setPosition(700,100);
    text.setString(stats.GetFormattedElapsed());
    screen.draw(text);
+
+   text.setString(std::to_string(stats.getFps()));
+   text.setPosition(700,125);
+   screen.draw(text);
 }
 
 void rendering::render_characters(const std::vector<std::unique_ptr<Character>>& c, sf::RenderWindow& w)
