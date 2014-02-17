@@ -116,6 +116,8 @@ void CharacterAnimation::setAnimationState(const State& a)
 
  }
 
+CharacterAnimation::CharacterAnimation(){}
+
 sf::Sprite CharacterAnimation::getSprite() const
 {
     return m_sprite;

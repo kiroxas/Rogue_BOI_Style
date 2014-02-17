@@ -8,17 +8,16 @@
 
 #include "CharacterAnimation.h"
 #include <utility>
-#include "Hittable.h"
 #include <memory>
 #include "State.h"
 #include "../Misc/Constantes.h"
 #include "Bullets.h"
 #include <vector>
 #include "CollisionManager.h"
-#include <SFML/Graphics.hpp>
+#include "ICharacter.h"
 
 /* A base Class for all characters in the game, hero or foe */
-class Character : public Hittable, public sf::Drawable
+class Character : public ICharacter
 {
   public :
 
@@ -26,7 +25,7 @@ class Character : public Hittable, public sf::Drawable
    Character(const KiroGame::Image& sprite_sheet,float rotation = 0, float scale = 0);
    virtual void update();
    virtual void animate();
-   virtual void Move(int x, int y);
+   virtual void Move(std::pair<int, int>);
    virtual std::pair<unsigned int, unsigned int> getSize() const;
    virtual void shoot();
    virtual sf::FloatRect getGlobalBounds() const;
@@ -36,7 +35,7 @@ class Character : public Hittable, public sf::Drawable
    void setCorrectPosition();
 
   protected :
-  
+    Character();
     Character& operator=(Character&&) =delete;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 

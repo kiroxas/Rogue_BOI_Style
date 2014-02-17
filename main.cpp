@@ -25,7 +25,7 @@
 #include <thread>
 #include <chrono>
 #include <SFML/Audio.hpp>
-
+#include <iostream>
 
 int main()
 {
@@ -63,11 +63,11 @@ int main()
 
 	Ai ai; 
 	
-	g_i.ListenToMove(std::bind(&Character::Move, characters[0].get(), std::placeholders::_1, std::placeholders::_2));
-	g_i.ListenToShoot(std::bind(&Character::shoot, characters[0].get()));
-	ai.ListenToShoot(std::bind(&Character::shoot, characters[1].get()));
-	ai.ListenToMove(std::bind(&Character::Move, characters[1].get(), std::placeholders::_1, std::placeholders::_2));
-	g_i.ListenToQuit([&running](){running = false;});
+	g_i.Listen(Events::Move(),std::bind(&Character::Move, characters[0].get(), std::placeholders::_1));
+	g_i.Listen(Events::Shoot(),std::bind(&Character::shoot, characters[0].get()));
+	ai.Listen(Events::Shoot(),std::bind(&Character::shoot, characters[1].get()));
+	ai.Listen(Events::Move(),std::bind(&Character::Move, characters[1].get(), std::placeholders::_1));
+	g_i.Listen(Events::Quit(),[&running](){running = false;});
 
 	sf::Event event; 
 	

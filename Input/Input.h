@@ -21,9 +21,20 @@ namespace Input
 		Joystick
 	};
 
-	class GameInput : public Listener
+	class GameInput : public Listener<Events::Shoot,void>, 
+					  public Listener<Events::Quit,void>, 
+	                  public Listener<Events::Move, std::pair<int,int>> 
 	{
 	public :
+
+	using Listener<Events::Shoot,void>::Listen;
+    using Listener<Events::Move, std::pair<int,int>>::Listen;
+    using Listener<Events::Quit,void>::Listen;
+
+    using Listener<Events::Shoot,void>::Trigger;
+    using Listener<Events::Move, std::pair<int,int>>::Trigger;
+    using Listener<Events::Quit,void>::Trigger;
+
 		GameInput(/*const sf::Input&*/);
 		GameInput(sf::Keyboard::Key up, sf::Keyboard::Key down, sf::Keyboard::Key left, sf::Keyboard::Key right);
 		void update(const sf::Event&);

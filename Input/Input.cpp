@@ -108,17 +108,17 @@ void Input::GameInput::update(const sf::Event& ite)
 				
 		 }
 		 if(isUp())
-		 	triggerMove(0,-1);
+		 	Trigger(Events::Move(),std::make_pair(0,-1));
 		 if(isDown())
-		 	triggerMove(0,1);
+		 	Trigger(Events::Move(),std::make_pair(0,1));
 		 if(isRight())
-		 	triggerMove(1,0);
+		 	Trigger(Events::Move(),std::make_pair(1,0));
 		 if(isLeft())
-		 	triggerMove(-1,0);
+		 	Trigger(Events::Move(),std::make_pair(-1,0));
 		 if(isShoot())
-		 	triggerShoot();
+		 	Trigger(Events::Shoot());
 		 if(isQuit())
-		 	triggerQuit();
+		 	Trigger(Events::Quit());
 }
 
 void Input::GameInput::clearAll()

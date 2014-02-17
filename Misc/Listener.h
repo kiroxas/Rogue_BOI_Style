@@ -3,24 +3,44 @@
 
 #include <vector>
 #include <functional>
+#include <map>
+#define EVENT(e) struct e{};
 
+namespace Events
+{
+  EVENT(Move)
+  EVENT(Shoot)
+  EVENT(Quit)
+
+  using MoveArgs = std::pair<int,int>;
+};
+
+template<typename T, typename U>
 class Listener
 {
+	using fun = std::function<void(U)>;
 	public :
 
-	virtual void ListenToMove(std::function<void(int,int)>);
-	virtual void ListenToShoot(std::function<void()>);
-	virtual void ListenToQuit(std::function<void()>);
+	virtual void Listen(T,fun f){callbacks.push_back(f);};
 
 	protected : 
+	virtual void Trigger(T,U arg){for(auto&e : callbacks) e(arg);};
 
-	void triggerMove(int x, int y);
-	void triggerShoot();
-	void triggerQuit();
+    std::vector<fun> callbacks;
+	//std::map<Events::Events,std::vector<fun>> callbacks;
+};
 
-	std::vector<std::function<void(int,int)>> moveFuncs;
-	std::vector<std::function<void()>> shootFuncs;
-	std::vector<std::function<void()>> quitFuncs;
+template<typename T>
+class Listener<T,void>
+{
+	using fun = std::function<void()>;
+	public :
+
+	virtual void Listen(T e,fun f){callbacks.push_back(f);}
+
+	protected : 
+	virtual void Trigger(T) const{for(auto&e : callbacks) e();}
+	 std::vector<fun> callbacks;
 };
 
 #endif

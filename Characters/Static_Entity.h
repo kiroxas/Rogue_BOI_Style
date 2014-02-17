@@ -19,3 +19,4 @@ class Static_Entity : public Character
 };
 
 #endif
+

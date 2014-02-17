@@ -3,7 +3,6 @@
 #include <iostream>
 
 Character::Character(const KiroGame::Image& sprite_sheet,CollisionManager* e,float rotation, float scale) :
-Hittable(e),
 m_animate(sprite_sheet,AnimationState(),rotation,scale)
 {
 	m_state.movement = Stand_still;
@@ -13,9 +12,9 @@ m_animate(sprite_sheet,AnimationState(),rotation,scale)
 	static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
 	static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
 	setPosition(x_distribution(generator),y_distribution(generator));
-	if(col)
+	if(e)
 	{
- 	   col->registerEntity(this);
+	   assignCM(e);
 	   setCorrectPosition();
 	}
 	health = 1;
@@ -40,8 +39,10 @@ void Character::setCorrectPosition()
     
 }
 
-void Character::Move(int x, int y)
+void Character::Move(std::pair<int, int> p)
 {
+	int x = p.first;
+	int y = p.second;
 	auto pos = getPosition();
 	auto old_pos = pos;
 	pos.x += 2*x;
@@ -117,6 +118,11 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 std::pair<unsigned int, unsigned int> Character::getSize() const
 {
 	return m_animate.getSize();
+}
+
+Character::Character()
+{
+std::cout << "In here" << std::endl;
 }
 
 Hittable::healthType Character::getDamage() const
