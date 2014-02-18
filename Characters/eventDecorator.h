@@ -3,10 +3,18 @@
 
 #include "Hittable.h"
 #include "CharacterDecorator.h"
+#include "../Misc/Listener.h"
 
-class eventDecorator : public CharacterDecorator
+class eventDecorator : public CharacterDecorator,
+					   public Listener<Events::LeaveRoom,Events::LeaveRoomArgs>
 {
-	 virtual void collide(const Hittable*);
+	public : 
+	 using  Listener<Events::LeaveRoom,Events::LeaveRoomArgs>::Listen;
+	 using  Listener<Events::LeaveRoom,Events::LeaveRoomArgs>::Trigger;
+
+	 eventDecorator(ICharacter* e) : CharacterDecorator(e){}
+	 virtual void collide(const Hittable* e);
+
 };
 
 #endif

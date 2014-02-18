@@ -5,7 +5,7 @@
 #include <vector>
 #include "../Misc/Constantes.h"
 #include <memory>
-#include "../Characters/Character.h"
+#include "../Characters/ICharacter.h"
 #include "../Misc/ImagePool.h"
 #include <SFML/Graphics.hpp>
 
@@ -28,13 +28,14 @@ private :
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 	bool canHasNeighboor();
 	void checkConnect();
+	void LeftTheRoom(Direction);
 	
 
 	unsigned int number_doors;
 	std::array<Room*,4> neighboors;
 	bool canConnect;
 	RoomType type;
-	std::vector<std::unique_ptr<Character>> elements;
+	std::vector<std::unique_ptr<ICharacter>> elements;
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;
 };

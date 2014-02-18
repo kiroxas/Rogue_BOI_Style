@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "../Misc/Constantes.h"
 #include "../Characters/Static_Entity.h"
+#include "../Characters/eventDecorator.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -74,10 +75,12 @@ void Room::Fill()
 	
 		if(neighboors[NORTH] != nullptr)
 		{
-			elements.emplace_back(new Static_Entity(pool.getImage("door")));
+			auto door = new eventDecorator(new Static_Entity(pool.getImage("door")));
+			door->Listen(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),std::placeholders::_1));
 			auto y = KiroGame::room_pos.second;
-			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (elements.back()->getSize().first / 2);
-			elements.back()->setPosition(x,y);
+			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (door->getSize().first / 2);
+			door->setPosition(x,y);
+			elements.emplace_back(door);
 		}
 		if(neighboors[SOUTH] != nullptr)
 		{
@@ -108,9 +111,14 @@ static std::uniform_int_distribution<int> int_distribution(0,30);
 for(int i = 0, end  = int_distribution(generator); i < end; ++i)
 {
    elements.emplace_back(new Static_Entity(pool.getImage("fire")));
-   callbacks.emplace_back(std::bind(&Character::animate,elements.back().get()));
+   callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
 }
 	
+}
+
+void Room::LeftTheRoom(Direction d)
+{
+   std::cout << "We left the Room" << std::endl;
 }
 
 void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inherited from sf::Drawable
@@ -140,7 +148,7 @@ void Room::assignCM(CollisionManager* c)
 	for(auto& e : elements)
 	{
 		e->assignCM(c);
-		e->setCorrectPosition();
+		//e->setCorrectPosition();
 	}
 }
 

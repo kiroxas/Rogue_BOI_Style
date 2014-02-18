@@ -2,7 +2,9 @@
 
 Static_Entity::Static_Entity(const KiroGame::Image& sprite_sheet, CollisionManager* e,float rotation, float scale) :
 Character(sprite_sheet,e,rotation,scale)
-{}
+{
+	health = 1000;
+}
 
 Static_Entity::Static_Entity(const KiroGame::Image& sprite_sheet,float rotation, float scale) :
 Character(sprite_sheet,rotation,scale)

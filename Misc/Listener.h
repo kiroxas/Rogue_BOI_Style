@@ -4,6 +4,7 @@
 #include <vector>
 #include <functional>
 #include <map>
+#include "Constantes.h"
 #define EVENT(e) struct e{};
 
 namespace Events
@@ -11,7 +12,9 @@ namespace Events
   EVENT(Move)
   EVENT(Shoot)
   EVENT(Quit)
+  EVENT(LeaveRoom)
 
+  using LeaveRoomArgs = Direction;
   using MoveArgs = std::pair<int,int>;
 };
 
@@ -27,7 +30,6 @@ class Listener
 	virtual void Trigger(T,U arg){for(auto&e : callbacks) e(arg);};
 
     std::vector<fun> callbacks;
-	//std::map<Events::Events,std::vector<fun>> callbacks;
 };
 
 template<typename T>
