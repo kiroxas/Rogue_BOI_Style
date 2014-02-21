@@ -56,17 +56,17 @@ int main()
 
 	maze->getCurrentRoom()->assignCM(collision);
 	maze->getCurrentRoom()->registerCallbacks(callbacks);
-	characters.emplace_back(new Character(pool.getImage("isaac"),collision));
-	characters.emplace_back(new Character(pool.getImage("isaac"),collision));
+	//characters.emplace_back(new Character(pool.getImage("isaac"),collision));
+	//characters.emplace_back(new Character(pool.getImage("isaac"),collision));
 
 	bool running = true;
 
 	Ai ai; 
 	
-	g_i.Listen(Events::Move(),std::bind(&Character::Move, characters[0].get(), std::placeholders::_1));
-	g_i.Listen(Events::Shoot(),std::bind(&Character::shoot, characters[0].get()));
-	ai.Listen(Events::Shoot(),std::bind(&Character::shoot, characters[1].get()));
-	ai.Listen(Events::Move(),std::bind(&Character::Move, characters[1].get(), std::placeholders::_1));
+	//g_i.Listen(Events::Move(),std::bind(&Character::Move, characters[0].get(), std::placeholders::_1));
+	//g_i.Listen(Events::Shoot(),std::bind(&Character::shoot, characters[0].get()));
+	//ai.Listen(Events::Shoot(),std::bind(&Character::shoot, characters[1].get()));
+	//ai.Listen(Events::Move(),std::bind(&Character::Move, characters[1].get(), std::placeholders::_1));
 	g_i.Listen(Events::Quit(),[&running](){running = false;});
 
 	sf::Event event; 

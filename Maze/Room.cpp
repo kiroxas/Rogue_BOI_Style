@@ -84,10 +84,11 @@ void Room::Fill()
 		}
 		if(neighboors[SOUTH] != nullptr)
 		{
-			elements.emplace_back(new Static_Entity(pool.getImage("angel_door"),180));
+			auto door = new eventDecorator(new Static_Entity(pool.getImage("angel_door"),180));
 			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; // - elements.back()->getSize().second;
-			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (elements.back()->getSize().first / 2);
-			elements.back()->setPosition(x,y);
+			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (door->getSize().first / 2);
+			door->setPosition(x,y);
+			elements.emplace_back(door);
 		}
 		if(neighboors[EAST] != nullptr)
 		{

@@ -48,10 +48,10 @@ void Character::Move(std::pair<int, int> p)
 	pos.x += 2*x;
 	pos.y += 2*y;
 
-	setPosition(pos);
+	setPosition(pos.x,pos.y);
 	if(col && !col->canIMove(this))
 	{
-		setPosition(old_pos);
+		setPosition(old_pos.x,old_pos.y);
 		return;
 	}
 
@@ -93,13 +93,21 @@ void Character::animate()
 	m_animate.animate();
 }
 
+void Character::setPosition(int x,int y)
+{
+	sf::Transformable::setPosition(x,y);
+}
+
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if(isDead()) return;
 	sf::Sprite s = m_animate.getSprite();
 	states.transform = getTransform();
 
+	std::cout << "Draw :  " << getPosition().x << "," << getPosition().y << std::endl;
+
 	target.draw(s, states);
+	//std::cout << " x : " << getPosition().x << "  y : " <<   getPosition().y << std::endl; 
 
 	for(auto& e : bullets)
 	{

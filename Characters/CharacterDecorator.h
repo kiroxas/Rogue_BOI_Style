@@ -18,6 +18,7 @@ public :
    virtual void Move(std::pair<int, int> e);
    virtual void shoot();
    virtual void collide(const Hittable* e);
+   virtual void setPosition(int,int);
  protected :
    std::unique_ptr<ICharacter> component;
 };

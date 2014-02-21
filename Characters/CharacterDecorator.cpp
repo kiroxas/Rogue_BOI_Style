@@ -11,3 +11,4 @@ void CharacterDecorator::Move(std::pair<int, int> e) {component->Move(e);}
 void CharacterDecorator::shoot() {component->shoot();}
 void CharacterDecorator::collide(const Hittable* e){component->collide(e);}
 Hittable::healthType CharacterDecorator::getDamage() const {return Hittable::getDamage();};
+void CharacterDecorator::setPosition(int x,int y){component->setPosition(x,y);};

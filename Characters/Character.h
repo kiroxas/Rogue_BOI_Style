@@ -33,6 +33,7 @@ class Character : public ICharacter
    virtual healthType getDamage() const;
    void collide(const Hittable*);
    void setCorrectPosition();
+   virtual void setPosition(int x,int y);
 
   protected :
     Character();
