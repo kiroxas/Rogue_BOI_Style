@@ -10,9 +10,9 @@ void Ai::update()
     	static std::bernoulli_distribution dist(0.5);
 	if(dist(generator))
 		//trigger(Events::Shoot);
-		Trigger(Events::Move(), std::make_pair(10 * dist(generator),10 * dist(generator)));
+		Notify(Events::Move(), std::make_pair(10 * dist(generator),10 * dist(generator)));
 	else
-		Trigger(Events::Move(), std::make_pair(10 * dist(generator),10 * dist(generator)));
+		Notify(Events::Shoot());
 	m_clock.restart();
     }
 }

@@ -17,6 +17,7 @@ Maze/*
 Misc/*
 "Rendering Engine/*"
 Views/*
+Level.cpp
 main.cpp
 )
 

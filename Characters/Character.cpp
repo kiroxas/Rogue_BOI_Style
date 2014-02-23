@@ -104,8 +104,6 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	sf::Sprite s = m_animate.getSprite();
 	states.transform = getTransform();
 
-	std::cout << "Draw :  " << getPosition().x << "," << getPosition().y << std::endl;
-
 	target.draw(s, states);
 	//std::cout << " x : " << getPosition().x << "  y : " <<   getPosition().y << std::endl; 
 
@@ -130,7 +128,7 @@ std::pair<unsigned int, unsigned int> Character::getSize() const
 
 Character::Character()
 {
-std::cout << "In here" << std::endl;
+
 }
 
 Hittable::healthType Character::getDamage() const

@@ -76,7 +76,7 @@ void Room::Fill()
 		if(neighboors[NORTH] != nullptr)
 		{
 			auto door = new eventDecorator(new Static_Entity(pool.getImage("door")));
-			door->Listen(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),std::placeholders::_1));
+			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),std::placeholders::_1));
 			auto y = KiroGame::room_pos.second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (door->getSize().first / 2);
 			door->setPosition(x,y);
@@ -105,21 +105,37 @@ void Room::Fill()
 			elements.back()->setPosition(x,y);
 		}
 
-static std::random_device rd;
-static std::mt19937 generator(rd());
-static std::uniform_int_distribution<int> int_distribution(0,30);
+	static std::random_device rd;
+	static std::mt19937 generator(rd());
+	static std::uniform_int_distribution<int> int_distribution(0,30);
 
-for(int i = 0, end  = int_distribution(generator); i < end; ++i)
-{
-   elements.emplace_back(new Static_Entity(pool.getImage("fire")));
-   callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
-}
+	for(int i = 0, end  = int_distribution(generator); i < end; ++i)
+	{
+  	 	elements.emplace_back(new Static_Entity(pool.getImage("fire")));
+   		callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
+	}
 	
+}
+
+void Room::update()
+{
+	for(auto& e : callbacks)
+		e();
+}
+
+void Room::addCharacter(std::shared_ptr<ICharacter>& i)
+{
+	elements.push_back(i);
 }
 
 void Room::LeftTheRoom(Direction d)
 {
    std::cout << "We left the Room" << std::endl;
+}
+
+const std::vector<std::shared_ptr<ICharacter>>& Room::getCharacters() const
+{
+	return elements;
 }
 
 void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inherited from sf::Drawable
@@ -151,12 +167,6 @@ void Room::assignCM(CollisionManager* c)
 		e->assignCM(c);
 		//e->setCorrectPosition();
 	}
-}
-
-void Room::registerCallbacks(std::vector<std::function<void()>>& f)
-{
-	for(auto e : callbacks)
-		f.push_back(e);
 }
 
 Direction opposite(Direction dir)

@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <map>
-#include "../Misc/Listener.h"
+#include "../Misc/Suscribable.h"
 
 namespace Input
 {
@@ -21,19 +21,19 @@ namespace Input
 		Joystick
 	};
 
-	class GameInput : public Listener<Events::Shoot,void>, 
-					  public Listener<Events::Quit,void>, 
-	                  public Listener<Events::Move, std::pair<int,int>> 
+	class GameInput : public Suscribable<Events::Shoot,void>, 
+					  public Suscribable<Events::Quit,void>, 
+	                  public Suscribable<Events::Move, std::pair<int,int>> 
 	{
 	public :
 
-	using Listener<Events::Shoot,void>::Listen;
-    using Listener<Events::Move, std::pair<int,int>>::Listen;
-    using Listener<Events::Quit,void>::Listen;
+	using Suscribable<Events::Shoot,void>::Suscribe;
+    using Suscribable<Events::Move, std::pair<int,int>>::Suscribe;
+    using Suscribable<Events::Quit,void>::Suscribe;
 
-    using Listener<Events::Shoot,void>::Trigger;
-    using Listener<Events::Move, std::pair<int,int>>::Trigger;
-    using Listener<Events::Quit,void>::Trigger;
+    using Suscribable<Events::Shoot,void>::Notify;
+    using Suscribable<Events::Move, std::pair<int,int>>::Notify;
+    using Suscribable<Events::Quit,void>::Notify;
 
 		GameInput(/*const sf::Input&*/);
 		GameInput(sf::Keyboard::Key up, sf::Keyboard::Key down, sf::Keyboard::Key left, sf::Keyboard::Key right);

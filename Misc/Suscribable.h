@@ -19,29 +19,29 @@ namespace Events
 };
 
 template<typename T, typename U>
-class Listener
+class Suscribable
 {
 	using fun = std::function<void(U)>;
 	public :
 
-	virtual void Listen(T,fun f){callbacks.push_back(f);};
+	virtual void Suscribe(T,fun f){callbacks.push_back(f);};
 
 	protected : 
-	virtual void Trigger(T,U arg){for(auto&e : callbacks) e(arg);};
+	virtual void Notify(T,U arg){for(auto&e : callbacks) e(arg);};
 
     std::vector<fun> callbacks;
 };
 
 template<typename T>
-class Listener<T,void>
+class Suscribable<T,void>
 {
 	using fun = std::function<void()>;
 	public :
 
-	virtual void Listen(T e,fun f){callbacks.push_back(f);}
+	virtual void Suscribe(T,fun f){callbacks.push_back(f);}
 
 	protected : 
-	virtual void Trigger(T) const{for(auto&e : callbacks) e();}
+	virtual void Notify(T) const{for(auto&e : callbacks) e();}
 	 std::vector<fun> callbacks;
 };
 
