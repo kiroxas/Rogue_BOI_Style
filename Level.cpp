@@ -36,4 +36,19 @@ void Level::update()
 	maze->getCurrentRoom()->update();
 	for(auto e: callbacks)
 		e();
+
+	if(maze->getCurrentRoom()->hasLeftRoom())
+	{
+		for(auto&e : maze->getCurrentRoom()->getCharacters())
+			e->desassignCM();
+		maze->Go(NORTH);
+		maze->getCurrentRoom()->assignCM(cm);
+
+		for(auto& e : heroes)
+		{
+			e->setPosition(400,400);
+			maze->getCurrentRoom()->addCharacter(e);
+		}
+	}
+		
 }

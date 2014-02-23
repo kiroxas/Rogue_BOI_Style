@@ -26,12 +26,13 @@ public :
 	Room* getSeedRoom() const;
 	unsigned int getNumberRooms() const;
 	Room* getCurrentRoom() const;
+	void Go(Direction);
 
 private :
 
 	unsigned int m_numberOfRooms;
 	myMaze m_maze;
-	unsigned int my_room;
+	Room* my_room;
 	RoomFactory god_room;
 	const ImagePool& pool;
 };

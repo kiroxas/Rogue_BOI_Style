@@ -107,7 +107,7 @@ void Room::Fill()
 
 	static std::random_device rd;
 	static std::mt19937 generator(rd());
-	static std::uniform_int_distribution<int> int_distribution(0,30);
+	static std::uniform_int_distribution<int> int_distribution(0,15);
 
 	for(int i = 0, end  = int_distribution(generator); i < end; ++i)
 	{
@@ -130,7 +130,12 @@ void Room::addCharacter(std::shared_ptr<ICharacter>& i)
 
 void Room::LeftTheRoom(Direction d)
 {
-   std::cout << "We left the Room" << std::endl;
+   has_left = true;
+}
+
+bool Room::hasLeftRoom() const
+{
+	return has_left;
 }
 
 const std::vector<std::shared_ptr<ICharacter>>& Room::getCharacters() const

@@ -25,6 +25,7 @@ public :
 	const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
 	void update();
 	void addCharacter(std::shared_ptr<ICharacter>&);
+	bool hasLeftRoom() const;
 
 private :
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
@@ -39,6 +40,7 @@ private :
 	std::vector<std::shared_ptr<ICharacter>> elements;
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;
+	bool has_left = false;
 };
 
 Direction opposite(Direction dir);

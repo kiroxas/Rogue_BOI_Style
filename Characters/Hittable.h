@@ -12,6 +12,7 @@ struct Hittable : public sf::Transformable
 	using healthType = unsigned long long;
 
 	virtual void assignCM(CollisionManager* e){col = e; col->registerEntity(this);}
+	virtual void desassignCM(){col->unregisterEntity(this);}
 	virtual healthType getDamage() const {return attack;};
 	virtual void collide(const Hittable*) =0;
 	virtual sf::FloatRect getGlobalBounds() const =0; 
