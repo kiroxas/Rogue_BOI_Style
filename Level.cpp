@@ -41,7 +41,7 @@ void Level::update()
 	{
 		for(auto&e : maze->getCurrentRoom()->getCharacters())
 			e->desassignCM();
-		maze->Go(NORTH);
+		maze->Go(maze->getCurrentRoom()->nextRoomDirection());
 		maze->getCurrentRoom()->assignCM(cm);
 
 		for(auto& e : heroes)

@@ -37,6 +37,11 @@ std::vector<Direction> Room::Connectible()
 	return res;
 }
 
+Direction Room::nextRoomDirection() const
+{
+	return next_room_dir;
+}
+
 bool Room::canHasNeighboor()
 {
 	return canConnect;
@@ -76,7 +81,7 @@ void Room::Fill()
 		if(neighboors[NORTH] != nullptr)
 		{
 			auto door = new eventDecorator(new Static_Entity(pool.getImage("door")));
-			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),std::placeholders::_1));
+			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),NORTH));
 			auto y = KiroGame::room_pos.second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (door->getSize().first / 2);
 			door->setPosition(x,y);
@@ -85,6 +90,7 @@ void Room::Fill()
 		if(neighboors[SOUTH] != nullptr)
 		{
 			auto door = new eventDecorator(new Static_Entity(pool.getImage("angel_door"),180));
+			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),SOUTH));
 			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; // - elements.back()->getSize().second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (door->getSize().first / 2);
 			door->setPosition(x,y);
@@ -92,17 +98,21 @@ void Room::Fill()
 		}
 		if(neighboors[EAST] != nullptr)
 		{
-			elements.emplace_back(new Static_Entity(pool.getImage("door"),90));
-			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (elements.back()->getSize().second / 2);
+			auto door = new eventDecorator(new Static_Entity(pool.getImage("door"),90));
+			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),EAST));
+			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (door->getSize().second / 2);
 			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; // - elements.back()->getSize().first;
-			elements.back()->setPosition(x,y);
+			door->setPosition(x,y);
+			elements.emplace_back(door);
 		}
 		if(neighboors[WEST] != nullptr)
 		{
-			elements.emplace_back(new Static_Entity(pool.getImage("door"),270));
-			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (elements.back()->getSize().second / 2);;
+			auto door = new eventDecorator(new Static_Entity(pool.getImage("door"),270));
+			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),WEST));
+			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (door->getSize().second / 2);;
 			auto x = KiroGame::room_pos.first;
-			elements.back()->setPosition(x,y);
+			door->setPosition(x,y);
+			elements.emplace_back(door);
 		}
 
 	static std::random_device rd;
@@ -128,9 +138,15 @@ void Room::addCharacter(std::shared_ptr<ICharacter>& i)
 	elements.push_back(i);
 }
 
+void Room::ResetRoom()
+{
+	has_left = false;
+}
+
 void Room::LeftTheRoom(Direction d)
 {
    has_left = true;
+   next_room_dir = d;
 }
 
 bool Room::hasLeftRoom() const

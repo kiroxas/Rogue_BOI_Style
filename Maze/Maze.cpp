@@ -89,6 +89,7 @@ Maze::~Maze()
 
  void Maze::Go(Direction d)
  {
+ 	my_room->ResetRoom();
  	my_room = my_room->getNeighboor(d);
  }
 
