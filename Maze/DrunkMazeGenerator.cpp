@@ -2,17 +2,15 @@
 #include "../Misc/Constantes.h"
 #include <memory>
 
-DrunkMazeGenerator::DrunkMazeGenerator(unsigned int number,const ImagePool& p,CollisionManager& _c) :
-	level_number(number),
-	pool(p),
-	c(_c)
+DrunkMazeGenerator::DrunkMazeGenerator(const ImagePool& p) :
+	pool(p)
 {}
 
-std::unique_ptr<Maze> DrunkMazeGenerator::CreateMaze()
+std::unique_ptr<Maze> DrunkMazeGenerator::CreateMaze(unsigned int l)
 {
 	infos::log(MAZE_LOG_PATH,"Generating Maze from NormalMaze");
 
-	std::unique_ptr<Maze> g(new Maze(NUMBER_OF_ROOMS + 2*level_number,pool,c));
+	std::unique_ptr<Maze> g(new Maze(NUMBER_OF_ROOMS + 2*l,pool));
 	g->GenerateDrunkStructure();
 
 	return g;

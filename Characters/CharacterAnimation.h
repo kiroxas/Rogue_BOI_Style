@@ -11,6 +11,7 @@ class CharacterAnimation
 {
   public :
     // Constructors
+    CharacterAnimation();
     CharacterAnimation(const KiroGame::Image& sprite_sheet, const AnimationState a, float rotation = 0, float scale = 1.0);
   
     // Operators

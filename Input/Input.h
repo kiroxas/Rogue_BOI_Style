@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <map>
-#include <functional>
+#include "../Misc/Suscribable.h"
 
 namespace Input
 {
@@ -21,9 +21,20 @@ namespace Input
 		Joystick
 	};
 
-	class GameInput
+	class GameInput : public Suscribable<Events::Shoot,void>, 
+					  public Suscribable<Events::Quit,void>, 
+	                  public Suscribable<Events::Move, std::pair<int,int>> 
 	{
 	public :
+
+	using Suscribable<Events::Shoot,void>::Suscribe;
+    using Suscribable<Events::Move, std::pair<int,int>>::Suscribe;
+    using Suscribable<Events::Quit,void>::Suscribe;
+
+    using Suscribable<Events::Shoot,void>::Notify;
+    using Suscribable<Events::Move, std::pair<int,int>>::Notify;
+    using Suscribable<Events::Quit,void>::Notify;
+
 		GameInput(/*const sf::Input&*/);
 		GameInput(sf::Keyboard::Key up, sf::Keyboard::Key down, sf::Keyboard::Key left, sf::Keyboard::Key right);
 		void update(const sf::Event&);
@@ -41,16 +52,10 @@ namespace Input
 		void lockKeyboard();
 
 		void switchMode();
-		void ListenToMove(std::function<void(int,int)>);
-		void ListenToShoot(std::function<void()>);
-		void ListenToQuit(std::function<void()>);
 		bool rebindUp(const sf::Keyboard::Key&);
 
 	private :
 
-		void triggerMove(int x, int y);
-		void triggerShoot();
-		void triggerQuit();
 		void clearAll();
 		GameInput& operator =(const GameInput&);
 		bool isJoystickEvent(sf::Event::EventType) const;
@@ -61,9 +66,6 @@ namespace Input
 		std::map<unsigned int,bool> joyButtons;
 		int posX, posY, relX, relY;
 		InputType mode;
-		std::vector<std::function<void(int,int)>> moveFuncs;
-		std::vector<std::function<void()>> shootFuncs;
-		std::vector<std::function<void()>> quitFuncs;
 
 		sf::Keyboard::Key up;
 		sf::Keyboard::Key down;
@@ -83,20 +85,5 @@ namespace Input
 		unsigned int JoyId;
 		bool locked;
 	};
-
-	class Input
-	{
-	public :
-		Input(sf::RenderWindow&);
-		~Input();
-		const GameInput& getGameInput() const;
-	private :
-		sf::RenderWindow& screen;
-		GameInput g_in;
-		bool done;
-		//std::thread th;
-	};
-}
-
-
+};
 #endif

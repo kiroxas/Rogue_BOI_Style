@@ -50,9 +50,6 @@ scale(_scale)
 
 CharacterAnimation& CharacterAnimation::operator++()
 {
-    auto pos = m_sprite.getTextureRect();
-    int max = m_etat.state.movement;
-
     int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
     m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
     m_sprite.setRotation(angle);
@@ -118,6 +115,8 @@ void CharacterAnimation::setAnimationState(const State& a)
     }
 
  }
+
+CharacterAnimation::CharacterAnimation(){}
 
 sf::Sprite CharacterAnimation::getSprite() const
 {

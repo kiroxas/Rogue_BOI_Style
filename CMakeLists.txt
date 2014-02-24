@@ -6,7 +6,7 @@ project(KiroGame)
 
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(EXECUTABLE_NAME KiroGame)
-set(CMAKE_CXX_FLAGS -std=c++0x)
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
 
 file(
 GLOB_RECURSE
@@ -17,6 +17,7 @@ Maze/*
 Misc/*
 "Rendering Engine/*"
 Views/*
+Level.cpp
 main.cpp
 )
 

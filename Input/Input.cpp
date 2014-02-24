@@ -10,17 +10,17 @@ posX(0),
 posY(0),
 relX(0),
 relY(0),
+mode(MouseKeyboard),
 up(_up),
 down(_down),
 right(_right),
 left(_left),
 shoot(sf::Keyboard::Space),
-mode(MouseKeyboard),
-shootJoy(0),
 upJoy(false),
 downJoy(false),
 rightJoy(false),
 leftJoy(false),
+shootJoy(0),
 escapeJoy(7),
 locked(false)
 {
@@ -36,19 +36,6 @@ Input::GameInput::GameInput() :
 GameInput(sf::Keyboard::Z,sf::Keyboard::S,sf::Keyboard::Q,sf::Keyboard::D)
 {}
 
-void Input::GameInput::ListenToMove(std::function<void(int,int)> a)
-{
-	moveFuncs.push_back(a);
-}
-
-void Input::GameInput::triggerMove(int x, int y)
-{
-	for(auto e : moveFuncs)
-	{
-		e(x,y);
-	}
-}
-
 void Input::GameInput::update(const sf::Event& ite)
 {
 	 /*if(!locked && isJoystickEvent(ite.type) && mode == MouseKeyboard)
@@ -58,8 +45,7 @@ void Input::GameInput::update(const sf::Event& ite)
 	 else if(!locked && isMouseKeyboardEvent(ite.type) && mode == Joystick)
 	 {
 	 	mode = MouseKeyboard;
-	 }
-	 */
+	 }*/
 
 	 if (ite.type == sf::Event::KeyPressed)
 	 {
@@ -122,17 +108,17 @@ void Input::GameInput::update(const sf::Event& ite)
 				
 		 }
 		 if(isUp())
-		 	triggerMove(0,-1);
+		 	Notify(Events::Move(),std::make_pair(0,-1));
 		 if(isDown())
-		 	triggerMove(0,1);
+		 	Notify(Events::Move(),std::make_pair(0,1));
 		 if(isRight())
-		 	triggerMove(1,0);
+		 	Notify(Events::Move(),std::make_pair(1,0));
 		 if(isLeft())
-		 	triggerMove(-1,0);
+		 	Notify(Events::Move(),std::make_pair(-1,0));
 		 if(isShoot())
-		 	triggerShoot();
+		 	Notify(Events::Shoot());
 		 if(isQuit())
-		 	triggerQuit();
+		 	Notify(Events::Quit());
 }
 
 void Input::GameInput::clearAll()
@@ -261,41 +247,6 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 	clavier[_c] = false;
 }
 
-Input::Input::Input(sf::RenderWindow& sc) :
-	screen(sc),
-	done(false)
-{}
 
-Input::Input::~Input()
-{
-	done = true;
-}
-
-const Input::GameInput& Input::Input::getGameInput() const
-{
-	return g_in;
-}
-
-void Input::GameInput::ListenToShoot(std::function<void()> f)
-{
-	shootFuncs.emplace_back(f);
-}
-
-void Input::GameInput::ListenToQuit(std::function<void()> f)
-{
-	quitFuncs.emplace_back(f);
-}
-
-void Input::GameInput::triggerQuit()
-{
-	for(auto&e : quitFuncs)
-		e();
-}
-
-void Input::GameInput::triggerShoot()
-{
-	for(auto&e : shootFuncs)
-		e();
-}
 
 

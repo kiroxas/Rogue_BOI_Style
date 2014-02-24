@@ -7,11 +7,15 @@
 #include <iterator>
 #include <array>
 
-Maze::Maze(unsigned int number, const ImagePool& p,CollisionManager& _c) :
+namespace
+{
+	const int max_ind = 10000;
+};
+
+Maze::Maze(unsigned int number, const ImagePool& p) :
 	m_numberOfRooms(number),
 	m_maze(myMaze(number)),
-	pool(p),
-	c(_c)
+	pool(p)
 {}
 
 Maze::~Maze()
@@ -21,8 +25,8 @@ Maze::~Maze()
  void Maze::GenerateGraphStructure()
  {
 	 // We first create the seed room
-	 m_maze.at(0) = god_room.CreateRoom(EMPTY,4,pool,c);
-	 my_room = 0;
+	 m_maze.at(0) = god_room.CreateRoom(EMPTY,4,pool);
+	 my_room = m_maze.at(0).get();
 	 std::vector<std::pair<int,int>> chizu;
 	 chizu.push_back(std::make_pair(0,0));
 	 unsigned int cpt = 1;
@@ -62,12 +66,12 @@ Maze::~Maze()
 		 if(std::find(chizu.begin(),chizu.end(),coord) != chizu.end()) continue;
 
 		 std::array<unsigned int, 4> res = find_neighboors(chizu,coord);
-		 m_maze.at(cpt) = god_room.CreateRoom(EMPTY,4,pool,c);
+		 m_maze.at(cpt) = god_room.CreateRoom(EMPTY,4,pool);
 		 unsigned int dir = 0;
 
 		 for(auto& x : res)
 		 {
-			 if(x != MAX_IND)
+			 if(x != ::max_ind)
 			 {
 				 Room::Connect(m_maze[cpt].get(),m_maze[x].get(),static_cast<Direction>(dir));
 			 }
@@ -83,9 +87,15 @@ Maze::~Maze()
 	 }
  }
 
+ void Maze::Go(Direction d)
+ {
+ 	my_room->ResetRoom();
+ 	my_room = my_room->getNeighboor(d);
+ }
+
  std::array<unsigned int, 4> find_neighboors(const std::vector<std::pair<int, int>>& chizu, const std::pair<int,int>& coord)
  {
-	 std::array<unsigned int, 4> res = {MAX_IND,MAX_IND,MAX_IND,MAX_IND};
+	 std::array<unsigned int, 4> res = {{::max_ind,::max_ind,::max_ind,::max_ind}};
 	 int cpt = 0;
 
 	 for(auto& x : chizu)
@@ -122,12 +132,12 @@ Maze::~Maze()
 	 std::vector<std::pair<unsigned int, unsigned int>> connections;
 
 	 // First We create the Boss Room
-	 m_maze.at(0) = god_room.CreateRoom(BOSS,1,pool,c);
+	 m_maze.at(0) = god_room.CreateRoom(BOSS,1,pool);
 	 rooms_to_connect.insert(0);
 
 	 for(unsigned int i = 1; i < m_numberOfRooms; ++i)
 	 {
-		 m_maze[i] = god_room.CreateRoom(EMPTY,4,pool,c);
+		 m_maze[i] = god_room.CreateRoom(EMPTY,4,pool);
 		 rooms_to_connect.insert(i);
 	 }
 
@@ -252,5 +262,5 @@ Maze::~Maze()
 
 Room* Maze::getCurrentRoom() const
 {
-	return m_maze[my_room].get();
+	return my_room;
 }

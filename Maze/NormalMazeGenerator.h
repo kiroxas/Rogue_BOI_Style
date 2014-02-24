@@ -9,11 +9,10 @@ class NormalMazeGenerator : public AbstractMazeGenerator
 {
 	public :
 	/* Virtual Functions */
-	NormalMazeGenerator(const ImagePool& p, CollisionManager& c);
+	NormalMazeGenerator(const ImagePool& p);
 	virtual std::unique_ptr<Maze> CreateMaze(unsigned int);
 private :
 	const ImagePool& pool;
-	CollisionManager& c;
 };
 
 #endif

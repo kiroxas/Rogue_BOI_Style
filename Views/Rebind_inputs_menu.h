@@ -10,7 +10,7 @@ class Rebind_Inputs_Menu
 		Rebind_Inputs_Menu(sf::RenderTarget& target, Input::GameInput&);
 
 	private :
-	Input::GameInput g_i;
+	Input::GameInput& g_i;
 	sf::RenderTarget& windows;
 };
 

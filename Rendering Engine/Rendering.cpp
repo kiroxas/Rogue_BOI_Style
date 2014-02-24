@@ -11,6 +11,7 @@
 #include <memory>
 #include <SFML/System/Vector2.hpp>
 #include <sstream>
+#include <chrono>
 
 /* render_map
    maze : The maze that needs to be rendered
@@ -27,14 +28,14 @@ namespace
 	const float corridors_size = 0.25; // it's corriddors_size % of the blank size
 }
 
-void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
+void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
 {
 	/*
 		First let's figure out the layout of the map !
 		TODO : This must be done only once for each map, so we have to calculate this when we load a level, 
 		not when we render the map
 	*/
-	Room* seed = maze->getSeedRoom();
+	Room* seed = maze.getSeedRoom();
 
 	std::vector<Room*> vec;
 	std::vector<std::pair<int, int>> positions;
@@ -123,7 +124,7 @@ void rendering::render_map(const Maze* maze, sf::RenderWindow& screen, const std
 	for(auto p : positions)
 	{
 		Room* piece = vec[cpt];
-		auto in = maze->getCurrentRoom();
+		auto in = maze.getCurrentRoom();
 		sf::RectangleShape rec;
 		if(piece == in)
 			rec.setFillColor(KiroGame::transparent);
@@ -206,19 +207,40 @@ bool rendering::secondComp(const std::pair<int,int>&  i1, const std::pair<int,in
 	return false;
 }
 
-void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
+void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size, const GameInfo& stats)
 {
 	screen.draw(*room);	
+	render_time(screen,stats);
 }
 
-void rendering::render_characters(const std::vector<std::unique_ptr<Character>>& c, sf::RenderWindow& w)
+void rendering::render_time(sf::RenderWindow& screen,const GameInfo& stats)
+{
+   static sf::Text text;
+   static sf::Font f;
+
+   f.loadFromFile("./data/Font/Loma.ttf");
+
+   text.setFont(f);
+   text.setColor(sf::Color::Red);
+   text.setCharacterSize(24);
+   text.setPosition(700,100);
+   text.setString(stats.GetFormattedElapsed());
+   screen.draw(text);
+
+   text.setString(std::to_string(stats.getFps()));
+   text.setPosition(700,125);
+   screen.draw(text);
+}
+
+void rendering::render_characters(const std::vector<std::shared_ptr<ICharacter>>& c, sf::RenderWindow& w)
 {
 	for(const auto& e : c)
 		w.draw(*e);
 }
 
-void rendering::render_level(const std::vector<std::unique_ptr<Character>>& c, const Maze* maze, sf::RenderWindow& window)
+void rendering::render_level(const Level& level, sf::RenderWindow& window, const GameInfo& stats)
 {
-	rendering::render_room(maze->getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size);
-	rendering::render_characters(c,window);
+	rendering::render_map(level.getMaze(),window,std::make_pair(0,0),std::make_pair(400,100));
+	rendering::render_room(level.getMaze().getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size, stats);
+	rendering::render_characters(level.getCharacters(),window);
 }
