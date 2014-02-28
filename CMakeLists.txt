@@ -5,6 +5,10 @@ project(KiroGame)
 
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(EXECUTABLE_NAME KiroGame)
+<<<<<<< HEAD
+=======
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
+>>>>>>> upstream/develop
 
 # Compilator configuration
 #set de base kiroxas 

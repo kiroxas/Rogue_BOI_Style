@@ -2,14 +2,16 @@
 #define COLLISION_MANAGER
 
 #include <vector>
-#include "Hittable.h"
+
+struct Hittable;
 
 class CollisionManager
 {
 	public : 
 
 	void registerEntity(Hittable*) const;
-	bool canIMove(const Hittable*) const;
+	void unregisterEntity(Hittable* ent) const;
+	bool canIMove(Hittable*) const;
 
 	private :
 

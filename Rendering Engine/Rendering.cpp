@@ -11,6 +11,7 @@
 #include <memory>
 #include <SFML/System/Vector2.hpp>
 #include <sstream>
+#include <chrono>
 
 /* render_map
    maze : The maze that needs to be rendered
@@ -206,9 +207,29 @@ bool rendering::secondComp(const std::pair<int,int>&  i1, const std::pair<int,in
 	return false;
 }
 
-void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size)
+void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size, const GameInfo& stats)
 {
 	screen.draw(*room);	
+	render_time(screen,stats);
+}
+
+void rendering::render_time(sf::RenderWindow& screen,const GameInfo& stats)
+{
+   static sf::Text text;
+   static sf::Font f;
+
+   f.loadFromFile("./data/Font/Loma.ttf");
+
+   text.setFont(f);
+   text.setColor(sf::Color::Red);
+   text.setCharacterSize(24);
+   text.setPosition(700,100);
+   text.setString(stats.GetFormattedElapsed());
+   screen.draw(text);
+
+   text.setString(std::to_string(stats.getFps()));
+   text.setPosition(700,125);
+   screen.draw(text);
 }
 
 void rendering::render_characters(const std::vector<std::unique_ptr<Character>>& c, sf::RenderWindow& w)
@@ -217,8 +238,8 @@ void rendering::render_characters(const std::vector<std::unique_ptr<Character>>&
 		w.draw(*e);
 }
 
-void rendering::render_level(const std::vector<std::unique_ptr<Character>>& c, const Maze* maze, sf::RenderWindow& window)
+void rendering::render_level(const std::vector<std::unique_ptr<Character>>& c, const Maze* maze, sf::RenderWindow& window, const GameInfo& stats)
 {
-	rendering::render_room(maze->getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size);
+	rendering::render_room(maze->getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size, stats);
 	rendering::render_characters(c,window);
 }

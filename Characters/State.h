@@ -1,6 +1,8 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "../Misc/Constantes.h"
+
 enum Movement
 {
    Stand_still = 0,
@@ -33,7 +35,7 @@ struct State
 struct AnimationState
 {
   State state;
-  unsigned int animation_cpt;
+  int animation_cpt;
 };
 
 #endif
