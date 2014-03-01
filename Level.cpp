@@ -39,8 +39,7 @@ void Level::update()
 
 	if(maze->getCurrentRoom()->hasLeftRoom())
 	{
-		for(auto&e : maze->getCurrentRoom()->getCharacters())
-			e->desassignCM();
+		maze->getCurrentRoom()->desassignCM();
 		maze->Go(maze->getCurrentRoom()->nextRoomDirection());
 		maze->getCurrentRoom()->assignCM(cm);
 

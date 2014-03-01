@@ -27,7 +27,7 @@ class Suscribable
 	virtual void Suscribe(T,fun f){callbacks.push_back(f);};
 
 	protected : 
-	virtual void Notify(T,U arg){for(auto&e : callbacks) e(arg);};
+	virtual void Notify(T,U arg)const {for(auto&e : callbacks) e(arg);};
 
     std::vector<fun> callbacks;
 };

@@ -190,6 +190,12 @@ void Room::assignCM(CollisionManager* c)
 	}
 }
 
+void Room::desassignCM()
+{
+	for(auto&e : elements)
+			e->desassignCM();
+}
+
 Direction opposite(Direction dir)
 {
 	switch(dir)

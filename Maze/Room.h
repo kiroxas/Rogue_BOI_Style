@@ -23,6 +23,7 @@ public :
 	Room* getNeighboor(Direction);
 	void Fill();
 	void assignCM(CollisionManager*);
+	void desassignCM();
 	const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
 	void update();
 	void addCharacter(std::shared_ptr<ICharacter>&);
