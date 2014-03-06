@@ -1,16 +1,40 @@
+#
+# Configuration for max os x
+#
+
+# Language choice
 language: cpp
 compiler:
   - clang
   - gcc
+
 before_install:
-- sudo apt-add-repository ppa:sonkun/sfml-development -y
-- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-- sudo apt-get update -qq
+- brew update
+
+# Depency install
 install:
-- sudo apt-get install -qq g++-4.8
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-- sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev
-- sudo apt-get install libxrandr-dev libfreetype6-dev libglew1.5-dev
-- sudo apt-get install libjpeg8-dev libgpgme11-dev libsndfile1-dev libopenal-dev
-- sudo apt-get install libsfml-dev
-script : $CXX -v && cmake . && make
+  # update gcc and clang
+- brew install gcc48
+- brew install llvm --with-clang --with-asan 
+  # lib install
+- brew install sfml
+
+after_install:
+- clang --version
+- gcc --version
+#- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+
+  # Build
+script : cmake . && make
+# Choose branchs
+branches:
+  - master
+  - develop
+
+# configuration of notifications
+notifications:
+  email:
+    recipients :
+    - mouton.guillaume88@gmail.com
+    on_success: change
+    on_failure: always
