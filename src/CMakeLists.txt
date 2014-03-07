@@ -27,8 +27,8 @@ set(EXECUTABLE_NAME KiroGame)
 # -ubuntu clang 3.2
 # -ubuntu gcc 4.8
 # -mac gcc 4.8
-#message("Setting up gcc for C++11 with libc++.")
-#set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
+message("Setting up gcc for C++11 with libc++.")
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
 
 # mac 
 #gcc 4.8
@@ -43,8 +43,9 @@ set(EXECUTABLE_NAME KiroGame)
 
 #set(CMAKE_CXX_FLAGS "-std=c++0x -stdlib=libc++")
 #set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
-set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+
+#set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall")
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
 
 #message("Setting up Xcode for C++11 with libc++.")
 #set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++0x")

@@ -3,14 +3,14 @@
 
 #include "Hittable.h"
 #include "CharacterDecorator.h"
-#include "../Misc/Listener.h"
+#include "../Misc/Suscribable.h"
 
 class eventDecorator : public CharacterDecorator,
-					   public Listener<Events::LeaveRoom,Events::LeaveRoomArgs>
+					   public Suscribable<Events::LeaveRoom,Events::LeaveRoomArgs>
 {
 	public : 
-	 using  Listener<Events::LeaveRoom,Events::LeaveRoomArgs>::Listen;
-	 using  Listener<Events::LeaveRoom,Events::LeaveRoomArgs>::Trigger;
+	 using  Suscribable<Events::LeaveRoom,Events::LeaveRoomArgs>::Suscribe;
+	 using  Suscribable<Events::LeaveRoom,Events::LeaveRoomArgs>::Notify;
 
 	 eventDecorator(ICharacter* e) : CharacterDecorator(e){}
 	 virtual void collide(const Hittable* e);
@@ -18,3 +18,5 @@ class eventDecorator : public CharacterDecorator,
 };
 
 #endif
+
+

@@ -26,12 +26,13 @@ public :
 	Room* getSeedRoom() const;
 	unsigned int getNumberRooms() const;
 	Room* getCurrentRoom() const;
+	void Go(Direction);
 
 private :
 
 	unsigned int m_numberOfRooms;
 	myMaze m_maze;
-	unsigned int my_room;
+	Room* my_room;
 	RoomFactory god_room;
 	const ImagePool& pool;
 };
@@ -40,3 +41,5 @@ std::set<unsigned int> find_biggest_connection(const std::vector<std::pair<unsig
 std::array<unsigned int, 4> find_neighboors(const std::vector<std::pair<int, int>>&, const std::pair<int,int>&);
 	 
 #endif
+
+

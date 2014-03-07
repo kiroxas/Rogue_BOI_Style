@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 
 class CollisionManager;
+class Maze;
 
 enum RoomType{EMPTY = 0, BOSS};
 
@@ -22,25 +23,35 @@ public :
 	Room* getNeighboor(Direction);
 	void Fill();
 	void assignCM(CollisionManager*);
-	void registerCallbacks(std::vector<std::function<void()>>&);
+	const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
+	void update();
+	void addCharacter(std::shared_ptr<ICharacter>&);
+	bool hasLeftRoom() const;
+    Direction nextRoomDirection() const;
 
 private :
+
+	friend class Maze;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 	bool canHasNeighboor();
 	void checkConnect();
 	void LeftTheRoom(Direction);
-	
+	void ResetRoom();
 
 	unsigned int number_doors;
 	std::array<Room*,4> neighboors;
 	bool canConnect;
 	RoomType type;
-	std::vector<std::unique_ptr<ICharacter>> elements;
+	std::vector<std::shared_ptr<ICharacter>> elements;
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;
+	Direction next_room_dir;
+	bool has_left = false;
 };
 
 Direction opposite(Direction dir);
 
 
 #endif
+
+

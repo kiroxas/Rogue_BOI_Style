@@ -26,7 +26,7 @@ Maze::~Maze()
  {
 	 // We first create the seed room
 	 m_maze.at(0) = god_room.CreateRoom(EMPTY,4,pool);
-	 my_room = 0;
+	 my_room = m_maze.at(0).get();
 	 std::vector<std::pair<int,int>> chizu;
 	 chizu.push_back(std::make_pair(0,0));
 	 unsigned int cpt = 1;
@@ -85,6 +85,12 @@ Maze::~Maze()
 	 {
 	 	e->Fill();
 	 }
+ }
+
+ void Maze::Go(Direction d)
+ {
+ 	my_room->ResetRoom();
+ 	my_room = my_room->getNeighboor(d);
  }
 
  std::array<unsigned int, 4> find_neighboors(const std::vector<std::pair<int, int>>& chizu, const std::pair<int,int>& coord)
@@ -256,5 +262,7 @@ Maze::~Maze()
 
 Room* Maze::getCurrentRoom() const
 {
-	return m_maze[my_room].get();
+	return my_room;
 }
+
+
