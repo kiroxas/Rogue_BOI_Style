@@ -40,7 +40,7 @@ int main()
 	std::uniform_int_distribution<int> int_distribution(0,10);
 	/*sf::Music music;
 
-	if(!music.openFromFile("./data/Music/01.flac"))
+	if(!music.openFromFile("../data/Music/01.flac"))
 		return 1;
 	music.play();*/
 

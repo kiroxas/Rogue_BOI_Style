@@ -48,10 +48,10 @@ void Character::Move(std::pair<int, int> p)
 	pos.x += 2*x;
 	pos.y += 2*y;
 
-	setPosition(pos);
+	setPosition(pos.x,pos.y);
 	if(col && !col->canIMove(this))
 	{
-		setPosition(old_pos);
+		setPosition(old_pos.x,old_pos.y);
 		return;
 	}
 
@@ -93,6 +93,11 @@ void Character::animate()
 	m_animate.animate();
 }
 
+void Character::setPosition(int x,int y)
+{
+	sf::Transformable::setPosition(x,y);
+}
+
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if(isDead()) return;
@@ -100,6 +105,7 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	states.transform = getTransform();
 
 	target.draw(s, states);
+	//std::cout << " x : " << getPosition().x << "  y : " <<   getPosition().y << std::endl; 
 
 	for(auto& e : bullets)
 	{
@@ -122,7 +128,7 @@ std::pair<unsigned int, unsigned int> Character::getSize() const
 
 Character::Character()
 {
-std::cout << "In here" << std::endl;
+
 }
 
 Hittable::healthType Character::getDamage() const
@@ -138,8 +144,6 @@ void Character::collide(const Hittable* h)
 }
 
 Character::~Character(){}
-<<<<<<< HEAD
-=======
 
 sf::FloatRect Character::getGlobalBounds() const
 {
@@ -147,4 +151,3 @@ sf::FloatRect Character::getGlobalBounds() const
 	s.setPosition(getPosition());
 	return s.getGlobalBounds();
 }
->>>>>>> upstream/develop

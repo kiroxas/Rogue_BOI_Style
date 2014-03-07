@@ -45,12 +45,7 @@ void Input::GameInput::update(const sf::Event& ite)
 	 else if(!locked && isMouseKeyboardEvent(ite.type) && mode == Joystick)
 	 {
 	 	mode = MouseKeyboard;
-<<<<<<< HEAD
-	 }
-	 */
-=======
 	 }*/
->>>>>>> upstream/develop
 
 	 if (ite.type == sf::Event::KeyPressed)
 	 {
@@ -113,17 +108,17 @@ void Input::GameInput::update(const sf::Event& ite)
 				
 		 }
 		 if(isUp())
-		 	Trigger(Events::Move(),std::make_pair(0,-1));
+		 	Notify(Events::Move(),std::make_pair(0,-1));
 		 if(isDown())
-		 	Trigger(Events::Move(),std::make_pair(0,1));
+		 	Notify(Events::Move(),std::make_pair(0,1));
 		 if(isRight())
-		 	Trigger(Events::Move(),std::make_pair(1,0));
+		 	Notify(Events::Move(),std::make_pair(1,0));
 		 if(isLeft())
-		 	Trigger(Events::Move(),std::make_pair(-1,0));
+		 	Notify(Events::Move(),std::make_pair(-1,0));
 		 if(isShoot())
-		 	Trigger(Events::Shoot());
+		 	Notify(Events::Shoot());
 		 if(isQuit())
-		 	Trigger(Events::Quit());
+		 	Notify(Events::Quit());
 }
 
 void Input::GameInput::clearAll()
@@ -251,6 +246,7 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 {
 	clavier[_c] = false;
 }
+
 
 
 

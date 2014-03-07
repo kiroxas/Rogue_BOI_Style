@@ -6,13 +6,13 @@
 #include <utility>
 
 #define VERBOSE 
-#define MAZE_LOG_PATH "Maze_Generation.log"
-#define RENDERING_PATH "Rendering.log"
+#define MAZE_LOG_PATH "../Logs/Maze_Generation.log"
+#define RENDERING_PATH "../Logs/Rendering.log"
 #define NUMBER_OF_ROOMS 5
 
 namespace infos
 {
-	const std::string sprite_path("./data/sprite Sheets/");
+	const std::string sprite_path("../data/sprite Sheets/");
 	const std::string pool_path(sprite_path + "pool_image.txt");
 	bool log(const std::string& path, const std::string& message, bool new_line = true);
 }

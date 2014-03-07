@@ -27,7 +27,7 @@ after_install:
 - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 # Build
-script : $CXX -v && cmake . && make
+script : mkdir build && cd build/ && $CXX -v && cmake ../src/ && make
 
 # Choose branchs
 branches:

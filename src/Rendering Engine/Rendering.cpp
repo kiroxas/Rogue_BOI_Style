@@ -218,7 +218,7 @@ void rendering::render_time(sf::RenderWindow& screen,const GameInfo& stats)
    static sf::Text text;
    static sf::Font f;
 
-   f.loadFromFile("./data/Font/Loma.ttf");
+   f.loadFromFile("../data/Font/Loma.ttf");
 
    text.setFont(f);
    text.setColor(sf::Color::Red);

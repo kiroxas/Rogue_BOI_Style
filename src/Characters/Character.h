@@ -1,6 +1,6 @@
-/*  Character.h
-   File that defines a character
-   author : Mouton Guillaume (Kiroxas)
+/* Character.h
+File that defines a character
+author : Mouton Guillaume (Kiroxas)
 */
 
 #ifndef CHARACTER_H
@@ -33,6 +33,7 @@ class Character : public ICharacter
    virtual healthType getDamage() const;
    void collide(const Hittable*);
    void setCorrectPosition();
+   virtual void setPosition(int x,int y);
 
   protected :
     Character();
@@ -41,12 +42,7 @@ class Character : public ICharacter
 
     State m_state;
     CharacterAnimation m_animate;
-<<<<<<< HEAD
-    mutable std::vector<Bullets> bullets;
-    const CollisionManager& c;
-=======
     mutable std::vector<std::unique_ptr<Bullets>> bullets;
->>>>>>> upstream/develop
 };
 
 #endif

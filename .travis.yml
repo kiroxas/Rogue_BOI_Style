@@ -3,19 +3,23 @@
 #
 
 # Language choice
-language: cpp
+language:
+  - objective-c # for switch to mac os x
+  - cpp
 compiler:
-  - clang
-  - gcc
+- clang
+- gcc
 
 before_install:
+- brew update
+- brew tap Homebrew/homebrew-versions
 - brew update
 
 # Depency install
 install:
   # update gcc and clang
-- brew install gcc48
-- brew install llvm --with-clang --with-asan 
+  #- brew install gcc48
+  #- brew install llvm --with-clang --with-asan 
   # lib install
 - brew install sfml
 
@@ -25,11 +29,12 @@ after_install:
 #- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
   # Build
-script : cmake . && make
+script : mkdir build && cd build/ && cmake ../src/ && make
 # Choose branchs
 branches:
-  - master
-  - develop
+  - masterMacOsX
+# - master
+# - develop
 
 # configuration of notifications
 notifications:
