@@ -52,5 +52,3 @@ void Level::update()
 	}
 		
 }
-
-

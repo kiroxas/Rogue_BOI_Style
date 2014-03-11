@@ -21,5 +21,3 @@ namespace rendering
 };
 
 #endif
-
-

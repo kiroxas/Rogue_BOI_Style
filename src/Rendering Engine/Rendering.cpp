@@ -244,5 +244,3 @@ void rendering::render_level(const Level& level, sf::RenderWindow& window, const
 	rendering::render_room(level.getMaze().getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size, stats);
 	rendering::render_characters(level.getCharacters(),window);
 }
-
-

@@ -2,6 +2,6 @@
 
 void eventDecorator::collide(const Hittable* e)
 {
-	Trigger(Events::LeaveRoom(), NORTH);
+	Notify(Events::LeaveRoom(), NORTH);
 	component->collide(e); //Chain for other decorators
 }

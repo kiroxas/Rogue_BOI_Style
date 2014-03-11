@@ -46,5 +46,3 @@ class Suscribable<T,void>
 };
 
 #endif
-
-

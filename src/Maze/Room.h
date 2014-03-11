@@ -53,5 +53,3 @@ Direction opposite(Direction dir);
 
 
 #endif
-
-

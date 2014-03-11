@@ -21,5 +21,3 @@ class Ai  : public Suscribable<Events::Move,Events::MoveArgs>,
 };
 
 #endif
-
-

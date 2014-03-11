@@ -264,5 +264,3 @@ Room* Maze::getCurrentRoom() const
 {
 	return my_room;
 }
-
-

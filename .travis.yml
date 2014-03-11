@@ -1,40 +1,38 @@
 #
-# Configuration for max os x
+# Configuration for linux (ubuntu)
 #
 
 # Language choice
-language:
-  - objective-c # for switch to mac os x
-  - cpp
+language: cpp
 compiler:
-- clang
-- gcc
+  - clang
+  - gcc
 
 before_install:
-- brew update
-- brew tap Homebrew/homebrew-versions
-- brew update
+- sudo apt-add-repository ppa:sonkun/sfml-development -y
+- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo apt-get update -qq
 
 # Depency install
 install:
-  # update gcc and clang
-  #- brew install gcc48
-  #- brew install llvm --with-clang --with-asan 
+  # update gcc
+- sudo apt-get install -qq g++-4.8
   # lib install
-- brew install sfml
+- sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev
+- sudo apt-get install libxrandr-dev libfreetype6-dev libglew1.5-dev
+- sudo apt-get install libjpeg8-dev libgpgme11-dev libsndfile1-dev libopenal-dev
+- sudo apt-get install libsfml-dev
 
-after_install:
-- clang --version
-- gcc --version
-#- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+#after_install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
-  # Build
-script : mkdir build && cd build/ && cmake ../src/ && make
+# Build
+script : mkdir build && cd build/ && $CXX -v && cmake ../src/ && make
+
 # Choose branchs
 branches:
-  - masterMacOsX
-# - master
-# - develop
+  - master
+  - develop
 
 # configuration of notifications
 notifications:

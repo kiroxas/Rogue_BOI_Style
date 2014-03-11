@@ -41,5 +41,3 @@ std::set<unsigned int> find_biggest_connection(const std::vector<std::pair<unsig
 std::array<unsigned int, 4> find_neighboors(const std::vector<std::pair<int, int>>&, const std::pair<int,int>&);
 	 
 #endif
-
-

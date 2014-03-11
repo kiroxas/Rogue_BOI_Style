@@ -87,5 +87,3 @@ namespace Input
 	};
 };
 #endif
-
-

@@ -203,5 +203,3 @@ Direction opposite(Direction dir)
 		exit(1);
 	}
 }
-
-

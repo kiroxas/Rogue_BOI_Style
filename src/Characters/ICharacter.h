@@ -30,5 +30,3 @@ class ICharacter : public Hittable, public sf::Drawable
 };
 
 #endif
-
-

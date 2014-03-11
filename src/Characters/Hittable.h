@@ -31,5 +31,3 @@ struct Hittable : public sf::Transformable
 
 
 #endif
-
-

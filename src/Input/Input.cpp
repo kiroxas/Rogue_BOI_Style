@@ -250,4 +250,3 @@ void Input::GameInput::cutKey(sf::Keyboard::Key _c)
 
 
 
-

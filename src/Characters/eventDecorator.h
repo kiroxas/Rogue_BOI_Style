@@ -18,5 +18,3 @@ class eventDecorator : public CharacterDecorator,
 };
 
 #endif
-
-

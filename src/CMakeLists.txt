@@ -7,7 +7,7 @@ project(KiroGame)
 #set(dir build/)
 #set(dir ${CMAKE_CURRENT_BINARY_DIR}/build/)
 #set(dir ${CMAKE_BINARY_DIR}/build/)
-set(dir ${PROJECT_BINARY_DIR})
+#set(dir ${PROJECT_BINARY_DIR})
 
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dir})
 #set(CMAKE_BUILD_FILES_DIRECTORY ${dir})
@@ -18,7 +18,8 @@ set(dir ${PROJECT_BINARY_DIR})
 #set(CMAKE_PROJECT_BINARY_DIR  ${dir})
 
 
-set(EXECUTABLE_OUTPUT_PATH ${dir}/bin/${CMAKE_BUILD_TYPE})
+#set(EXECUTABLE_OUTPUT_PATH ${dir}/bin/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(EXECUTABLE_NAME KiroGame)
 
 # Compilator configuration
@@ -27,44 +28,65 @@ set(EXECUTABLE_NAME KiroGame)
 # -ubuntu clang 3.2
 # -ubuntu gcc 4.8
 # -mac gcc 4.8
-message("Setting up gcc for C++11 with libc++.")
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
 
-# mac 
-#gcc 4.8
-#set(CMAKE_CXX_FLAGS "-std=c++0x -stdlib=libc++")
-#set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+# window choice
+if(WIN32) # MSVC MSYS CYGWIN BORLAND
+    message("Setting up for window system")
+    set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
+endif()
 
-# les deux qui fonctionne
-#set(CMAKE_CXX_FLAGS "-std=c++0x")
-#set(CMAKE_CXX_FLAGS "-std=c++11") 
+# linux choice
+message("show variable " ${CMAKE_SYSTEM_NAME}) 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux") 
+   message("Setting up for linux system")
+   message("Setting up gcc for C++11 with libc++.")
 
-# clang 3.4
+   set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
+   #set(CMAKE_CXX_FLAGS "-std=c++0x")
+endif()
 
-#set(CMAKE_CXX_FLAGS "-std=c++0x -stdlib=libc++")
-#set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+# mac choice
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+   message("Setting up for mac system")
 
-#set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall")
-#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+    #gcc 4.8
+    #set(CMAKE_CXX_FLAGS "-std=c++0x -stdlib=libc++")
+    set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
 
-#message("Setting up Xcode for C++11 with libc++.")
-#set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++0x")
-#set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+    # les deux qui fonctionne
+    #set(CMAKE_CXX_FLAGS "-std=c++0x")
+    #set(CMAKE_CXX_FLAGS "-std=c++11") 
 
-#message("Setting up Xcode for C++11 with libc++.")
-#set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
-#set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+    # clang 3.4
+
+    #set(CMAKE_CXX_FLAGS "-std=c++0x -stdlib=libc++")
+    #set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+
+    ##bon
+    #set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+    ##set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Wall")
+    # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+
+    # Xcode
+    #message("Setting up Xcode for C++11 with libc++.")
+    #set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++0x")
+    #set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+
+    #message("Setting up Xcode for C++11 with libc++.")
+    #set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
+    #set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+endif()
 
 # sources files
 file(
 GLOB_RECURSE
 source_file
-src/Characters/*
-src/Input/*
-src/Maze/*
-src/Misc/*
-"src/Rendering Engine/*"
-src/Views/*
+Characters/*
+Input/*
+Maze/*
+Misc/*
+"Rendering Engine/*"
+Views/*
 Level.cpp
 main.cpp
 )

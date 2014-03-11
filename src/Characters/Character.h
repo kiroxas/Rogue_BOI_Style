@@ -1,6 +1,6 @@
-/* Character.h
-File that defines a character
-author : Mouton Guillaume (Kiroxas)
+/*  Character.h
+   File that defines a character
+   author : Mouton Guillaume (Kiroxas)
 */
 
 #ifndef CHARACTER_H

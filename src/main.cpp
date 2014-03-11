@@ -65,5 +65,3 @@ int main()
 			stats.setFps(1.0f / clock.restart().asSeconds());
 	}
 }
-
-
