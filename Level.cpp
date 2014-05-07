@@ -14,6 +14,7 @@ g_i(gi)
 	maze = (g->CreateMaze(int_distribution(generator)));
 	maze->getCurrentRoom()->assignCM(cm);
 	heroes.emplace_back(std::make_shared<Character>(pool.getImage("isaac"),cm));
+	heroes.back()->setProperties(properties::defs::Triggering_global);
 	g_i.Suscribe(Events::Move(),std::bind(&ICharacter::Move,heroes.back().get(),std::placeholders::_1));
 	g_i.Suscribe(Events::Shoot(),std::bind(&ICharacter::shoot,heroes.back().get()));
 

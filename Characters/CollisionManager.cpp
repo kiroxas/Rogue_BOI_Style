@@ -27,8 +27,11 @@ bool CollisionManager::canIMove(Hittable* me) const
 		
 		if(me->getGlobalBounds().intersects(e->getGlobalBounds()))
 		{
+			std::cout << "Canimove" << std::endl;
 			(e)->collide(me);
+			std::cout << "me" << std::endl;
 			me->collide(e);
+			std::cout << "out" << std::endl;
 			res = false;
 		}
 	}

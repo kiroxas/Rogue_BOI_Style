@@ -85,6 +85,7 @@ void Room::Fill()
 			auto y = KiroGame::room_pos.second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (door->getSize().first / 2);
 			door->setPosition(x,y);
+			door->setProperties(properties::defs::Invincible);
 			elements.emplace_back(door);
 		}
 		if(neighboors[SOUTH] != nullptr)
@@ -94,6 +95,7 @@ void Room::Fill()
 			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; // - elements.back()->getSize().second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (door->getSize().first / 2);
 			door->setPosition(x,y);
+			door->setProperties(properties::defs::Invincible);
 			elements.emplace_back(door);
 		}
 		if(neighboors[EAST] != nullptr)
@@ -103,6 +105,7 @@ void Room::Fill()
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (door->getSize().second / 2);
 			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; // - elements.back()->getSize().first;
 			door->setPosition(x,y);
+			door->setProperties(properties::defs::Invincible);
 			elements.emplace_back(door);
 		}
 		if(neighboors[WEST] != nullptr)
@@ -112,6 +115,7 @@ void Room::Fill()
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (door->getSize().second / 2);;
 			auto x = KiroGame::room_pos.first;
 			door->setPosition(x,y);
+			door->setProperties(properties::defs::Invincible);
 			elements.emplace_back(door);
 		}
 

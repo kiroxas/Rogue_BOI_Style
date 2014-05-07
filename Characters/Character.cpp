@@ -19,6 +19,7 @@ m_animate(sprite_sheet,AnimationState(),rotation,scale)
 	}
 	health = 1;
 	attack = 1;
+	state = properties::defs::Nothing;
 }
 
 Character::Character(const KiroGame::Image& sprite_sheet,float rotation, float scale) :
@@ -138,7 +139,9 @@ Hittable::healthType Character::getDamage() const
 
 void Character::collide(const Hittable* h) 
 {
-	if(isDead()) return;
+	std::cout << "In Character collide" << std::endl;
+	if((state & properties::defs::Invincible) == properties::defs::Invincible || isDead()) return;
+	std::cout << "collided " << static_cast<int>(state) << ". I have health : " << health << std::endl;
 	health -= h->getDamage();
 	if(isDead() && col) col->unregisterEntity(this);
 }

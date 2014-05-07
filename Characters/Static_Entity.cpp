@@ -9,7 +9,9 @@ Character(sprite_sheet,e,rotation,scale)
 
 Static_Entity::Static_Entity(const KiroGame::Image& sprite_sheet,float rotation, float scale) :
 Character(sprite_sheet,rotation,scale)
-{}
+{
+	health = 1000;
+}
 
 void Static_Entity::Move(std::pair<int, int> e)
 {
@@ -18,7 +20,6 @@ void Static_Entity::Move(std::pair<int, int> e)
     pos.y += 2*e.second;
 
 	setPosition(pos.x,pos.y);
-	std::cout << "Move" << std::endl;
 
 	m_animate.AdjustAnimation(m_state);
 }
