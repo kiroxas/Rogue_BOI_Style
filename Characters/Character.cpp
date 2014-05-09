@@ -139,9 +139,7 @@ Hittable::healthType Character::getDamage() const
 
 void Character::collide(const Hittable* h) 
 {
-	std::cout << "In Character collide" << std::endl;
 	if((state & properties::defs::Invincible) == properties::defs::Invincible || isDead()) return;
-	std::cout << "collided " << static_cast<int>(state) << ". I have health : " << health << std::endl;
 	health -= h->getDamage();
 	if(isDead() && col) col->unregisterEntity(this);
 }

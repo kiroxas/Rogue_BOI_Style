@@ -19,6 +19,8 @@ public :
    virtual void shoot();
    virtual void collide(const Hittable* e);
    virtual void setPosition(int,int);
+   virtual properties::defs getProperties() const;
+   virtual void setProperties(const properties::defs d);
  protected :
    std::unique_ptr<ICharacter> component;
 };

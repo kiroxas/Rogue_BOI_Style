@@ -12,3 +12,5 @@ void CharacterDecorator::shoot() {component->shoot();}
 void CharacterDecorator::collide(const Hittable* e){component->collide(e);}
 Hittable::healthType CharacterDecorator::getDamage() const {return Hittable::getDamage();};
 void CharacterDecorator::setPosition(int x,int y){component->setPosition(x,y);};
+properties::defs CharacterDecorator::getProperties() const {return component->getProperties();}
+void CharacterDecorator::setProperties(const properties::defs d){component->setProperties(d);}

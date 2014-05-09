@@ -17,6 +17,7 @@ m_dir(dir)
 	   col->registerEntity(this);
 	   registered = true;
 	}
+	state = properties::defs::Nothing;
 }
 
 Bullets::~Bullets()

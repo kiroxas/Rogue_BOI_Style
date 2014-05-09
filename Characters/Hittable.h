@@ -42,7 +42,7 @@ struct Hittable : public sf::Transformable
 	virtual ~Hittable(){}
 	virtual bool isDead() const {return health <= 0;}
 	virtual properties::defs getProperties() const {return state;}
-	virtual void setProperties(const properties::defs& d){state = d;}
+	virtual void setProperties(const properties::defs d){state = d;}
 
 	protected :
 
