@@ -141,6 +141,7 @@ void Character::collide(const Hittable* h)
 {
 	if((state & properties::defs::Invincible) == properties::defs::Invincible || isDead()) return;
 	health -= h->getDamage();
+	
 	if(isDead() && col) col->unregisterEntity(this);
 }
 

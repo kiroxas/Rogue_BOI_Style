@@ -6,11 +6,11 @@
 #include "../Misc/Suscribable.h"
 
 class eventDecorator : public CharacterDecorator,
-					   public Suscribable<Events::LeaveRoom,Events::LeaveRoomArgs>
+					   public Suscribable<Events::LeaveRoom,void>
 {
 	public : 
-	 using  Suscribable<Events::LeaveRoom,Events::LeaveRoomArgs>::Suscribe;
-	 using  Suscribable<Events::LeaveRoom,Events::LeaveRoomArgs>::Notify;
+	 using  Suscribable<Events::LeaveRoom,void>::Suscribe;
+	 using  Suscribable<Events::LeaveRoom, void>::Notify;
 
 	 eventDecorator(ICharacter* e) : CharacterDecorator(e){}
 	 virtual void collide(const Hittable* e);
