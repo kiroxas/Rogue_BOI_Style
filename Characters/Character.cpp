@@ -5,7 +5,6 @@
 Character::Character(const KiroGame::Image& sprite_sheet,CollisionManager* e,float rotation, float scale) :
 m_animate(sprite_sheet,AnimationState(),rotation,scale)
 {
-	m_state.movement = Stand_still;
 	m_state.dir = SOUTH;
 	static std::random_device rd;
 	static std::mt19937 generator(rd());
@@ -64,8 +63,6 @@ void Character::Move(std::pair<int, int> p)
 		m_state.dir = NORTH;
 	else if(y == 1)
 		m_state.dir = SOUTH;
-
-	m_state.movement = Walk;
 
 	m_animate.AdjustAnimation(m_state);
 }

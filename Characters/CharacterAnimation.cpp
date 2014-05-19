@@ -32,25 +32,21 @@ scale(_scale)
     infos::log(RENDERING_PATH,"Creating Sprite : " + item + ", " + item2);
     m_sprite_size = std::make_pair(std::stoi(item),std::stoi(item2));
     m_sprite.setTextureRect(sf::IntRect(0,0,m_sprite_size.first,m_sprite_size.second));
-    //m_sprite.setOrigin(m_sprite_size.first /2, m_sprite_size.second /2);
     m_sprite.setRotation(angle);
     m_sprite.setScale(scale,scale);
 
-    for(int j = 0; j < 2; ++j)
+    for(int i = 0; i < 3; ++i)
     {
-        for(int i = 0; i < 3; ++i)
-        {
-            std::getline(info_file,item, ' ');
-             m_animation_length.push_back(std::stoi(item));
-        }
-        std::getline(info_file,item);
+        std::getline(info_file,item, ' ');
         m_animation_length.push_back(std::stoi(item));
     }
+    std::getline(info_file,item);
+    m_animation_length.push_back(std::stoi(item));
 }
 
 CharacterAnimation& CharacterAnimation::operator++()
 {
-    int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
+    int correct_line =  m_etat.state.dir;
     m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
     m_sprite.setRotation(angle);
     m_sprite.setScale(scale,scale);
@@ -74,7 +70,7 @@ void CharacterAnimation::animate()
 void CharacterAnimation::update()
 {
         m_etat.animation_cpt++;
-        if(m_etat.animation_cpt >= m_animation_length[m_etat.state.movement * 4 + m_etat.state.dir])
+        if(m_etat.animation_cpt >= m_animation_length[ m_etat.state.dir])
             m_etat.animation_cpt = 0;
         ++(*this);
 }
@@ -98,14 +94,14 @@ void CharacterAnimation::setAnimationState(const State& a)
         if(m_clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
         {
             m_etat.animation_cpt++;
-            if(m_etat.animation_cpt >= m_animation_length[m_etat.state.movement * 4 + m_etat.state.dir])
+            if(m_etat.animation_cpt >= m_animation_length[m_etat.state.dir])
                 m_etat.animation_cpt = 0;
         }
     }
 
     if(m_clock.getElapsedTime() >= KiroGame::elapsed_animation_time)
     {
-        int correct_line = m_etat.state.movement * 4 + m_etat.state.dir;
+        int correct_line =  m_etat.state.dir;
         if(m_animation_length[correct_line] == 0)
             correct_line = 0;
         m_sprite.setTextureRect(sf::IntRect(m_etat.animation_cpt * m_sprite_size.first,correct_line * m_sprite_size.second,m_sprite_size.first,m_sprite_size.second));
