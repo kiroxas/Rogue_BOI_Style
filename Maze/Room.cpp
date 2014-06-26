@@ -143,7 +143,7 @@ void Room::update()
 	for(auto& e : callbacks)
 		e();
 
-	auto res = std::count_if(elements.begin(),elements.end(),[](const std::shared_ptr<ICharacter>& e){return e->isDead();});
+	std::size_t res = std::count_if(elements.begin(),elements.end(),[](const std::shared_ptr<ICharacter>& e){return e->isDead();});
 	if(res == elements.size())
 		Notify(Events::RoomEmpty());
 }
