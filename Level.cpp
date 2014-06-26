@@ -17,6 +17,7 @@ g_i(gi)
 	heroes.back()->setProperties(properties::defs::Triggering_global);
 	g_i.Suscribe(Events::Move(),std::bind(&ICharacter::Move,heroes.back().get(),std::placeholders::_1));
 	g_i.Suscribe(Events::Shoot(),std::bind(&ICharacter::shoot,heroes.back().get()));
+	maze->getCurrentRoom()->Suscribe(Events::LeaveRoom(),std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
 
 	for(auto& e : heroes)
 		maze->getCurrentRoom()->addCharacter(e);
@@ -32,23 +33,23 @@ const std::vector<std::shared_ptr<ICharacter>>& Level::getCharacters() const
 	return maze->getCurrentRoom()->getCharacters();
 }
 
+void Level::ReAssignRoom(Direction d)
+{
+	maze->getCurrentRoom()->desassignCM();
+	maze->Go(d);
+	maze->getCurrentRoom()->assignCM(cm);
+	maze->getCurrentRoom()->Suscribe(Events::LeaveRoom(),std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
+
+	for(auto& e : heroes)
+	{
+		e->setPosition(400,400);
+		maze->getCurrentRoom()->addCharacter(e);
+	}
+}
+
 void Level::update()
 {
 	maze->getCurrentRoom()->update();
 	for(auto e: callbacks)
-		e();
-
-	if(maze->getCurrentRoom()->hasLeftRoom())
-	{
-		maze->getCurrentRoom()->desassignCM();
-		maze->Go(maze->getCurrentRoom()->nextRoomDirection());
-		maze->getCurrentRoom()->assignCM(cm);
-
-		for(auto& e : heroes)
-		{
-			e->setPosition(400,400);
-			maze->getCurrentRoom()->addCharacter(e);
-		}
-	}
-		
+		e();	
 }

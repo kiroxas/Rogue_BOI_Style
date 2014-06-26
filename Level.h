@@ -18,7 +18,7 @@ class Level
     const Maze& getMaze() const;
     const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
     void update();
-
+    void ReAssignRoom(Direction d);
 		
 	private :
 	std::unique_ptr<Maze> maze;

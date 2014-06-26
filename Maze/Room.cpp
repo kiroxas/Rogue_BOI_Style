@@ -37,11 +37,6 @@ std::vector<Direction> Room::Connectible()
 	return res;
 }
 
-Direction Room::nextRoomDirection() const
-{
-	return next_room_dir;
-}
-
 bool Room::canHasNeighboor()
 {
 	return canConnect;
@@ -74,49 +69,61 @@ bool Room::Connect(Room* r1, Room* r2, Direction dir)
 	return true;
 }
 
+std::string GetDoorName(RoomType from, RoomType to)
+{
+	if (to == BOSS)
+		return "boss door";
+	else
+		return "door";
+}
+
 void Room::Fill()
 {
 	// First lets place Doors !
 	
 		if(neighboors[NORTH] != nullptr)
 		{
-			auto door = new eventDecorator(new Static_Entity(pool.getImage("door")));
+			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[NORTH]->type)));
+			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
 			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),NORTH));
 			auto y = KiroGame::room_pos.second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (door->getSize().first / 2);
 			door->setPosition(x,y);
 			door->setProperties(properties::defs::Invincible);
-			elements.emplace_back(door);
+			doors.emplace_back(door);
 		}
 		if(neighboors[SOUTH] != nullptr)
 		{
-			auto door = new eventDecorator(new Static_Entity(pool.getImage("angel_door"),180));
+			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[SOUTH]->type)),180);
+			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
 			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),SOUTH));
-			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; // - elements.back()->getSize().second;
+			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; 
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (door->getSize().first / 2);
 			door->setPosition(x,y);
 			door->setProperties(properties::defs::Invincible);
-			elements.emplace_back(door);
+			doors.emplace_back(door);
 		}
 		if(neighboors[EAST] != nullptr)
 		{
-			auto door = new eventDecorator(new Static_Entity(pool.getImage("door"),90));
+			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[EAST]->type)),90);
+			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
 			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),EAST));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (door->getSize().second / 2);
-			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; // - elements.back()->getSize().first;
+			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; 
 			door->setPosition(x,y);
 			door->setProperties(properties::defs::Invincible);
-			elements.emplace_back(door);
+			doors.emplace_back(door);
 		}
 		if(neighboors[WEST] != nullptr)
 		{
-			auto door = new eventDecorator(new Static_Entity(pool.getImage("door"),270));
+			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[WEST]->type)),270);
+			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
 			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),WEST));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (door->getSize().second / 2);;
 			auto x = KiroGame::room_pos.first;
 			door->setPosition(x,y);
 			door->setProperties(properties::defs::Invincible);
-			elements.emplace_back(door);
+			doors.emplace_back(door);
 		}
 
 	static std::random_device rd;
@@ -135,32 +142,26 @@ void Room::update()
 {
 	for(auto& e : callbacks)
 		e();
+
+	auto res = std::count_if(elements.begin(),elements.end(),[](const std::shared_ptr<ICharacter>& e){return e->isDead();});
+	if(res == elements.size())
+		Notify(Events::RoomEmpty());
 }
 
 void Room::addCharacter(std::shared_ptr<ICharacter>& i)
 {
-	elements.push_back(i);
-}
-
-void Room::ResetRoom()
-{
-	has_left = false;
+	heroes.push_back(i);
 }
 
 void Room::LeftTheRoom(Direction d)
 {
-   has_left = true;
-   next_room_dir = d;
+   Notify(Events::LeaveRoom(), d);
 }
 
-bool Room::hasLeftRoom() const
-{
-	return has_left;
-}
 
 const std::vector<std::shared_ptr<ICharacter>>& Room::getCharacters() const
 {
-	return elements;
+	return heroes;
 }
 
 void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inherited from sf::Drawable
@@ -183,6 +184,12 @@ void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inhe
 	{
 		target.draw(*e);
 	}
+
+	for(auto& e : doors)
+		target.draw(*e);
+
+	for(auto& e: heroes)
+		target.draw(*e);
 }
 
 void Room::assignCM(CollisionManager* c)
@@ -190,7 +197,14 @@ void Room::assignCM(CollisionManager* c)
 	for(auto& e : elements)
 	{
 		e->assignCM(c);
-		//e->setCorrectPosition();
+	}
+	for(auto& e : doors)
+	{
+		e->assignCM(c);
+	}
+	for(auto& e : heroes)
+	{
+		e->assignCM(c);
 	}
 }
 
@@ -198,6 +212,10 @@ void Room::desassignCM()
 {
 	for(auto&e : elements)
 			e->desassignCM();
+	for(auto&e : doors)
+			e->desassignCM();
+	for(auto&e : heroes)
+		e->desassignCM();
 }
 
 Direction opposite(Direction dir)
