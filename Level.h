@@ -10,9 +10,10 @@
 #include <functional>
 #include <vector>
 
-class Level
+class Level : public Suscribable<Events::HeroAreDead, void(void)>
 {
 	public :
+	using Hero_type = std::shared_ptr<ICharacter>;
     Level(const ImagePool&, Input::GameInput&);
 
     const Maze& getMaze() const;
@@ -25,7 +26,7 @@ class Level
 	const ImagePool& pool;
 	CollisionManager* cm;
 	Input::GameInput& g_i;
-	std::vector<std::shared_ptr<ICharacter>> heroes;
+	std::vector<Hero_type> heroes;
 	Registration hero_move, hero_shoot, assign_room;
 	std::vector<std::function<void()>> callbacks;
 };

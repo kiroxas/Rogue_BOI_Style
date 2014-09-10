@@ -53,5 +53,8 @@ void Level::update()
 {
 	maze->getCurrentRoom()->update();
 	for(auto e: callbacks)
-		e();	
+		e();
+
+	if(std::all_of(std::begin(heroes), std::end(heroes), [](const Hero_type& e){ return e->isDead();}))
+		Notify();
 }
