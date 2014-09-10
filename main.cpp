@@ -49,7 +49,7 @@ int main()
 
 	Level l(pool,g_i);
 
-	g_i.Suscribe(Events::Quit(),[&running](){running = false;});
+	auto quit_reg = g_i.Quit::Suscribe([&running](){running = false;});
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Level::update, std::ref(l)));
 

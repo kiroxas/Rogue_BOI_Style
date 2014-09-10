@@ -24,9 +24,10 @@ class Level
 	std::unique_ptr<Maze> maze;
 	const ImagePool& pool;
 	CollisionManager* cm;
-	std::vector<std::function<void()>> callbacks;
 	Input::GameInput& g_i;
 	std::vector<std::shared_ptr<ICharacter>> heroes;
+	Registration hero_move, hero_shoot, assign_room;
+	std::vector<std::function<void()>> callbacks;
 };
 
 

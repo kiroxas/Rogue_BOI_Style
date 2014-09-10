@@ -4,15 +4,10 @@
 #include <SFML/System.hpp>
 #include "../Misc/Suscribable.h"
 
-class Ai  : public Suscribable<Events::Move,Events::MoveArgs>,
-			      public Suscribable<Events::Shoot, void>
+class Ai  : public Suscribable<Events::Move, void(Events::MoveArgs)>, // Move
+			public Suscribable<Events::Shoot, void(void)> //Shoot
 {
    public :
-   using Suscribable<Events::Shoot,void>::Suscribe;
-   using Suscribable<Events::Move, std::pair<int,int>>::Suscribe;
-
-   using Suscribable<Events::Shoot,void>::Notify;
-   using Suscribable<Events::Move, std::pair<int,int>>::Notify;
 	 void update();
 
    private :

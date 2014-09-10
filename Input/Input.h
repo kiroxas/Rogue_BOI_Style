@@ -21,19 +21,17 @@ namespace Input
 		Joystick
 	};
 
-	class GameInput : public Suscribable<Events::Shoot,void>, 
-					  public Suscribable<Events::Quit,void>, 
-	                  public Suscribable<Events::Move, std::pair<int,int>> 
+	class GameInput : public Suscribable<Events::Shoot,void(void)>, 
+					  public Suscribable<Events::Quit,void(void)>, 
+	                  public Suscribable<Events::Move, void(std::pair<int,int>)> 
 	{
 	public :
 
-	using Suscribable<Events::Shoot,void>::Suscribe;
-    using Suscribable<Events::Move, std::pair<int,int>>::Suscribe;
-    using Suscribable<Events::Quit,void>::Suscribe;
+	using Shoot = Suscribable<Events::Shoot,void(void)>;
+	using Quit = Suscribable<Events::Quit,void(void)>;
+    using Suscribable<Events::Move, void(std::pair<int,int>)>::Suscribe;
+    using Suscribable<Events::Move, void(std::pair<int,int>)>::Notify;
 
-    using Suscribable<Events::Shoot,void>::Notify;
-    using Suscribable<Events::Move, std::pair<int,int>>::Notify;
-    using Suscribable<Events::Quit,void>::Notify;
 
 		GameInput(/*const sf::Input&*/);
 		GameInput(sf::Keyboard::Key up, sf::Keyboard::Key down, sf::Keyboard::Key left, sf::Keyboard::Key right);

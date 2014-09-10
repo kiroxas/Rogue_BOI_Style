@@ -84,8 +84,8 @@ void Room::Fill()
 		if(neighboors[NORTH] != nullptr)
 		{
 			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[NORTH]->type)));
-			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
-			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),NORTH));
+			my_reg.push_back(RoomEmpty::Suscribe(std::bind(&Door::Unlock,std::ref(*door))));
+			my_reg.push_back(door->Suscribe(std::bind(&Room::LeftTheRoom,std::ref(*this),NORTH)));
 			auto y = KiroGame::room_pos.second;
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) - (door->getSize().first / 2);
 			door->setPosition(x,y);
@@ -95,8 +95,8 @@ void Room::Fill()
 		if(neighboors[SOUTH] != nullptr)
 		{
 			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[SOUTH]->type)),180);
-			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
-			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),SOUTH));
+			my_reg.push_back(RoomEmpty::Suscribe(std::bind(&Door::Unlock,std::ref(*door))));
+			my_reg.push_back(door->Suscribe(std::bind(&Room::LeftTheRoom,std::ref(*this),SOUTH)));
 			auto y = KiroGame::room_pos.second + KiroGame::room_size.second; 
 			auto x = KiroGame::room_pos.first + (KiroGame::room_size.first / 2) + (door->getSize().first / 2);
 			door->setPosition(x,y);
@@ -106,8 +106,8 @@ void Room::Fill()
 		if(neighboors[EAST] != nullptr)
 		{
 			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[EAST]->type)),90);
-			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
-			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),EAST));
+			my_reg.push_back(RoomEmpty::Suscribe(std::bind(&Door::Unlock,std::ref(*door))));
+			my_reg.push_back(door->Suscribe(std::bind(&Room::LeftTheRoom,std::ref(*this),EAST)));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) - (door->getSize().second / 2);
 			auto x = KiroGame::room_pos.first + KiroGame::room_size.first; 
 			door->setPosition(x,y);
@@ -117,8 +117,8 @@ void Room::Fill()
 		if(neighboors[WEST] != nullptr)
 		{
 			auto door = new Door(pool.getImage(GetDoorName(type,neighboors[WEST]->type)),270);
-			Suscribe(Events::RoomEmpty(),std::bind(&Door::Unlock,std::ref(*door)));
-			door->Suscribe(Events::LeaveRoom(),std::bind(&Room::LeftTheRoom,std::ref(*this),WEST));
+			my_reg.push_back(RoomEmpty::Suscribe(std::bind(&Door::Unlock,std::ref(*door))));
+			my_reg.push_back(door->Suscribe(std::bind(&Room::LeftTheRoom,std::ref(*this),WEST)));
 			auto y = KiroGame::room_pos.second + (KiroGame::room_size.second / 2) + (door->getSize().second / 2);;
 			auto x = KiroGame::room_pos.first;
 			door->setPosition(x,y);
@@ -145,7 +145,7 @@ void Room::update()
 
 	std::size_t res = std::count_if(elements.begin(),elements.end(),[](const std::shared_ptr<ICharacter>& e){return e->isDead();});
 	if(res == elements.size())
-		Notify(Events::RoomEmpty());
+		RoomEmpty::Notify();
 }
 
 void Room::addCharacter(std::shared_ptr<ICharacter>& i)
@@ -155,7 +155,8 @@ void Room::addCharacter(std::shared_ptr<ICharacter>& i)
 
 void Room::LeftTheRoom(Direction d)
 {
-   Notify(Events::LeaveRoom(), d);
+   LeaveRoom::Notify(d);
+   my_reg.clear(); // No need to be notified now
 }
 
 

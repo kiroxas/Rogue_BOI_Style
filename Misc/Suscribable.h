@@ -4,6 +4,7 @@
 #include <vector>
 #include <functional>
 #include <map>
+#include <memory>
 #include "Constantes.h"
 #define EVENT(e) struct e{};
 
@@ -14,36 +15,60 @@ namespace Events
   EVENT(Quit)
   EVENT(LeaveRoom)
   EVENT(RoomEmpty)
-
   using LeaveRoomArgs = Direction;
   using MoveArgs = std::pair<int,int>;
 };
 
-template<typename T, typename U>
-class Suscribable
+using Registration = std::shared_ptr<void>;
+
+using UniversalPointer = std::shared_ptr<void>;
+
+template<typename Deleter>
+UniversalPointer CreateEmptyPtr(Deleter d)
 {
-	using fun = std::function<void(U)>;
-	public :
+	return UniversalPointer((void*)0xDEADC0DE,d);
+}
 
-	virtual void Suscribe(T,fun f){callbacks.push_back(f);};
+UniversalPointer createHeartBeat();
 
-	protected : 
-	virtual void Notify(T,U arg)const {for(auto&e : callbacks) e(arg);};
+class SubjectBase
+{
+	protected :
+	SubjectBase();
 
-    std::vector<fun> callbacks;
+	Registration registerObserver(UniversalPointer ptr);
+
+	std::vector<UniversalPointer> observers;
+
+	private :
+
+	UniversalPointer heartBeat_;
+
 };
 
-template<typename T>
-class Suscribable<T,void>
+template <typename Event, typename Signature>
+struct Suscribable;
+
+template<typename Event, typename Return, typename... params>
+struct Suscribable<Event, Return (params...)> : SubjectBase
 {
-	using fun = std::function<void()>;
-	public :
+	using F = std::function<Return (params...)>;
+	using Fptr = std::shared_ptr<F>;
 
-	virtual void Suscribe(T,fun f){callbacks.push_back(f);}
+	void Notify(params... p)
+	{
+		for(const auto& obs : observers)
+		{
+			const Fptr fp = std::static_pointer_cast<F>(obs);
+			(*fp)(p...);
+		}
+	}
 
-	protected : 
-	virtual void Notify(T) const{for(auto&e : callbacks) e();}
-	 std::vector<fun> callbacks;
+	Registration Suscribe(F f)
+	{
+		Fptr fp(new F(std::move(f)));
+		return SubjectBase::registerObserver(fp);
+	}
 };
 
 #endif

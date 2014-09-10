@@ -3,7 +3,7 @@
 void eventDecorator::collide(const Hittable* e)
 {
 	if((e->getProperties() & properties::defs::Triggering_global) == properties::defs::Triggering_global)
-		Notify(Events::LeaveRoom());
+		Notify();
 
 	component->collide(e); //Chain for other decorators
 }

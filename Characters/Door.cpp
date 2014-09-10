@@ -4,7 +4,7 @@ void Door::collide(const Hittable* e)
 {
 	if((e->getProperties() & properties::defs::Triggering_global) == properties::defs::Triggering_global
 		&& !isLocked())
-		Notify(Events::LeaveRoom());
+		Notify();
 }
 
 Door::Door(const KiroGame::Image& sprite_sheet,CollisionManager* e , float rotation, float scale):

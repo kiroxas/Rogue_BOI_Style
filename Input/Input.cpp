@@ -108,17 +108,17 @@ void Input::GameInput::update(const sf::Event& ite)
 				
 		 }
 		 if(isUp())
-		 	Notify(Events::Move(),std::make_pair(0,-1));
+		 	Notify(std::make_pair(0,-1));
 		 if(isDown())
-		 	Notify(Events::Move(),std::make_pair(0,1));
+		 	Notify(std::make_pair(0,1));
 		 if(isRight())
-		 	Notify(Events::Move(),std::make_pair(1,0));
+		 	Notify(std::make_pair(1,0));
 		 if(isLeft())
-		 	Notify(Events::Move(),std::make_pair(-1,0));
+		 	Notify(std::make_pair(-1,0));
 		 if(isShoot())
-		 	Notify(Events::Shoot());
+		 	Shoot::Notify();
 		 if(isQuit())
-		 	Notify(Events::Quit());
+		 	Quit::Notify();
 }
 
 void Input::GameInput::clearAll()

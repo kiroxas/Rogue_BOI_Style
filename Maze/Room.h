@@ -17,15 +17,17 @@ class Maze;
 enum RoomType{EMPTY = 0, BOSS};
 
 class Room : public sf::Drawable, 
-             Suscribable<Events::LeaveRoom, Events::LeaveRoomArgs>,
-             Suscribable<Events::RoomEmpty,void>
+             public Suscribable<Events::LeaveRoom, void(Events::LeaveRoomArgs)>,
+             public Suscribable<Events::RoomEmpty,void(void)>
 {
 public :
-	using Suscribable<Events::LeaveRoom, Events::LeaveRoomArgs>::Suscribe;
-	using Suscribable<Events::LeaveRoom, Events::LeaveRoomArgs>::Notify;
-	using  Suscribable<Events::RoomEmpty,void>::Suscribe;
-	using  Suscribable<Events::RoomEmpty, void>::Notify;
 
+	using Suscribable<Events::LeaveRoom, void(Events::LeaveRoomArgs)>::Notify;
+	using Suscribable<Events::LeaveRoom, void(Events::LeaveRoomArgs)>::Suscribe;
+	using Suscribable<Events::RoomEmpty, void(void)>::Notify;
+	using Suscribable<Events::RoomEmpty, void(void)>::Suscribe;
+	using RoomEmpty = Suscribable<Events::RoomEmpty, void(void)>;
+	using LeaveRoom = Suscribable<Events::LeaveRoom, void(Events::LeaveRoomArgs)>;
 
 	explicit Room(RoomType,unsigned int,const ImagePool& p);
 	std::vector<Direction> Connectible();
@@ -55,6 +57,7 @@ private :
 	std::vector<std::shared_ptr<ICharacter>> heroes;
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;
+	std::vector<Registration> my_reg;
 };
 
 Direction opposite(Direction dir);

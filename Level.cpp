@@ -15,9 +15,10 @@ g_i(gi)
 	maze->getCurrentRoom()->assignCM(cm);
 	heroes.emplace_back(std::make_shared<Character>(pool.getImage("isaac"),cm));
 	heroes.back()->setProperties(properties::defs::Triggering_global);
-	g_i.Suscribe(Events::Move(),std::bind(&ICharacter::Move,heroes.back().get(),std::placeholders::_1));
-	g_i.Suscribe(Events::Shoot(),std::bind(&ICharacter::shoot,heroes.back().get()));
-	maze->getCurrentRoom()->Suscribe(Events::LeaveRoom(),std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
+	hero_move = g_i.Suscribable<Events::Move, void(std::pair<int,int>)>::Suscribe(std::bind(&ICharacter::Move,heroes.back().get(),std::placeholders::_1));
+	hero_shoot = g_i.Suscribable<Events::Shoot,void(void)>::Suscribe(std::bind(&ICharacter::shoot,heroes.back().get()));
+	//Leave Room
+	assign_room = maze->getCurrentRoom()->Suscribe(std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
 
 	for(auto& e : heroes)
 		maze->getCurrentRoom()->addCharacter(e);
@@ -38,7 +39,8 @@ void Level::ReAssignRoom(Direction d)
 	maze->getCurrentRoom()->desassignCM();
 	maze->Go(d);
 	maze->getCurrentRoom()->assignCM(cm);
-	maze->getCurrentRoom()->Suscribe(Events::LeaveRoom(),std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
+	//LeaveRoom
+	assign_room = maze->getCurrentRoom()->Suscribe(std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
 
 	for(auto& e : heroes)
 	{
