@@ -41,8 +41,8 @@ void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std
 	std::vector<std::pair<int, int>> positions;
 	std::vector<std::pair<unsigned int, unsigned int>> coords;
 
-	positions.push_back(std::make_pair(0,0));
-	coords.push_back(std::make_pair(pos.first + size.first/2, pos.second + size.second / 2));
+	positions.emplace_back(0,0);
+	coords.emplace_back(pos.first + size.first/2, pos.second + size.second / 2);
 
 	unsigned int cpt = 0;
 	vec.push_back(seed);
@@ -61,7 +61,7 @@ void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std
 		{
 			if (std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first,positions[cpt].second - 1)) == positions.end())
 			{
-				positions.push_back(std::make_pair(positions[cpt].first,positions[cpt].second - 1));
+				positions.emplace_back(positions[cpt].first,positions[cpt].second - 1);
 				vec.push_back(piece->getNeighboor(NORTH));
 			}
 		}
@@ -69,7 +69,7 @@ void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std
 		{
 			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first,positions[cpt].second + 1)) == positions.end())
 			{
-				positions.push_back(std::make_pair(positions[cpt].first,positions[cpt].second + 1));
+				positions.emplace_back(positions[cpt].first,positions[cpt].second + 1);
 				vec.push_back(piece->getNeighboor(SOUTH));
 			}
 		}
@@ -77,7 +77,7 @@ void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std
 		{
 			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first - 1,positions[cpt].second)) == positions.end())
 			{
-				positions.push_back(std::make_pair(positions[cpt].first - 1,positions[cpt].second));
+				positions.emplace_back(positions[cpt].first - 1,positions[cpt].second);
 				vec.push_back(piece->getNeighboor(WEST));
 			}
 		}
@@ -85,7 +85,7 @@ void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std
 		{
 			if(std::find(positions.begin(),positions.end(),std::make_pair(positions[cpt].first + 1,positions[cpt].second)) == positions.end())
 			{
-				positions.push_back(std::make_pair(positions[cpt].first + 1,positions[cpt].second));
+				positions.emplace_back(positions[cpt].first + 1,positions[cpt].second);
 				vec.push_back(piece->getNeighboor(EAST));
 			}
 		}
@@ -185,26 +185,18 @@ void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std
 	++cpt;
 		
 	}
-
-	//screen.display();
 }
 
 /* Comparaisons Functions */
 
 bool rendering::firstComp(const std::pair<int,int>&  i1, const std::pair<int,int>&  i2)
 {
-	if(i1.first < i2.first)
-		return true;
-
-	return false;
+	return i1.first < i2.first;
 }
 
 bool rendering::secondComp(const std::pair<int,int>&  i1, const std::pair<int,int>&  i2)
 {
-	if(i1.second < i2.second)
-		return true;
-
-	return false;
+	return i1.second < i2.second;
 }
 
 void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size, const GameInfo& stats)
