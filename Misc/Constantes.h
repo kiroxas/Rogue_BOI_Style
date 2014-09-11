@@ -33,8 +33,29 @@ namespace KiroGame
   const std::pair<int,int> room_size(std::make_pair(800,500));
   const std::pair<int,int> inner_room_pos(std::make_pair(60,160));
   const std::pair<int,int> inner_room_size(std::make_pair(680,380));
-  const sf::FloatRect RoomRect(room_pos.first,room_pos.second,room_size.first,room_size.second);
-  const sf::FloatRect inner_RoomRect(inner_room_pos.first,inner_room_pos.second,inner_room_size.first,inner_room_size.second);
+  const sf::FloatRect RoomRect(room_pos.first,room_pos.second,room_size.first, room_size.second);
+  const sf::FloatRect inner_RoomRect(inner_room_pos.first,
+                                     inner_room_pos.second,
+                                     inner_room_size.first,
+                                     inner_room_size.second);
+  const sf::FloatRect NorthWall(room_pos.first,
+                                room_pos.second,
+                                room_size.first,
+                                inner_room_pos.second);
+  const sf::FloatRect SouthWall(room_pos.first, 
+                                inner_room_pos.second + inner_room_size.second, 
+                                room_size.first,
+                                inner_room_pos.second);
+  const sf::FloatRect EastWall(room_pos.first,
+                               inner_room_pos.second,
+                               inner_room_pos.first,
+                               inner_room_size.second);
+  const sf::FloatRect WestWall(inner_room_pos.first + inner_room_size.first,
+                               inner_room_pos.second,
+                               inner_room_pos.first,
+                               inner_room_size.second);
+
+  bool isInInnerRoom(const sf::FloatRect&);
 };
 
 #endif

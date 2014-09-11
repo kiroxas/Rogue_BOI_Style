@@ -34,7 +34,7 @@ void Character::setCorrectPosition()
 	static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
 	static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
 
-   while(!col->canIMove(this) || !getGlobalBounds().intersects(KiroGame::inner_RoomRect))
+   while(!col->canIMove(this) || !KiroGame::isInInnerRoom(getGlobalBounds()))
 		setPosition(x_distribution(generator),y_distribution(generator));
     
 }
@@ -103,7 +103,6 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	states.transform = getTransform();
 
 	target.draw(s, states);
-	//std::cout << " x : " << getPosition().x << "  y : " <<   getPosition().y << std::endl; 
 
 	for(auto& e : bullets)
 	{

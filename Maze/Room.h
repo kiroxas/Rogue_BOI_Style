@@ -53,7 +53,7 @@ private :
 	bool canConnect;
 	RoomType type;
 	std::vector<std::shared_ptr<Door>> doors;
-	std::vector<std::shared_ptr<ICharacter>> elements;
+	std::vector<std::shared_ptr<Character>> elements;
 	std::vector<std::shared_ptr<ICharacter>> heroes;
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;

@@ -167,10 +167,11 @@ const std::vector<std::shared_ptr<ICharacter>>& Room::getCharacters() const
 
 void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inherited from sf::Drawable
 {
-	sf::RectangleShape rec;
+	static sf::RectangleShape rec;/*({static_cast<float>(KiroGame::room_pos.first),
+								   static_cast<float>(KiroGame::room_pos.second)});*/
 
-	rec.setFillColor(sf::Color(100,100,100,255));
 	rec.setPosition(KiroGame::room_pos.first,KiroGame::room_pos.second);
+	rec.setFillColor(sf::Color(100,100,100,255));
 	rec.setSize(sf::Vector2f(KiroGame::room_size.first,KiroGame::room_size.second));
 	target.draw(rec);
 
@@ -198,6 +199,7 @@ void Room::assignCM(CollisionManager* c)
 	for(auto& e : elements)
 	{
 		e->assignCM(c);
+		e->setCorrectPosition();
 	}
 	for(auto& e : doors)
 	{
