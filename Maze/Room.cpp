@@ -194,6 +194,16 @@ void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inhe
 		target.draw(*e);
 }
 
+bool Room::hasBeenVisited() const
+{
+	return visited;
+}
+
+void Room::setVisited()
+{
+	visited = true;
+}
+
 void Room::assignCM(CollisionManager* c)
 {
 	for(auto& e : elements)

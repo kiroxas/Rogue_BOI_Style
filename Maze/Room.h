@@ -39,6 +39,8 @@ public :
 	const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
 	void update();
 	void addCharacter(std::shared_ptr<ICharacter>&);
+	bool hasBeenVisited() const;
+	void setVisited();
 
 private :
 
@@ -58,6 +60,9 @@ private :
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;
 	std::vector<Registration> my_reg;
+
+protected :
+	bool visited = false;
 };
 
 Direction opposite(Direction dir);

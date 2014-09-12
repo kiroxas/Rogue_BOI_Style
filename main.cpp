@@ -47,7 +47,7 @@ int main()
 	sf::Event event;
 	sf::Clock clock;
 
-	Level l(pool,g_i);
+	Level l(pool,g_i,stats);
 
 	auto quit_reg = g_i.Quit::Suscribe([&running](){running = false;});
 	auto quit_reg2 = l.Suscribe([&running](){running = false;});
@@ -65,4 +65,6 @@ int main()
 			window.display();
 			stats.setFps(1.0f / clock.restart().asSeconds());
 	}
+
+	stats.dump();
 }

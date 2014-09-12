@@ -1,10 +1,11 @@
 #include "Level.h"
 #include "Characters/Character.h"
 
-Level::Level(const ImagePool& p, Input::GameInput& gi) :
+Level::Level(const ImagePool& p, Input::GameInput& gi, GameInfo& s) :
 pool(p),
 cm(new CollisionManager()),
-g_i(gi)
+g_i(gi),
+stats(s)
 {
 	std::random_device rd;
 	std::mt19937 generator(rd());
@@ -19,6 +20,8 @@ g_i(gi)
 	hero_shoot = g_i.Suscribable<Events::Shoot,void(void)>::Suscribe(std::bind(&ICharacter::shoot,heroes.back().get()));
 	//Leave Room
 	assign_room = maze->getCurrentRoom()->Suscribe(std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
+	maze->getCurrentRoom()->setVisited();
+	stats.addVisited();
 
 	for(auto& e : heroes)
 		maze->getCurrentRoom()->addCharacter(e);
@@ -38,7 +41,10 @@ void Level::ReAssignRoom(Direction d)
 {
 	maze->getCurrentRoom()->desassignCM();
 	maze->Go(d);
+	if(!maze->getCurrentRoom()->hasBeenVisited())
+		stats.addVisited();
 	maze->getCurrentRoom()->assignCM(cm);
+	maze->getCurrentRoom()->setVisited();
 	//LeaveRoom
 	assign_room = maze->getCurrentRoom()->Suscribe(std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
 

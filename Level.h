@@ -5,6 +5,7 @@
 #include "Maze/NormalMazeGenerator.h"
 #include <memory>
 #include "Misc/ImagePool.h"
+#include "Misc/GameInfo.h"
 #include "Characters/CollisionManager.h"
 #include "Input/Input.h"
 #include <functional>
@@ -14,7 +15,7 @@ class Level : public Suscribable<Events::HeroAreDead, void(void)>
 {
 	public :
 	using Hero_type = std::shared_ptr<ICharacter>;
-    Level(const ImagePool&, Input::GameInput&);
+    Level(const ImagePool&, Input::GameInput&, GameInfo&);
 
     const Maze& getMaze() const;
     const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
@@ -29,6 +30,7 @@ class Level : public Suscribable<Events::HeroAreDead, void(void)>
 	std::vector<Hero_type> heroes;
 	Registration hero_move, hero_shoot, assign_room;
 	std::vector<std::function<void()>> callbacks;
+	GameInfo& stats;
 };
 
 
