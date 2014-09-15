@@ -14,6 +14,8 @@ stats(s)
 	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(pool));
 	maze = (g->CreateMaze(int_distribution(generator)));
 	maze->getCurrentRoom()->assignCM(cm);
+	stats.addCreated(maze->getNumberRooms());
+	stats.addEnnemiesEncountered(maze->getCurrentRoom()->getNumberOfEnnemies());
 	heroes.emplace_back(std::make_shared<Character>(pool.getImage("isaac"),cm));
 	heroes.back()->setProperties(properties::defs::Triggering_global);
 	hero_move = g_i.Suscribable<Events::Move, void(std::pair<int,int>)>::Suscribe(std::bind(&ICharacter::Move,heroes.back().get(),std::placeholders::_1));
@@ -45,6 +47,7 @@ void Level::ReAssignRoom(Direction d)
 		stats.addVisited();
 	maze->getCurrentRoom()->assignCM(cm);
 	maze->getCurrentRoom()->setVisited();
+	stats.addEnnemiesEncountered(maze->getCurrentRoom()->getNumberOfEnnemies());
 	//LeaveRoom
 	assign_room = maze->getCurrentRoom()->Suscribe(std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
 

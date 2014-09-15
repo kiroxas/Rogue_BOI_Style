@@ -1,11 +1,6 @@
 #include "GameInfo.h"
 #include "Constantes.h"
 
-GameInfo::GameInfo() :
-room_visited(0),
-room_created(0)
-{}
-
 sf::Time GameInfo::GetElapsedTime() const
 {
    return clock.getElapsedTime();
@@ -43,5 +38,16 @@ float GameInfo::getFps() const
  	static const std::string dump_p("dump.log");
 
  	infos::log(dump_p, "Rooms visited : " + std::to_string(room_visited));
-
+ 	infos::log(dump_p, "Rooms Created : " + std::to_string(room_created));
+ 	infos::log(dump_p, "Ennemies : " + std::to_string(ennemies_encountered));
  }
+
+ void GameInfo::addCreated(unsigned long long n)
+ {
+ 	room_created += n;
+ }
+
+void GameInfo::addEnnemiesEncountered(unsigned long long n)
+{
+	ennemies_encountered += n;
+}

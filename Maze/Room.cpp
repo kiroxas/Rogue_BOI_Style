@@ -153,6 +153,11 @@ void Room::addCharacter(std::shared_ptr<ICharacter>& i)
 	heroes.push_back(i);
 }
 
+unsigned long long Room::getNumberOfEnnemies() const
+{
+	return elements.size();
+}
+
 void Room::LeftTheRoom(Direction d)
 {
    LeaveRoom::Notify(d);

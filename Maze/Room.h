@@ -39,6 +39,7 @@ public :
 	const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
 	void update();
 	void addCharacter(std::shared_ptr<ICharacter>&);
+	unsigned long long getNumberOfEnnemies() const;
 	bool hasBeenVisited() const;
 	void setVisited();
 
