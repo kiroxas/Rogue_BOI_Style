@@ -161,7 +161,6 @@ unsigned long long Room::getNumberOfEnnemies() const
 void Room::LeftTheRoom(Direction d)
 {
    LeaveRoom::Notify(d);
-   my_reg.clear(); // No need to be notified now
 }
 
 
