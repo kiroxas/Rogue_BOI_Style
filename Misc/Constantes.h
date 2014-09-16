@@ -41,7 +41,7 @@ namespace KiroGame
   const sf::FloatRect NorthWall(room_pos.first,
                                 room_pos.second,
                                 room_size.first,
-                                inner_room_pos.second);
+                                inner_room_pos.second - room_pos.second);
   const sf::FloatRect SouthWall(room_pos.first, 
                                 inner_room_pos.second + inner_room_size.second, 
                                 room_size.first,

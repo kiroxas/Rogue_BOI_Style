@@ -128,7 +128,7 @@ void Room::Fill()
 
 	static std::random_device rd;
 	static std::mt19937 generator(rd());
-	static std::uniform_int_distribution<int> int_distribution(0,0);
+	static std::uniform_int_distribution<int> int_distribution(0,10);
 
 	for(int i = 0, end  = int_distribution(generator); i < end; ++i)
 	{

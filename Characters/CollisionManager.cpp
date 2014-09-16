@@ -1,6 +1,7 @@
 #include "CollisionManager.h"
 #include "Hittable.h"
 #include <iostream>
+#include "../Misc/Constantes.h"
 
 CollisionManager::CollisionManager(GameInfo& s)
 : stats(s){}
@@ -19,7 +20,7 @@ void CollisionManager::unregisterEntity(Hittable* ent) const
 
 bool CollisionManager::canIMove(Hittable* me) const
 {
-	if(me == nullptr)
+	if(me == nullptr || !KiroGame::isInInnerRoom(me->getGlobalBounds()))
 		return false;
 	bool res = true;
 
