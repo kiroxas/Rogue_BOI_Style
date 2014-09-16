@@ -123,11 +123,6 @@ std::pair<unsigned int, unsigned int> Character::getSize() const
 	return m_animate.getSize();
 }
 
-Character::Character()
-{
-
-}
-
 Hittable::healthType Character::getDamage() const
 {
 	return attack;

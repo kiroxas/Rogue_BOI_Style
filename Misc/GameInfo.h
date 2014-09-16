@@ -19,6 +19,7 @@ public :
   void addCreated(unsigned long long);
   void addEnnemiesEncountered(unsigned long long);
   void dump() const;
+  void KilledAnEnnemy();
 private :
 
   sf::Clock clock;
@@ -26,6 +27,7 @@ private :
   unsigned long long room_visited = 0;
   unsigned long long room_created = 0;
   unsigned long long ennemies_encountered = 0;
+  unsigned long long killed_ennemies = 0;
 };
 
 #endif

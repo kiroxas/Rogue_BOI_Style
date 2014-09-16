@@ -36,7 +36,7 @@ class Character : public ICharacter
    virtual void setPosition(int x,int y);
 
   protected :
-    Character();
+    Character() = default;
     Character& operator=(Character&&) =delete;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
 

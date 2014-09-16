@@ -37,9 +37,10 @@ float GameInfo::getFps() const
  {
  	static const std::string dump_p("dump.log");
 
- 	infos::log(dump_p, "Rooms visited : " + std::to_string(room_visited));
+ 	infos::log(dump_p, "Rooms Visited : " + std::to_string(room_visited));
  	infos::log(dump_p, "Rooms Created : " + std::to_string(room_created));
  	infos::log(dump_p, "Ennemies : " + std::to_string(ennemies_encountered));
+ 	infos::log(dump_p, "Ennemies killed : " + std::to_string(killed_ennemies));
  }
 
  void GameInfo::addCreated(unsigned long long n)
@@ -50,4 +51,9 @@ float GameInfo::getFps() const
 void GameInfo::addEnnemiesEncountered(unsigned long long n)
 {
 	ennemies_encountered += n;
+}
+
+void GameInfo::KilledAnEnnemy()
+{
+	killed_ennemies++;
 }

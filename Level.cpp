@@ -3,7 +3,7 @@
 
 Level::Level(const ImagePool& p, Input::GameInput& gi, GameInfo& s) :
 pool(p),
-cm(new CollisionManager()),
+cm(new CollisionManager(s)),
 g_i(gi),
 stats(s)
 {
