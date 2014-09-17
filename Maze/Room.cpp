@@ -44,21 +44,14 @@ bool Room::canHasNeighboor()
 
 void Room::checkConnect()
 {
-	unsigned int cpt = 0;
-
-	for(const auto& x : neighboors)
-	{
-		if(x != nullptr) ++cpt;
-	}
-
-	if(cpt == number_doors) canConnect = false;
+	if(std::count_if(std::begin(neighboors), std::end(neighboors), [](Room* e){return e!= nullptr;}) == number_doors) canConnect = false;
 }
 
 bool Room::Connect(Room* r1, Room* r2, Direction dir)
 {
-	if (r1 == nullptr || r2 == nullptr) return false;
-	if (r1->neighboors[dir] != nullptr || r2->neighboors[opposite(dir)] != nullptr) return false;
-	if (!r1->canHasNeighboor() || !r2->canHasNeighboor()) return false;
+	if (r1 == nullptr || r2 == nullptr ||
+	    r1->neighboors[dir] != nullptr || r2->neighboors[opposite(dir)] != nullptr ||
+	    !r1->canHasNeighboor() || !r2->canHasNeighboor()) return false;
 
 	r1->neighboors[dir] = r2;
 	r2->neighboors[opposite(dir)] = r1;
@@ -72,7 +65,7 @@ bool Room::Connect(Room* r1, Room* r2, Direction dir)
 std::string GetDoorName(RoomType from, RoomType to)
 {
 	if (to == BOSS)
-		return "boss door";
+		return "door";
 	else
 		return "door";
 }
@@ -132,7 +125,7 @@ void Room::Fill()
 
 	for(int i = 0, end  = int_distribution(generator); i < end; ++i)
 	{
-  	 	elements.emplace_back(new Static_Entity(pool.getImage("fire")));
+  	 	elements.emplace_back(std::make_shared<Static_Entity>(pool.getImage("fire")));
    		callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
 	}
 	
@@ -206,6 +199,11 @@ bool Room::hasBeenVisited() const
 void Room::setVisited()
 {
 	visited = true;
+}
+
+RoomType Room::getRoomType() const
+{
+	return type;
 }
 
 void Room::assignCM(CollisionManager* c)

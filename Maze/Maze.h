@@ -12,7 +12,8 @@
 
 class Maze 
 {
-	typedef std::vector<std::unique_ptr<Room>> myMaze;
+	typedef std::unique_ptr<Room> element;
+	typedef std::vector<element> myMaze;
 
 public :
 	/* Constructeurs */
@@ -26,6 +27,7 @@ public :
 	Room* getSeedRoom() const;
 	unsigned int getNumberRooms() const;
 	Room* getCurrentRoom() const;
+	Room* getBossRoom() const;
 	void Go(Direction);
 
 private :

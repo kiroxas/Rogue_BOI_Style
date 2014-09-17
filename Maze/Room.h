@@ -42,6 +42,7 @@ public :
 	unsigned long long getNumberOfEnnemies() const;
 	bool hasBeenVisited() const;
 	void setVisited();
+	RoomType getRoomType() const;
 
 private :
 

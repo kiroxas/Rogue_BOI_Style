@@ -81,6 +81,9 @@ Maze::~Maze()
 		 ++cpt;
 	 }
 
+	 std::uniform_int_distribution<> distr(1,m_maze.size()-1);
+	 m_maze[distr(generator)]->type = BOSS;
+
 	 for(auto& e : m_maze)
 	 {
 	 	e->Fill();
@@ -262,4 +265,11 @@ Maze::~Maze()
 Room* Maze::getCurrentRoom() const
 {
 	return my_room;
+}
+
+Room* Maze::getBossRoom() const
+{
+	auto it = std::find_if(std::begin(m_maze),std::end(m_maze),[](myMaze::const_reference s){return s->getRoomType() == BOSS;});
+
+	return it == std::end(m_maze) ? nullptr : it->get();
 }

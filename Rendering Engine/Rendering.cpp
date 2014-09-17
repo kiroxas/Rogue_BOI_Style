@@ -120,14 +120,17 @@ void rendering::render_map(const Maze& maze, sf::RenderWindow& screen, const std
 	/* Then, let's do the actual rendering */
 	
 	/* For Debugging purpose, let's log those infos, to see what's messing with the rendering */
+	auto in = maze.getCurrentRoom();
+	auto boss = maze.getBossRoom();
 
 	for(auto p : positions)
 	{
 		Room* piece = vec[cpt];
-		auto in = maze.getCurrentRoom();
 		sf::RectangleShape rec;
 		if(piece == in)
 			rec.setFillColor(KiroGame::transparent);
+		else if (piece == boss)
+			rec.setFillColor(sf::Color(255,0,0));
 		const unsigned int rank_w = abs(minf - p.first);
 		const unsigned int rank_h = abs(mins - p.second);
 		const float x = pos.first + rank_w * room_width + (rank_w + 1) * blank_width;
