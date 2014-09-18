@@ -43,13 +43,16 @@ void Level::ReAssignRoom(Direction d)
 {
 	maze->getCurrentRoom()->desassignCM();
 	maze->Go(d);
-	if(!maze->getCurrentRoom()->hasBeenVisited())
+	auto room = maze->getCurrentRoom();
+	if(!room->hasBeenVisited())
 		stats.addVisited();
-	maze->getCurrentRoom()->assignCM(cm);
-	maze->getCurrentRoom()->setVisited();
-	stats.addEnnemiesEncountered(maze->getCurrentRoom()->getNumberOfEnnemies());
+	room->assignCM(cm);
+	room->setVisited();
+	stats.addEnnemiesEncountered(room->getNumberOfEnnemies());
 	//LeaveRoom
-	assign_room = maze->getCurrentRoom()->Suscribe(std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
+	assign_room = room->Suscribe(std::bind(&Level::ReAssignRoom, this, std::placeholders::_1));
+	if(room->getRoomType() == BOSS)
+		exit_level = room->RoomEmpty::Suscribe(std::bind(&ClearedLevel::Notify, this));
 
 	for(auto& e : heroes)
 	{
@@ -65,5 +68,5 @@ void Level::update()
 		e();
 
 	if(std::all_of(std::begin(heroes), std::end(heroes), [](const Hero_type& e){ return e->isDead();}))
-		Notify();
+		HeroAreDead::Notify();
 }

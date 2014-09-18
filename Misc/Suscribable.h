@@ -16,6 +16,7 @@ namespace Events
   EVENT(LeaveRoom)
   EVENT(RoomEmpty)
   EVENT(HeroAreDead)
+  EVENT(ClearedLevel)
   using LeaveRoomArgs = Direction;
   using MoveArgs = std::pair<int,int>;
 };
