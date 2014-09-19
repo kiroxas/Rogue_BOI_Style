@@ -17,6 +17,7 @@ m_animate(sprite_sheet,AnimationState(),rotation,scale)
 	   setCorrectPosition();
 	}
 	health = 1;
+	health_max = 3;
 	attack = 1;
 	state = properties::defs::Nothing;
 }

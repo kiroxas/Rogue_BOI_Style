@@ -9,9 +9,9 @@ void Ai::update()
     	static std::mt19937 generator(rd());
     	static std::bernoulli_distribution dist(0.5);
 		if(dist(generator))
-			Suscribable<Events::Move, void(Events::MoveArgs)>::Notify(std::make_pair(10 * dist(generator),10 * dist(generator)));
+			Move::Notify(std::make_pair(10 * dist(generator),10 * dist(generator)));
 		else
-			Suscribable<Events::Shoot, void(void)>::Notify();
+			Shoot::Notify();
 		m_clock.restart();
     }
 }

@@ -36,7 +36,9 @@ struct Hittable : public sf::Transformable
 
 	virtual void assignCM(CollisionManager* e){col = e; col->registerEntity(this);}
 	virtual void desassignCM(){col->unregisterEntity(this);}
-	virtual healthType getDamage() const {return attack;};
+	virtual healthType getDamage() const {return attack;}
+	virtual healthType getHealth() const {return health;}
+	virtual healthType getMaxHealth() const {return health_max;}
 	virtual void collide(const Hittable*) =0;
 	virtual sf::FloatRect getGlobalBounds() const =0; 
 	virtual ~Hittable(){}
@@ -48,6 +50,7 @@ struct Hittable : public sf::Transformable
 
     virtual void setDamage(healthType e){attack = e;}
 	healthType health;
+	healthType health_max;
 	healthType attack; 
 	const CollisionManager* col;
 	bool registered;

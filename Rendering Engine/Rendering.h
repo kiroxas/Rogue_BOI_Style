@@ -18,6 +18,7 @@ namespace rendering
 	bool secondComp(const std::pair<int,int>&  i1, const std::pair<int,int>&  i2);
 	bool firstComp(const std::pair<int,int>&  i1, const std::pair<int,int>&  i2);
 	void render_time(sf::RenderWindow& screen,const GameInfo& stats);
+	void render_hero(const ICharacter& hero, sf::RenderWindow& w);
 };
 
 #endif

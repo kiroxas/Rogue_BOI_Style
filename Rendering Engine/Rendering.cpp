@@ -206,6 +206,30 @@ void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std
 {
 	screen.draw(*room);	
 	render_time(screen,stats);
+	render_hero(*(room->getCharacters().back().get()),screen);
+}
+
+void rendering::render_hero(const ICharacter& hero, sf::RenderWindow& w)
+{
+	w.draw(hero);
+
+	auto max = hero.getMaxHealth();
+	auto current = hero.getHealth();
+	static int heart_size = 20;
+	int x = KiroGame::hub_pos.first;
+	int y = KiroGame::hub_pos.second;
+
+	for(decltype(current) i = 1; i <= max; ++i)
+	{
+		sf::CircleShape s;
+
+		if(i <= current)
+			s.setFillColor(sf::Color(255,0,0));
+		s.setRadius(heart_size);
+		s.setPosition(x,y);
+		w.draw(s);
+		x += heart_size*2 + heart_size;
+	}
 }
 
 void rendering::render_time(sf::RenderWindow& screen,const GameInfo& stats)
@@ -235,7 +259,7 @@ void rendering::render_characters(const std::vector<std::shared_ptr<ICharacter>>
 
 void rendering::render_level(const Level& level, sf::RenderWindow& window, const GameInfo& stats)
 {
-	rendering::render_map(level.getMaze(),window,std::make_pair(0,0),std::make_pair(400,100));
+	rendering::render_map(level.getMaze(),window,KiroGame::map_placement,KiroGame::map_size);
 	rendering::render_room(level.getMaze().getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size, stats);
 	rendering::render_characters(level.getCharacters(),window);
 }

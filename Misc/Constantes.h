@@ -29,10 +29,15 @@ namespace KiroGame
 
   const sf::Color transparent(0,255,0);
   const sf::Time elapsed_animation_time = sf::seconds(0.08);
-  const std::pair<int,int> room_pos(std::make_pair(0,100));
-  const std::pair<int,int> room_size(std::make_pair(800,500));
-  const std::pair<int,int> inner_room_pos(std::make_pair(60,160));
-  const std::pair<int,int> inner_room_size(std::make_pair(680,380));
+  constexpr std::pair<int,int> room_pos(std::make_pair(0,100));
+  constexpr std::pair<int,int> room_size(std::make_pair(800,500));
+  constexpr std::pair<int,int> inner_room_pos(std::make_pair(60,160));
+  constexpr std::pair<int,int> inner_room_size(std::make_pair(680,380));
+  constexpr std::pair<int,int> map_placement(std::make_pair(0,0));
+  constexpr std::pair<int,int> map_size(std::make_pair(400,100));
+  constexpr std::pair<int,int> hub_pos(std::make_pair(map_placement.first + map_size.first + 50,
+                                                      0));
+  constexpr std::pair<int,int> hub_size(std::make_pair(150,50));
   const sf::FloatRect RoomRect(room_pos.first,room_pos.second,room_size.first, room_size.second);
   const sf::FloatRect inner_RoomRect(inner_room_pos.first,
                                      inner_room_pos.second,

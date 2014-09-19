@@ -8,6 +8,8 @@ class Ai  : public Suscribable<Events::Move, void(Events::MoveArgs)>, // Move
 			public Suscribable<Events::Shoot, void(void)> //Shoot
 {
    public :
+     using Move = Suscribable<Events::Move, void(Events::MoveArgs)>;
+     using Shoot = Suscribable<Events::Shoot, void(void)>;
 	 void update();
 
    private :

@@ -10,6 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include "../Rendering Engine/Rendering.h"
 
 Room::Room(RoomType r,unsigned int n,const ImagePool& p) : 
 	number_doors(n),
@@ -123,9 +124,12 @@ void Room::Fill()
 	static std::mt19937 generator(rd());
 	static std::uniform_int_distribution<int> int_distribution(0,10);
 
+	callbacks.emplace_back(std::bind(&Ai::update,std::ref(common_brain)));
+
 	for(int i = 0, end  = int_distribution(generator); i < end; ++i)
 	{
   	 	elements.emplace_back(std::make_shared<Static_Entity>(pool.getImage("fire")));
+  	 	ai_reg.push_back(common_brain.Move::Suscribe(std::bind(&Character::Move,elements.back().get(),std::placeholders::_1)));
    		callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
 	}
 	
@@ -187,8 +191,8 @@ void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inhe
 	for(auto& e : doors)
 		target.draw(*e);
 
-	for(auto& e: heroes)
-		target.draw(*e);
+	//for(auto& e: heroes)
+		//rendering::render_hero(*e, target);
 }
 
 bool Room::hasBeenVisited() const

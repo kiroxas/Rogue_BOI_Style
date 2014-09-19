@@ -6,6 +6,7 @@
 #include "../Misc/Constantes.h"
 #include <memory>
 #include "../Characters/ICharacter.h"
+#include "../Characters/Ai.h"
 #include "../Misc/ImagePool.h"
 #include <SFML/Graphics.hpp>
 #include "../Misc/Suscribable.h"
@@ -14,7 +15,7 @@
 class CollisionManager;
 class Maze;
 
-enum RoomType{EMPTY = 0, BOSS};
+enum RoomType{EMPTY = 0, BOSS, TREASURE};
 
 class Room : public sf::Drawable, 
              public Suscribable<Events::LeaveRoom, void(Events::LeaveRoomArgs)>,
@@ -62,6 +63,8 @@ private :
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;
 	std::vector<Registration> my_reg;
+	Ai common_brain;
+	std::vector<Registration> ai_reg;
 
 protected :
 	bool visited = false;
