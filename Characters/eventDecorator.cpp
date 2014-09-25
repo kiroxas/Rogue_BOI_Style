@@ -1,6 +1,6 @@
 #include "eventDecorator.h"
 
-void eventDecorator::collide(const Hittable* e)
+void eventDecorator::collide(Hittable* e)
 {
 	if((e->getProperties() & properties::defs::Triggering_global) == properties::defs::Triggering_global)
 		Notify();

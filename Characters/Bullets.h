@@ -16,7 +16,7 @@ class Bullets : public Hittable, public sf::Drawable
 	~Bullets();
 	void update();
 	Hittable::healthType getDamage() const;
-	void collide(const Hittable*);
+	void collide(Hittable*);
 	virtual sf::FloatRect getGlobalBounds() const; 
 	bool isDead() const;
 	void die();

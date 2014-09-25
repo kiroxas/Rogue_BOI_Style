@@ -68,7 +68,7 @@ Hittable::healthType Bullets::getDamage() const
 	return attack;
 }
 
-void Bullets::collide(const Hittable*)
+void Bullets::collide(Hittable*)
 {
 	health = 0;
 }

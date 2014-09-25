@@ -11,7 +11,7 @@ class eventDecorator : public CharacterDecorator,
 	public : 
 
 	 eventDecorator(ICharacter* e) : CharacterDecorator(e){}
-	 virtual void collide(const Hittable* e);
+	 virtual void collide(Hittable* e);
 
 };
 

@@ -13,7 +13,7 @@ class Door : public Static_Entity,
 	
 	Door(const KiroGame::Image& sprite_sheet,CollisionManager* e, float rotation = 0, float scale = 1);
 	Door(const KiroGame::Image& sprite_sheet, float rotation = 0, float scale = 1);
-	virtual void collide(const Hittable* e);
+	virtual void collide(Hittable* e);
 
 
 };

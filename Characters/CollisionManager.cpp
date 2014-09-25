@@ -31,12 +31,10 @@ bool CollisionManager::canIMove(Hittable* me) const
 		
 		if(me->getGlobalBounds().intersects(e->getGlobalBounds()))
 		{
-			(e)->collide(me);
+			e->collide(me);
 			me->collide(e);
 			if(e->isDead())
 				stats.KilledAnEnnemy();
-			//if(me->isDead())
-				//stats.KilledAnEnnemy();
 			res = false;
 		}
 	}

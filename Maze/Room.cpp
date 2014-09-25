@@ -132,6 +132,7 @@ void Room::Fill()
   	 	ai_reg.push_back(common_brain.Move::Suscribe(std::bind(&Character::Move,elements.back().get(),std::placeholders::_1)));
    		callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
 	}
+	items.emplace_back(Item());
 	
 }
 
@@ -140,9 +141,20 @@ void Room::update()
 	for(auto& e : callbacks)
 		e();
 
+	auto ite = std::remove_if(std::begin(items),std::end(items),[](Itemcollection::reference e){return e.isConsumed();});
+	if(ite != std::end(items))
+	{
+		for(auto it = ite, end = std::end(items); it < end; ++it)
+			it->desassignCM();
+
+		items.erase(ite,std::end(items));
+	}
+
 	std::size_t res = std::count_if(elements.begin(),elements.end(),[](const std::shared_ptr<ICharacter>& e){return e->isDead();});
 	if(res == elements.size())
+	{	
 		RoomEmpty::Notify();
+	}
 }
 
 void Room::addCharacter(std::shared_ptr<ICharacter>& i)
@@ -184,15 +196,13 @@ void Room::draw(sf::RenderTarget& target, sf::RenderStates states) const // Inhe
 	target.draw(rec2);	
 
 	for(auto& e : elements)
-	{
 		target.draw(*e);
-	}
 
 	for(auto& e : doors)
 		target.draw(*e);
 
-	//for(auto& e: heroes)
-		//rendering::render_hero(*e, target);
+	for(auto& e : items)
+		target.draw(e);
 }
 
 bool Room::hasBeenVisited() const
@@ -225,6 +235,10 @@ void Room::assignCM(CollisionManager* c)
 	{
 		e->assignCM(c);
 	}
+	for(auto& e : items)
+	{
+		e.assignCM(c);
+	}
 }
 
 void Room::desassignCM()
@@ -235,6 +249,8 @@ void Room::desassignCM()
 			e->desassignCM();
 	for(auto&e : heroes)
 		e->desassignCM();
+	for(auto& e : items)
+		e.desassignCM();
 }
 
 Direction opposite(Direction dir)

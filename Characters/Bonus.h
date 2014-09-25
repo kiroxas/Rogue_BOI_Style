@@ -11,10 +11,11 @@ public :
 	Bonus(type h = 0, type m_h = 0, type a = 0);
 
 	void applyTo(Hittable*) const;
+	void clear();
 
 private :
-	type max_health;
 	type health;
+	type max_health;
 	type attack;
 };
 

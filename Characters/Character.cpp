@@ -129,7 +129,7 @@ Hittable::healthType Character::getDamage() const
 	return attack;
 }
 
-void Character::collide(const Hittable* h) 
+void Character::collide(Hittable* h) 
 {
 	if((state & properties::defs::Invincible) == properties::defs::Invincible || isDead()) return;
 	health -= h->getDamage();

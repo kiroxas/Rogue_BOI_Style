@@ -6,7 +6,7 @@ project(KiroGame)
 
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(EXECUTABLE_NAME KiroGame)
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -O2")
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -g")
 
 file(
 GLOB_RECURSE

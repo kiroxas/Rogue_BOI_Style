@@ -31,27 +31,31 @@ namespace properties
 
 struct Hittable : public sf::Transformable 
 {
-	Hittable(const CollisionManager* e = nullptr) : col(e){}
+	Hittable(const CollisionManager* e = nullptr);
 	using healthType = unsigned long long;
 
-	virtual void assignCM(CollisionManager* e){col = e; col->registerEntity(this);}
-	virtual void desassignCM(){col->unregisterEntity(this);}
-	virtual healthType getDamage() const {return attack;}
-	virtual healthType getHealth() const {return health;}
-	virtual healthType getMaxHealth() const {return health_max;}
-	virtual void collide(const Hittable*) =0;
+	virtual void assignCM(CollisionManager* e);
+	virtual void desassignCM();
+	virtual healthType getDamage() const;
+	virtual healthType getHealth() const;
+	virtual healthType getMaxHealth() const;
+	virtual void collide(Hittable*) =0;
 	virtual sf::FloatRect getGlobalBounds() const =0; 
-	virtual ~Hittable(){}
-	virtual bool isDead() const {return health <= 0;}
-	virtual properties::defs getProperties() const {return state;}
-	virtual void setProperties(const properties::defs d){state = d;}
+	virtual ~Hittable();
+	virtual bool isDead() const;
+	virtual properties::defs getProperties() const;
+	virtual void setProperties(const properties::defs d);
 
 	protected :
 
-    virtual void setDamage(healthType e){attack = e;}
+	friend class Bonus;
+
+    virtual void setDamage(healthType e);
+
 	healthType health;
 	healthType health_max;
 	healthType attack; 
+	
 	const CollisionManager* col;
 	bool registered;
 	properties::defs state;

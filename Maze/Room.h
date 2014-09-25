@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Misc/Suscribable.h"
 #include "../Characters/Door.h"
+#include "../Characters/Item.h"
 
 class CollisionManager;
 class Maze;
@@ -29,6 +30,7 @@ public :
 	using Suscribable<Events::RoomEmpty, void(void)>::Suscribe;
 	using RoomEmpty = Suscribable<Events::RoomEmpty, void(void)>;
 	using LeaveRoom = Suscribable<Events::LeaveRoom, void(Events::LeaveRoomArgs)>;
+	using Itemcollection = std::vector<Item>;
 
 	explicit Room(RoomType,unsigned int,const ImagePool& p);
 	std::vector<Direction> Connectible();
@@ -65,6 +67,7 @@ private :
 	std::vector<Registration> my_reg;
 	Ai common_brain;
 	std::vector<Registration> ai_reg;
+	Itemcollection items;
 
 protected :
 	bool visited = false;

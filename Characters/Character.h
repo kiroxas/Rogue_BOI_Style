@@ -31,7 +31,7 @@ class Character : public ICharacter
    virtual sf::FloatRect getGlobalBounds() const;
    virtual ~Character();
    virtual healthType getDamage() const;
-   void collide(const Hittable*);
+   void collide(Hittable*);
    void setCorrectPosition();
    virtual void setPosition(int x,int y);
 

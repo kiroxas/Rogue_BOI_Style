@@ -1,10 +1,12 @@
 #include "Door.h"
 
-void Door::collide(const Hittable* e)
+void Door::collide(Hittable* e)
 {
 	if((e->getProperties() & properties::defs::Triggering_global) == properties::defs::Triggering_global
 		&& !isLocked())
+	{
 		Notify();
+	}
 }
 
 Door::Door(const KiroGame::Image& sprite_sheet,CollisionManager* e , float rotation, float scale):

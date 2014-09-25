@@ -17,7 +17,7 @@ public :
    virtual void animate();
    virtual void Move(std::pair<int, int> e);
    virtual void shoot();
-   virtual void collide(const Hittable* e);
+   virtual void collide(Hittable* e);
    virtual void setPosition(int,int);
    virtual properties::defs getProperties() const;
    virtual void setProperties(const properties::defs d);

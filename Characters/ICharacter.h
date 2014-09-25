@@ -22,7 +22,7 @@ class ICharacter : public Hittable, public sf::Drawable
    virtual void animate() = 0;
    virtual void Move(std::pair<int, int>) = 0;
    virtual void shoot() = 0;
-   virtual void collide(const Hittable*) =0;
+   virtual void collide(Hittable*) =0;
    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const =0;
 
    protected :

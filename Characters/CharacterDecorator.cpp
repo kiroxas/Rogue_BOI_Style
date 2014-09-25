@@ -9,7 +9,7 @@ void CharacterDecorator::update(){component->update();}
 void CharacterDecorator::animate() {component->animate();}
 void CharacterDecorator::Move(std::pair<int, int> e) {component->Move(e);}
 void CharacterDecorator::shoot() {component->shoot();}
-void CharacterDecorator::collide(const Hittable* e){component->collide(e);}
+void CharacterDecorator::collide(Hittable* e){component->collide(e);}
 Hittable::healthType CharacterDecorator::getDamage() const {return Hittable::getDamage();};
 void CharacterDecorator::setPosition(int x,int y){component->setPosition(x,y);};
 properties::defs CharacterDecorator::getProperties() const {return component->getProperties();}
