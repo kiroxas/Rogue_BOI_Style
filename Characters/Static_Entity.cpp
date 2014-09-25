@@ -16,10 +16,17 @@ Character(sprite_sheet,rotation,scale)
 void Static_Entity::Move(std::pair<int, int> e)
 {
 	auto pos = getPosition();
+	auto old_pos = pos;
     pos.x += 2*e.first;
     pos.y += 2*e.second;
 
-	setPosition(pos.x,pos.y);
+    setPosition(pos.x,pos.y);
+
+    if(col && !col->canIMove(this))
+	{
+		setPosition(old_pos.x,old_pos.y);
+		return;
+	}
 
 	m_animate.AdjustAnimation(m_state);
 }

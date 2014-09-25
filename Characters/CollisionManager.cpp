@@ -8,7 +8,8 @@ CollisionManager::CollisionManager(GameInfo& s)
 
 void CollisionManager::registerEntity(Hittable* ent) const
 {
-	entities.push_back(ent);
+	if(ent)
+		entities.push_back(ent);
 }
 
 void CollisionManager::unregisterEntity(Hittable* ent) const
@@ -26,7 +27,7 @@ bool CollisionManager::canIMove(Hittable* me) const
 
 	for(auto e : entities)
 	{
-		if(e == nullptr || e == me || e->isDead()) 
+		if(e == me || e->isDead()) 
 			continue;
 		
 		if(me->getGlobalBounds().intersects(e->getGlobalBounds()))
