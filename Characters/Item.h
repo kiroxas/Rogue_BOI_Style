@@ -18,7 +18,7 @@ enum Category
 class Item : public Hittable, public sf::Drawable
 {
 public :
-	Item() :effect(Bonus(0,1,0)){}
+	Item(int x, int y);
 	void collide(Hittable*);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	sf::FloatRect getGlobalBounds() const;

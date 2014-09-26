@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <utility>
+#include <functional>
 #include "../Misc/Constantes.h"
 #include "Hittable.h"
 
@@ -11,8 +12,11 @@ class CollisionManager;
 class Bullets : public Hittable, public sf::Drawable
 {
 	public :
+	using arg = sf::Vector2f;
+	using moveFunction = std::function<arg()> ;
+	using Func = std::function<arg(arg,Direction)>;
 
-	Bullets(std::pair<int, int> pos, Direction dir,const CollisionManager* e = nullptr);
+	Bullets(std::pair<int, int> pos, Direction dir, Func f, const CollisionManager* e = nullptr);
 	~Bullets();
 	void update();
 	Hittable::healthType getDamage() const;
@@ -20,11 +24,13 @@ class Bullets : public Hittable, public sf::Drawable
 	virtual sf::FloatRect getGlobalBounds() const; 
 	bool isDead() const;
 	void die();
+	moveFunction setFunction(Func f);
 
 	private :
   
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Inherited from sf::Drawable
     Direction m_dir;
+    moveFunction  move_func;
     sf::CircleShape bullet;
 };
 

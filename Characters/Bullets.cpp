@@ -2,7 +2,7 @@
 #include "CollisionManager.h"
 #include <iostream>
 
-Bullets::Bullets(std::pair<int,int> pos, Direction dir,const CollisionManager* e) :
+Bullets::Bullets(std::pair<int,int> pos, Direction dir, Func f, const CollisionManager* e) :
 Hittable(e),
 m_dir(dir)
 {
@@ -18,6 +18,12 @@ m_dir(dir)
 	   registered = true;
 	}
 	state = properties::defs::Nothing;
+	move_func = setFunction(f);
+}
+
+Bullets::moveFunction Bullets::setFunction(Func f)
+{
+	return [this,f](){return f(bullet.getPosition(),this->m_dir);};
 }
 
 Bullets::~Bullets()
@@ -33,14 +39,7 @@ void Bullets::update()
 		auto pos = bullet.getPosition();
 		auto old_pos = pos;
 
-		switch(m_dir)
-		{
-			case NORTH : pos.y -= 4; break;
-			case SOUTH : pos.y += 4; break;
-			case EAST : pos.x += 4; break;
-			case WEST : pos.x -= 4; break;
-		}
-	
+		pos = move_func();
 		bullet.setPosition(pos);
 
 		if(col && !col->canIMove(this))

@@ -132,7 +132,9 @@ void Room::Fill()
   	 	ai_reg.push_back(common_brain.Move::Suscribe(std::bind(&Character::Move,elements.back().get(),std::placeholders::_1)));
    		callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
 	}
-	items.emplace_back(Item());
+	static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
+	static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
+	items.emplace_back(Item(x_distribution(generator),y_distribution(generator)));
 	
 }
 

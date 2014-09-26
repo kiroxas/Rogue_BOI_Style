@@ -11,9 +11,6 @@ void Item::collide(Hittable* e)
 
 void Item::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    s.setRadius(10);
-    s.setPosition(200,200);
-
     target.draw(s,states);
 }
 
@@ -25,4 +22,14 @@ sf::FloatRect Item::getGlobalBounds() const
 bool Item::isConsumed() const
 {
 	return consumed;
+}
+
+Item::Item(int x, int y)
+{
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	static std::uniform_int_distribution<int> distribution(0,10);
+	effect = Bonus(distribution(gen),distribution(gen),distribution(gen));
+	s.setRadius(10);
+	s.setPosition(x,y);
 }

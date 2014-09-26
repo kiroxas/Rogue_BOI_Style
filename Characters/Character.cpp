@@ -79,7 +79,19 @@ void Character::shoot()
 	   case NORTH : y -= 10; break;
 	   case SOUTH : y += size.second;
 	}
-	bullets.emplace_back(new Bullets(std::make_pair(x,y),m_state.dir,col));
+	bullets.emplace_back(new Bullets(std::make_pair(x,y),m_state.dir,
+		[](Bullets::arg pos, Direction dir)
+		{
+			switch(dir)
+			{
+				case WEST : pos.x -= 4; break;
+	  			case EAST : pos.x += 4; break;
+	   			case NORTH : pos.y -= 4; break;
+	   			case SOUTH : pos.y += 4;
+			}
+			return pos;
+		}
+		,col));
 }
 
 void Character::update()

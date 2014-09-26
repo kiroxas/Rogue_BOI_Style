@@ -1,7 +1,7 @@
 #ifndef BONUS_H
 #define BONUS_H
 
-class Hittable;
+struct Hittable;
 
 class Bonus
 {
