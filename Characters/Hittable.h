@@ -31,12 +31,16 @@ namespace properties
 namespace BulletEffect
 {
 	using arg = sf::Vector2f;
-	using Func = std::function<arg(arg,Direction)>;
+	using speedType = float;
+	using Func = std::function<arg(arg,Direction, speedType)>;
+
+	arg Straight(arg,Direction, speedType);
+	arg Reverse(arg,Direction, speedType);
 };
 
 struct Hittable : public sf::Transformable 
 {
-	Hittable(const CollisionManager* e = nullptr, unsigned int team_number = 0);
+	Hittable(const CollisionManager* e = nullptr);
 	using healthType = unsigned long long;
 
 	virtual void assignCM(CollisionManager* e);
@@ -60,11 +64,12 @@ struct Hittable : public sf::Transformable
 
     virtual void setDamage(healthType e);
 
-	healthType health;
-	healthType health_max;
-	healthType attack; 
+	healthType health = 1;
+	healthType health_max = 3;
+	healthType attack = 0; 
 	const CollisionManager* col;
-	unsigned int team_number;
+	unsigned int team_number = 0;
+	double bullet_speed = 4;
 
 	bool registered;
 	properties::defs state;

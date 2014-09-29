@@ -21,17 +21,7 @@ m_animate(sprite_sheet,AnimationState(),rotation,scale)
 	attack = 1;
 	state = properties::defs::Nothing;
 
-	bullet_ef = [](BulletEffect::arg pos, Direction dir)
-		{
-			switch(dir)
-			{
-				case WEST : pos.x -= 4; break;
-	  			case EAST : pos.x += 4; break;
-	   			case NORTH : pos.y -= 4; break;
-	   			case SOUTH : pos.y += 4;
-			}
-			return pos;
-		};
+	bullet_ef = BulletEffect::Straight;
 }
 
 Character::Character(const KiroGame::Image& sprite_sheet,float rotation, float scale) :
@@ -83,14 +73,6 @@ void Character::Move(std::pair<int, int> p)
 void Character::shoot()
 {
 	int x = getPosition().x,y = getPosition().y;
-	auto size = m_animate.getSize();
-	switch(m_state.dir)
-	{
-	   case WEST : x -= 10; break;
-	   case EAST : x += size.first; break;
-	   case NORTH : y -= 10; break;
-	   case SOUTH : y += size.second;
-	}
 	bullets.emplace_back(new Bullets(std::make_pair(x,y),m_state.dir,bullet_ef,col));
 	bullets.back()->setTeam(this->team_number);
 }

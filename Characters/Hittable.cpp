@@ -1,6 +1,6 @@
 #include "Hittable.h"
 
-Hittable::Hittable(const CollisionManager* e, unsigned int t_n) : health(1), health_max(1), attack(0), col(e), team_number(t_n){}
+Hittable::Hittable(const CollisionManager* e) : col(e){}
 
 void Hittable::assignCM(CollisionManager* e){col = e; col->registerEntity(this);}
 
@@ -27,3 +27,27 @@ void Hittable::setBulletEffect(BulletEffect::Func f) {bullet_ef = f;}
 bool Hittable::sameTeam(const Hittable* e) const {return team_number == e->team_number;}
 
 void Hittable::setTeam(unsigned int t) {team_number = t;}
+
+BulletEffect::arg BulletEffect::Straight(arg pos,Direction dir, speedType speed)
+{
+	switch(dir)
+	{
+		case WEST : pos.x -= speed; break;
+	  	case EAST : pos.x += speed; break;
+	   	case NORTH : pos.y -= speed; break;
+	   	case SOUTH : pos.y += speed;
+	}
+	return pos;
+}
+
+BulletEffect::arg BulletEffect::Reverse(arg pos,Direction dir, speedType speed)
+{
+	switch(dir)
+	{
+		case WEST : pos.x += speed; break;
+	  	case EAST : pos.x -= speed; break;
+	   	case NORTH : pos.y += speed; break;
+	   	case SOUTH : pos.y -= speed;
+	}
+	return pos;
+}

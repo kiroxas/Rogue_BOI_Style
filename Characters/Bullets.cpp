@@ -23,7 +23,7 @@ m_dir(dir)
 
 Bullets::moveFunction Bullets::setFunction(BulletEffect::Func f)
 {
-	return [this,f](){return f(bullet.getPosition(),this->m_dir);};
+	return [this,f](){return f(bullet.getPosition(),m_dir, bullet_speed);};
 }
 
 Bullets::~Bullets()
