@@ -7,8 +7,8 @@ before_install:
 - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 - sudo apt-get update -qq
 install:
-- sudo apt-get install -qq g++-4.8
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+- sudo apt-get install -qq g++-4.9
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-49"; fi
 - sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev
 - sudo apt-get install libxrandr-dev libfreetype6-dev libglew1.5-dev
 - sudo apt-get install libjpeg8-dev libgpgme11-dev libsndfile1-dev libopenal-dev
