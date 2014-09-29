@@ -27,7 +27,7 @@ bool CollisionManager::canIMove(Hittable* me) const
 
 	for(auto e : entities)
 	{
-		if(e == me || e->isDead()) 
+		if(e == me || e->isDead() || e->sameTeam(me)) 
 			continue;
 		
 		if(me->getGlobalBounds().intersects(e->getGlobalBounds()))

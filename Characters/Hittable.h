@@ -28,10 +28,15 @@ namespace properties
    }
 };
 
+namespace BulletEffect
+{
+	using arg = sf::Vector2f;
+	using Func = std::function<arg(arg,Direction)>;
+};
 
 struct Hittable : public sf::Transformable 
 {
-	Hittable(const CollisionManager* e = nullptr);
+	Hittable(const CollisionManager* e = nullptr, unsigned int team_number = 0);
 	using healthType = unsigned long long;
 
 	virtual void assignCM(CollisionManager* e);
@@ -45,6 +50,9 @@ struct Hittable : public sf::Transformable
 	virtual bool isDead() const;
 	virtual properties::defs getProperties() const;
 	virtual void setProperties(const properties::defs d);
+	virtual void setBulletEffect(BulletEffect::Func);
+	virtual bool sameTeam(const Hittable*) const;
+	virtual void setTeam(unsigned int t);
 
 	protected :
 
@@ -55,10 +63,12 @@ struct Hittable : public sf::Transformable
 	healthType health;
 	healthType health_max;
 	healthType attack; 
-	
 	const CollisionManager* col;
+	unsigned int team_number;
+
 	bool registered;
 	properties::defs state;
+	BulletEffect::Func bullet_ef;
 };
 
 

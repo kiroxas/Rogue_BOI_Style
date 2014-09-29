@@ -2,7 +2,7 @@
 #include "CollisionManager.h"
 #include <iostream>
 
-Bullets::Bullets(std::pair<int,int> pos, Direction dir, Func f, const CollisionManager* e) :
+Bullets::Bullets(std::pair<int,int> pos, Direction dir, BulletEffect::Func f, const CollisionManager* e) :
 Hittable(e),
 m_dir(dir)
 {
@@ -21,7 +21,7 @@ m_dir(dir)
 	move_func = setFunction(f);
 }
 
-Bullets::moveFunction Bullets::setFunction(Func f)
+Bullets::moveFunction Bullets::setFunction(BulletEffect::Func f)
 {
 	return [this,f](){return f(bullet.getPosition(),this->m_dir);};
 }

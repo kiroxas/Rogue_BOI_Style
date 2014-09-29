@@ -12,11 +12,9 @@ class CollisionManager;
 class Bullets : public Hittable, public sf::Drawable
 {
 	public :
-	using arg = sf::Vector2f;
-	using moveFunction = std::function<arg()> ;
-	using Func = std::function<arg(arg,Direction)>;
+	using moveFunction = std::function<BulletEffect::arg()> ;
 
-	Bullets(std::pair<int, int> pos, Direction dir, Func f, const CollisionManager* e = nullptr);
+	Bullets(std::pair<int, int> pos, Direction dir, BulletEffect::Func f, const CollisionManager* e = nullptr);
 	~Bullets();
 	void update();
 	Hittable::healthType getDamage() const;
@@ -24,7 +22,7 @@ class Bullets : public Hittable, public sf::Drawable
 	virtual sf::FloatRect getGlobalBounds() const; 
 	bool isDead() const;
 	void die();
-	moveFunction setFunction(Func f);
+	moveFunction setFunction(BulletEffect::Func f);
 
 	private :
   

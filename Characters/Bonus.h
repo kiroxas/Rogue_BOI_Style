@@ -1,6 +1,8 @@
 #ifndef BONUS_H
 #define BONUS_H
 
+#include "Bullets.h"
+
 struct Hittable;
 
 class Bonus
@@ -17,6 +19,7 @@ private :
 	type health;
 	type max_health;
 	type attack;
+	BulletEffect::Func f;
 };
 
 #endif

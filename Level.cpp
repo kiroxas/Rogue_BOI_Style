@@ -18,6 +18,7 @@ stats(s)
 	stats.addEnnemiesEncountered(maze->getCurrentRoom()->getNumberOfEnnemies());
 	heroes.emplace_back(std::make_shared<Character>(pool.getImage("isaac"),cm));
 	heroes.back()->setProperties(properties::defs::Triggering_global);
+	heroes.back()->setTeam(1);
 	hero_move = g_i.Suscribable<Events::Move, void(std::pair<int,int>)>::Suscribe(std::bind(&ICharacter::Move,heroes.back().get(),std::placeholders::_1));
 	hero_shoot = g_i.Suscribable<Events::Shoot,void(void)>::Suscribe(std::bind(&ICharacter::shoot,heroes.back().get()));
 	//Leave Room
