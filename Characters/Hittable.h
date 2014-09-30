@@ -36,6 +36,7 @@ namespace BulletEffect
 
 	arg Straight(arg,Direction, speedType);
 	arg Reverse(arg,Direction, speedType);
+	arg Wavy(arg,Direction, speedType);
 };
 
 struct Hittable : public sf::Transformable 
@@ -69,7 +70,7 @@ struct Hittable : public sf::Transformable
 	healthType attack = 0; 
 	const CollisionManager* col;
 	unsigned int team_number = 0;
-	double bullet_speed = 4;
+	double bullet_speed = 2;
 
 	bool registered;
 	properties::defs state;

@@ -5,7 +5,7 @@ Bonus::Bonus(type h, type m_h, type a) :
 health(h),
 max_health(m_h),
 attack(a),
-f(BulletEffect::Reverse)
+f(BulletEffect::Wavy)
 {}
 
 void Bonus::applyTo(Hittable* e) const

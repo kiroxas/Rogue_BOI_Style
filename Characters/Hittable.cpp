@@ -51,3 +51,15 @@ BulletEffect::arg BulletEffect::Reverse(arg pos,Direction dir, speedType speed)
 	}
 	return pos;
 }
+
+BulletEffect::arg BulletEffect::Wavy(arg pos,Direction dir, speedType speed)
+{
+	switch(dir)
+	{
+		case WEST : pos.x -= speed; pos.y += speed * 10 * std::cos(pos.x); break;
+	  	case EAST : pos.x += speed; pos.y += speed * 10 * std::cos(pos.x);break;
+	   	case NORTH : pos.y -= speed; pos.x += speed * 10 * std::cos(pos.y);break;
+	   	case SOUTH : pos.y += speed; pos.x += speed * 10 * std::cos(pos.y);
+	}
+	return pos;
+}
