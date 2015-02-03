@@ -37,6 +37,7 @@ void Character::setCorrectPosition()
 	static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
 	static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
 
+std::cout << "Set correct pos " << std::endl;
    while(!col->canIMove(this) || !KiroGame::isInInnerRoom(getGlobalBounds()))
 		setPosition(x_distribution(generator),y_distribution(generator));
     
@@ -47,6 +48,7 @@ void Character::Move(std::pair<int, int> p)
 	int x = p.first;
 	int y = p.second;
 	auto pos = getPosition();
+	//std::cout << " Moving from " << pos.x << " ; " << pos.y << std::endl; 
 	auto old_pos = pos;
 	pos.x += 2*x;
 	pos.y += 2*y;
@@ -54,6 +56,9 @@ void Character::Move(std::pair<int, int> p)
 	setPosition(pos.x,pos.y);
 	if(col && !col->canIMove(this))
 	{
+		if(getPosition() != pos) // something changed its position
+			return; 
+		//std::cout << "cant move to " << pos.x << " ; " << pos.y << " Resetting to  : " << old_pos.x << " ; " << old_pos.y << " npos : " << n_pos.x << " " << n_pos.y << std::endl;
 		setPosition(old_pos.x,old_pos.y);
 		return;
 	}
@@ -89,6 +94,7 @@ void Character::animate()
 
 void Character::setPosition(int x,int y)
 {
+	std::cout << "moving to " << x << " ; " << y << std::endl;
 	sf::Transformable::setPosition(x,y);
 }
 

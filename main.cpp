@@ -49,9 +49,9 @@ int main()
 
 	Level l(pool,g_i,stats);
 
-	auto quit_reg = g_i.Quit::Suscribe([&running](){running = false;});
-	auto quit_reg2 = l.HeroAreDead::Suscribe([&running](){running = false;});
-	auto quit_reg3 = l.ClearedLevel::Suscribe([&running](){running = false;});
+	auto quit_reg = g_i.Quit::Suscribe([&running](){std::cout << "Quit" << std::endl; running = false;});
+	auto quit_reg2 = l.HeroAreDead::Suscribe([&running](){std::cout << "Dead" << std::endl; running = false;});
+	auto quit_reg3 = l.ClearedLevel::Suscribe([&running](){std::cout << "Cleared" << std::endl; running = false;});
 	callbacks.emplace_back(std::bind(&Input::GameInput::update,std::ref(g_i),std::ref(event)));
 	callbacks.emplace_back(std::bind(&Level::update, std::ref(l)));
 

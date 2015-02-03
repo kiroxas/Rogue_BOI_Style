@@ -22,10 +22,13 @@ void CollisionManager::unregisterEntity(Hittable* ent) const
 bool CollisionManager::canIMove(Hittable* me) const
 {
 	if(me == nullptr || !KiroGame::isInInnerRoom(me->getGlobalBounds()))
+	{
+		std::cout << " null or not in inner " << std::endl;
 		return false;
+	}
 	bool res = true;
 
-	for(auto e : entities)
+	for(auto& e : entities)
 	{
 		if(e == me || e->isDead() || e->sameTeam(me)) 
 			continue;
@@ -36,6 +39,7 @@ bool CollisionManager::canIMove(Hittable* me) const
 			me->collide(e);
 			if(e->isDead())
 				stats.KilledAnEnnemy();
+			std::cout << "splash" << std::endl;
 			res = false;
 		}
 	}

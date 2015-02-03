@@ -206,7 +206,7 @@ void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std
 {
 	screen.draw(*room);	
 	render_time(screen,stats);
-	render_hero(*(room->getCharacters().back().get()),screen);
+	render_hero(*(room->peekAtCharacters().back().get()),screen);
 }
 
 void rendering::render_hero(const ICharacter& hero, sf::RenderWindow& w)
@@ -251,7 +251,7 @@ void rendering::render_time(sf::RenderWindow& screen,const GameInfo& stats)
    screen.draw(text);
 }
 
-void rendering::render_characters(const std::vector<std::shared_ptr<ICharacter>>& c, sf::RenderWindow& w)
+void rendering::render_characters(const std::vector<std::unique_ptr<ICharacter>>& c, sf::RenderWindow& w)
 {
 	for(const auto& e : c)
 		w.draw(*e);
@@ -261,5 +261,5 @@ void rendering::render_level(const Level& level, sf::RenderWindow& window, const
 {
 	rendering::render_map(level.getMaze(),window,KiroGame::map_placement,KiroGame::map_size);
 	rendering::render_room(level.getMaze().getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size, stats);
-	rendering::render_characters(level.getCharacters(),window);
+	rendering::render_characters(level.peekAtCharacters(),window);
 }

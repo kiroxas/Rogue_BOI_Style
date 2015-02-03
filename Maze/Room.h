@@ -39,9 +39,10 @@ public :
 	void Fill();
 	void assignCM(CollisionManager*);
 	void desassignCM();
-	const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
+	std::vector<std::unique_ptr<ICharacter>> getCharacters();
+	const std::vector<std::unique_ptr<ICharacter>>& peekAtCharacters() const;
 	void update();
-	void addCharacter(std::shared_ptr<ICharacter>&);
+	void addCharacter(std::unique_ptr<ICharacter>);
 	unsigned long long getNumberOfEnnemies() const;
 	bool hasBeenVisited() const;
 	void setVisited();
@@ -61,7 +62,7 @@ private :
 	RoomType type;
 	std::vector<std::shared_ptr<Door>> doors;
 	std::vector<std::shared_ptr<Character>> elements;
-	std::vector<std::shared_ptr<ICharacter>> heroes;
+	std::vector<std::unique_ptr<ICharacter>> heroes;
 	const ImagePool& pool;
 	std::vector<std::function<void()>> callbacks;
 	std::vector<Registration> my_reg;

@@ -74,6 +74,7 @@ std::string GetDoorName(RoomType from, RoomType to)
 void Room::Fill()
 {
 	// First lets place Doors !
+		std::cout << " Fill room " << std::endl;
 	
 		if(neighboors[NORTH] != nullptr)
 		{
@@ -159,9 +160,10 @@ void Room::update()
 	}
 }
 
-void Room::addCharacter(std::shared_ptr<ICharacter>& i)
+void Room::addCharacter(std::unique_ptr<ICharacter> i)
 {
-	heroes.push_back(i);
+	std::cout << "Adding : " << i->getPosition().x << " " <<i->getPosition().y << std::endl;
+	heroes.emplace_back(std::move(i)); 
 }
 
 unsigned long long Room::getNumberOfEnnemies() const
@@ -175,7 +177,12 @@ void Room::LeftTheRoom(Direction d)
 }
 
 
-const std::vector<std::shared_ptr<ICharacter>>& Room::getCharacters() const
+std::vector<std::unique_ptr<ICharacter>> Room::getCharacters()
+{
+	return std::move(heroes);
+}
+
+const std::vector<std::unique_ptr<ICharacter>>& Room::peekAtCharacters() const
 {
 	return heroes;
 }
@@ -224,11 +231,6 @@ RoomType Room::getRoomType() const
 
 void Room::assignCM(CollisionManager* c)
 {
-	for(auto& e : elements)
-	{
-		e->assignCM(c);
-		e->setCorrectPosition();
-	}
 	for(auto& e : doors)
 	{
 		e->assignCM(c);
@@ -240,6 +242,11 @@ void Room::assignCM(CollisionManager* c)
 	for(auto& e : items)
 	{
 		e.assignCM(c);
+	}
+	for(auto& e : elements)
+	{
+		e->assignCM(c);
+		e->setCorrectPosition();
 	}
 }
 

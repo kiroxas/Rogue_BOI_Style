@@ -19,7 +19,7 @@ void Static_Entity::Move(std::pair<int, int> e)
 	auto old_pos = pos;
     pos.x += 2*e.first;
     pos.y += 2*e.second;
-
+    std::cout << " SE Moving from " << pos.x << " ; " << pos.y << std::endl; 
     setPosition(pos.x,pos.y);
 
     if(col && !col->canIMove(this))

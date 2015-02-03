@@ -18,12 +18,13 @@ class Level : public Suscribable<Events::HeroAreDead, void(void)>,
 
 	using HeroAreDead = Suscribable<Events::HeroAreDead, void(void)>;
 	using ClearedLevel = Suscribable<Events::ClearedLevel, void(void)>;
-	using Hero_type = std::shared_ptr<ICharacter>;
+	using Hero_type = std::unique_ptr<ICharacter>;
 	
     Level(const ImagePool&, Input::GameInput&, GameInfo&);
 
     const Maze& getMaze() const;
-    const std::vector<std::shared_ptr<ICharacter>>& getCharacters() const;
+    std::vector<Hero_type> getCharacters();
+    const std::vector<Hero_type>& peekAtCharacters() const;
     void update();
     void ReAssignRoom(Direction d);
 		
@@ -32,7 +33,7 @@ class Level : public Suscribable<Events::HeroAreDead, void(void)>,
 	const ImagePool& pool;
 	CollisionManager* cm;
 	Input::GameInput& g_i;
-	std::vector<Hero_type> heroes;
+	//std::vector<Hero_type> heroes;
 	Registration hero_move, hero_shoot, assign_room, exit_level;
 	std::vector<std::function<void()>> callbacks;
 	GameInfo& stats;
