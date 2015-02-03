@@ -62,7 +62,7 @@ int main()
 			for(auto& e : callbacks)
 				e();
 
-			rendering::render_level(l,window,stats);
+			rendering::render_level(l,window,stats,pool);
 			window.display();
 			stats.setFps(1.0f / clock.restart().asSeconds());
 	}

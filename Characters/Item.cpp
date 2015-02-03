@@ -29,7 +29,7 @@ Item::Item(int x, int y)
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
 	static std::uniform_int_distribution<int> distribution(0,10);
-	effect = Bonus(distribution(gen),distribution(gen),distribution(gen));
+	effect = Bonus(1,0,0);
 	s.setRadius(10);
 	s.setPosition(x,y);
 }

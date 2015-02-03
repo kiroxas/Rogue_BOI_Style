@@ -202,14 +202,14 @@ bool rendering::secondComp(const std::pair<int,int>&  i1, const std::pair<int,in
 	return i1.second < i2.second;
 }
 
-void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size, const GameInfo& stats)
+void rendering::render_room(const Room* room,sf::RenderWindow& screen, const std::pair<unsigned int, unsigned int>& pos, const std::pair<unsigned int, unsigned int>& size, const GameInfo& stats, const ImagePool & pool)
 {
 	screen.draw(*room);	
 	render_time(screen,stats);
-	render_hero(*(room->peekAtCharacters().back().get()),screen);
+	render_hero(*(room->peekAtCharacters().back().get()),screen, pool);
 }
 
-void rendering::render_hero(const ICharacter& hero, sf::RenderWindow& w)
+void rendering::render_hero(const ICharacter& hero, sf::RenderWindow& w, const ImagePool& pool)
 {
 	w.draw(hero);
 
@@ -221,11 +221,14 @@ void rendering::render_hero(const ICharacter& hero, sf::RenderWindow& w)
 
 	for(decltype(current) i = 1; i <= max; ++i)
 	{
-		sf::CircleShape s;
+		//sf::CircleShape s;
+		static sf::Texture t;
+		t.loadFromImage(pool.getImage("heart").image);
+		sf::Sprite s(t);
 
 		if(i <= current)
-			s.setFillColor(sf::Color(255,0,0));
-		s.setRadius(heart_size);
+			s.setColor(sf::Color(255,0,0));
+		s.setScale(2,2);
 		s.setPosition(x,y);
 		w.draw(s);
 		x += heart_size*2 + heart_size;
@@ -257,9 +260,9 @@ void rendering::render_characters(const std::vector<std::unique_ptr<ICharacter>>
 		w.draw(*e);
 }
 
-void rendering::render_level(const Level& level, sf::RenderWindow& window, const GameInfo& stats)
+void rendering::render_level(const Level& level, sf::RenderWindow& window, const GameInfo& stats, const ImagePool& pool)
 {
 	rendering::render_map(level.getMaze(),window,KiroGame::map_placement,KiroGame::map_size);
-	rendering::render_room(level.getMaze().getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size, stats);
+	rendering::render_room(level.getMaze().getCurrentRoom(),window,KiroGame::room_pos,KiroGame::room_size, stats, pool);
 	rendering::render_characters(level.peekAtCharacters(),window);
 }
