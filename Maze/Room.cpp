@@ -127,15 +127,26 @@ void Room::Fill()
 
 	callbacks.emplace_back(std::bind(&Ai::update,std::ref(common_brain)));
 
-	for(int i = 0, end  = int_distribution(generator); i < end; ++i)
+	if(type == BOSS)
 	{
-  	 	elements.emplace_back(std::make_shared<Static_Entity>(pool.getImage("fire")));
-  	 	ai_reg.push_back(common_brain.Move::Suscribe(std::bind(&Character::Move,elements.back().get(),std::placeholders::_1)));
-   		callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
+		elements.emplace_back(std::make_shared<Character>(pool.getImage("boss"),nullptr,0,3));
+		ai_reg.push_back(common_brain.Move::Suscribe(std::bind(&Character::Move,elements.back().get(),std::placeholders::_1)));
+		ai_reg.push_back(common_brain.Shoot::Suscribe(std::bind(&Character::shoot,elements.back().get())));
 	}
-	static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
-	static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
-	items.emplace_back(Item(x_distribution(generator),y_distribution(generator)));
+	else
+	{
+		for(int i = 0, end  = int_distribution(generator); i < end; ++i)
+		{
+  	 		elements.emplace_back(std::make_shared<Static_Entity>(pool.getImage("fire")));
+  	 		ai_reg.push_back(common_brain.Move::Suscribe(std::bind(&Character::Move,elements.back().get(),std::placeholders::_1)));
+   			callbacks.emplace_back(std::bind(&ICharacter::animate,elements.back().get()));
+		}
+		static std::uniform_int_distribution<int> x_distribution(KiroGame::inner_room_pos.first,KiroGame::inner_room_pos.first + KiroGame::inner_room_size.first);
+		static std::uniform_int_distribution<int> y_distribution(KiroGame::inner_room_pos.second,KiroGame::inner_room_pos.second + KiroGame::inner_room_size.second);
+		items.emplace_back(Item(x_distribution(generator),y_distribution(generator)));
+	}
+
+	
 	
 }
 

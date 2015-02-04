@@ -5,3 +5,4 @@ door	door.png	door_info.txt
 angel_door	angel_door.png	door_info.txt
 fire	fire.png	fire_info.txt
 heart	heart.png	heart_info.txt
+boss	boss.png	boss_info.txt

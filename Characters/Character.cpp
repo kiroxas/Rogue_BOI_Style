@@ -48,7 +48,7 @@ void Character::Move(std::pair<int, int> p)
 	int x = p.first;
 	int y = p.second;
 	auto pos = getPosition();
-	//std::cout << " Moving from " << pos.x << " ; " << pos.y << std::endl; 
+	std::cout << " Moving from " << pos.x << " ; " << pos.y << std::endl; 
 	auto old_pos = pos;
 	pos.x += 2*x;
 	pos.y += 2*y;

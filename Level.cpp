@@ -9,7 +9,7 @@ stats(s)
 {
 	std::random_device rd;
 	std::mt19937 generator(rd());
-	std::uniform_int_distribution<int> int_distribution(0,10);
+	std::uniform_int_distribution<int> int_distribution(0,1);
 
 	std::unique_ptr<AbstractMazeGenerator> g(new NormalMazeGenerator(pool));
 	maze = (g->CreateMaze(int_distribution(generator)));
