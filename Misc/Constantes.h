@@ -35,7 +35,7 @@ namespace KiroGame
   constexpr std::pair<int,int> inner_room_size(std::make_pair(680,380));
   constexpr std::pair<int,int> map_placement(std::make_pair(0,0));
   constexpr std::pair<int,int> map_size(std::make_pair(400,100));
-  constexpr std::pair<int,int> hub_pos(std::make_pair(map_placement.first + map_size.first + 50,
+  constexpr std::pair<int,int> hub_pos(std::make_pair(map_placement.first + map_size.first,
                                                       0));
   constexpr std::pair<int,int> hub_size(std::make_pair(150,50));
   const sf::FloatRect RoomRect(room_pos.first,room_pos.second,room_size.first, room_size.second);

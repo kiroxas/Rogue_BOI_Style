@@ -215,7 +215,7 @@ void rendering::render_hero(const ICharacter& hero, sf::RenderWindow& w, const I
 
 	auto max = hero.getMaxHealth();
 	auto current = hero.getHealth();
-	static int heart_size = 20;
+	static int heart_size = 40;
 	int x = KiroGame::hub_pos.first;
 	int y = KiroGame::hub_pos.second;
 
@@ -228,10 +228,14 @@ void rendering::render_hero(const ICharacter& hero, sf::RenderWindow& w, const I
 
 		if(i <= current)
 			s.setColor(sf::Color(255,0,0));
-		s.setScale(2,2);
+		else
+		{
+			s.setColor(sf::Color(30,30,30));
+		}
+		
 		s.setPosition(x,y);
 		w.draw(s);
-		x += heart_size*2 + heart_size;
+		x += heart_size * 1.5;
 	}
 }
 
