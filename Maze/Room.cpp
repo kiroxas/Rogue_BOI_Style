@@ -130,6 +130,9 @@ void Room::Fill()
 	if(type == BOSS)
 	{
 		elements.emplace_back(std::make_shared<Character>(pool.getImage("boss"),nullptr,0,3));
+		elements.back().get()->setBulletColor(sf::Color::Red);
+		elements.back().get()->addHealth();
+		elements.back().get()->addHealth();
 		ai_reg.push_back(common_brain.Move::Suscribe(std::bind(&Character::Move,elements.back().get(),std::placeholders::_1)));
 		ai_reg.push_back(common_brain.Shoot::Suscribe(std::bind(&Character::shoot,elements.back().get())));
 	}

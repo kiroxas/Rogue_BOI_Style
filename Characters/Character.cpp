@@ -48,7 +48,7 @@ void Character::Move(std::pair<int, int> p)
 	int x = p.first;
 	int y = p.second;
 	auto pos = getPosition();
-	std::cout << " Moving from " << pos.x << " ; " << pos.y << std::endl; 
+	//std::cout << " Moving from " << pos.x << " ; " << pos.y << std::endl; 
 	auto old_pos = pos;
 	pos.x += 2*x;
 	pos.y += 2*y;
@@ -63,23 +63,26 @@ void Character::Move(std::pair<int, int> p)
 		return;
 	}
 
-	if(x == -1)
+	if(x < 0)
 		m_state.dir = WEST;
-	else if(x == 1)
+	else if(x > 0)
 		m_state.dir = EAST;
-	else if(y == -1)
+	else if(y < 0)
 		m_state.dir = NORTH;
-	else if(y == 1)
+	else if(y > 0)
 		m_state.dir = SOUTH;
-
+	std::cout << "x : " << x << ", y = " << y << " " << m_state.dir << std::endl;
 	m_animate.AdjustAnimation(m_state);
 }
 
 void Character::shoot()
 {
 	int x = getPosition().x,y = getPosition().y;
-	bullets.emplace_back(new Bullets(std::make_pair(x,y),m_state.dir,bullet_ef,col));
+	auto size = m_animate.getSize();
+	auto scale = m_animate.getScale();
+	bullets.emplace_back(new Bullets(std::make_pair(x + (size.first * scale.first) /2,y + (size.second * scale.second) /2),m_state.dir,bullet_ef,col));
 	bullets.back()->setTeam(this->team_number);
+	bullets.back()->setBulletColor(bullet_color);
 }
 
 void Character::update()

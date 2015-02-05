@@ -123,3 +123,9 @@ std::pair<unsigned int, unsigned int> CharacterAnimation::getSize() const
 {
     return m_sprite_size;
 }
+
+std::pair<double, double> CharacterAnimation::getScale() const
+{
+	auto scale = m_sprite.getScale();
+	return std::make_pair(scale.x, scale.y);
+}

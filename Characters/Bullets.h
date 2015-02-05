@@ -23,6 +23,7 @@ class Bullets : public Hittable, public sf::Drawable
 	bool isDead() const;
 	void die();
 	moveFunction setFunction(BulletEffect::Func f);
+	void setBulletColor(const sf::Color&);
 
 	private :
   

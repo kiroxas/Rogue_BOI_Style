@@ -26,6 +26,11 @@ Bullets::moveFunction Bullets::setFunction(BulletEffect::Func f)
 	return [this,f](){return f(bullet.getPosition(),m_dir, bullet_speed);};
 }
 
+void Bullets::setBulletColor(const sf::Color& s)
+{
+	bullet.setFillColor(s);
+}
+
 Bullets::~Bullets()
 {
    if(registered && col)

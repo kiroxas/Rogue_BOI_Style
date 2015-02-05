@@ -28,6 +28,10 @@ bool Hittable::sameTeam(const Hittable* e) const {return team_number == e->team_
 
 void Hittable::setTeam(unsigned int t) {team_number = t;}
 
+void Hittable::setBulletColor(const sf::Color& s) {bullet_color = s;}
+
+void Hittable::addHealth() {health++; if(health > health_max) health = health_max; }
+
 BulletEffect::arg BulletEffect::Straight(arg pos,Direction dir, speedType speed)
 {
 	switch(dir)

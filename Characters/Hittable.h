@@ -58,6 +58,8 @@ struct Hittable : public sf::Transformable
 	virtual void setBulletEffect(BulletEffect::Func);
 	virtual bool sameTeam(const Hittable*) const;
 	virtual void setTeam(unsigned int t);
+	virtual void setBulletColor(const sf::Color&);
+	virtual void addHealth();
 
 	protected :
 
@@ -75,6 +77,7 @@ struct Hittable : public sf::Transformable
 	bool registered;
 	properties::defs state;
 	BulletEffect::Func bullet_ef;
+	sf::Color bullet_color = sf::Color::Blue; 
 };
 
 
