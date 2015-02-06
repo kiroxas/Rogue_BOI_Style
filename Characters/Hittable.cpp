@@ -1,10 +1,10 @@
 #include "Hittable.h"
 
-Hittable::Hittable(const CollisionManager* e) : col(e){}
+Hittable::Hittable(CollisionManager* e) : col(e) {}
 
-void Hittable::assignCM(CollisionManager* e){col = e; col->registerEntity(this);}
+void Hittable::assignCM(CollisionManager* e){ col = e; col_reg = col->registerEntity(this);}
 
-void Hittable::desassignCM(){col->unregisterEntity(this);}
+void Hittable::desassignCM(){col_reg.reset();}
 
 Hittable::healthType Hittable::getDamage() const {return attack;}
 

@@ -6,6 +6,7 @@
 #include "CharacterAnimation.h"
 #include "CollisionManager.h"
 #include <iostream>
+#include "../Misc/Suscribable.h"
 
 namespace properties
 {
@@ -41,7 +42,7 @@ namespace BulletEffect
 
 struct Hittable : public sf::Transformable 
 {
-	Hittable(const CollisionManager* e = nullptr);
+	Hittable(CollisionManager* e = nullptr);
 	using healthType = unsigned long long;
 
 	virtual void assignCM(CollisionManager* e);
@@ -70,7 +71,8 @@ struct Hittable : public sf::Transformable
 	healthType health = 1;
 	healthType health_max = 3;
 	healthType attack = 0; 
-	const CollisionManager* col;
+	CollisionManager* col;
+	Registration col_reg; 
 	unsigned int team_number = 0;
 	double bullet_speed = 2;
 

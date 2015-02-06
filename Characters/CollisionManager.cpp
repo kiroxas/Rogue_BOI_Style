@@ -6,31 +6,33 @@
 CollisionManager::CollisionManager(GameInfo& s)
 : stats(s){}
 
-void CollisionManager::registerEntity(Hittable* ent) const
+Registration CollisionManager::registerEntity(Hittable* ent) 
 {
-	if(ent)
-		entities.push_back(ent);
+	/*if(ent)
+		entities.push_back(ent);*/
+	UniversalPointer f = UniversalPointer((void*)ent,[](void* e){std::cout << "Deleted " << e <<std::endl;});
+	return SubjectBase::registerObserver(std::move(f));
 }
 
-void CollisionManager::unregisterEntity(Hittable* ent) const
+/*void CollisionManager::unregisterEntity(Hittable* ent) const
 {
 	auto it = std::find(entities.begin(),entities.end(),ent);
 	if(it != entities.end())
 		entities.erase(it);
 }
-
+*/
 bool CollisionManager::canIMove(Hittable* me) const
 {
 	if(me == nullptr || !KiroGame::isInInnerRoom(me->getGlobalBounds()))
 	{
-		std::cout << " null or not in inner " << std::endl;
 		return false;
 	}
 	bool res = true;
 
-	for(auto& e : entities)
+	for(const auto& fp : observers)
 	{
-		if(e == me || e->isDead() || e->sameTeam(me)) 
+		Hittable* e = (Hittable*)fp.get();
+		if(!e || e == me || e->isDead() || e->sameTeam(me)) 
 			continue;
 		
 		if(me->getGlobalBounds().intersects(e->getGlobalBounds()))
@@ -41,6 +43,8 @@ bool CollisionManager::canIMove(Hittable* me) const
 				stats.KilledAnEnnemy();
 			std::cout << "splash" << std::endl;
 			res = false;
+			if(me->isDead())
+				return res;
 		}
 	}
 	

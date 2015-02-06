@@ -6,6 +6,8 @@ void Item::collide(Hittable* e)
 	{
 		effect.applyTo(e);
 		consumed = true;
+		//desassignCM();
+		//std::cout << "desassigned : " << this << std::endl;
 	}
 }
 

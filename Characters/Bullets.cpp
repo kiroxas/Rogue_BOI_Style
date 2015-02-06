@@ -2,7 +2,7 @@
 #include "CollisionManager.h"
 #include <iostream>
 
-Bullets::Bullets(std::pair<int,int> pos, Direction dir, BulletEffect::Func f, const CollisionManager* e) :
+Bullets::Bullets(std::pair<int,int> pos, Direction dir, BulletEffect::Func f, CollisionManager* e) :
 Hittable(e),
 m_dir(dir)
 {
@@ -32,10 +32,7 @@ void Bullets::setBulletColor(const sf::Color& s)
 }
 
 Bullets::~Bullets()
-{
-   if(registered && col)
-	 col->unregisterEntity(this);
-}
+{}
 
 void Bullets::update()
 {

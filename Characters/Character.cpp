@@ -138,7 +138,7 @@ void Character::collide(Hittable* h)
 	if((state & properties::defs::Invincible) == properties::defs::Invincible || isDead()) return;
 	health -= h->getDamage();
 	
-	if(isDead() && col) col->unregisterEntity(this);
+	if(isDead()) col_reg.reset(); // Then we do not want to be in the collision manager anymore
 }
 
 Character::~Character(){}

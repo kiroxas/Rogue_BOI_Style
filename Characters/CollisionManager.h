@@ -3,20 +3,21 @@
 
 #include <vector>
 #include "../Misc/GameInfo.h"
+#include "../Misc/Suscribable.h"
 
 struct Hittable;
 
-class CollisionManager
+class CollisionManager : public SubjectBase
 {
 	public : 
 	CollisionManager(GameInfo&);
-	void registerEntity(Hittable*) const;
-	void unregisterEntity(Hittable* ent) const;
+	Registration registerEntity(Hittable*);
+	//void unregisterEntity(Hittable* ent) const;
 	bool canIMove(Hittable*) const;
 
 	private :
 
-	mutable std::vector<Hittable*> entities;
+	//mutable std::vector<Hittable*> entities;
 	GameInfo& stats;
 };
 #endif

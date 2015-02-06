@@ -161,9 +161,6 @@ void Room::update()
 	auto ite = std::remove_if(std::begin(items),std::end(items),[](Itemcollection::reference e){return e.isConsumed();});
 	if(ite != std::end(items))
 	{
-		for(auto it = ite, end = std::end(items); it < end; ++it)
-			it->desassignCM();
-
 		items.erase(ite,std::end(items));
 	}
 
@@ -176,7 +173,6 @@ void Room::update()
 
 void Room::addCharacter(std::unique_ptr<ICharacter> i)
 {
-	std::cout << "Adding : " << i->getPosition().x << " " <<i->getPosition().y << std::endl;
 	heroes.emplace_back(std::move(i)); 
 }
 

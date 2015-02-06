@@ -14,7 +14,7 @@ class Bullets : public Hittable, public sf::Drawable
 	public :
 	using moveFunction = std::function<BulletEffect::arg()> ;
 
-	Bullets(std::pair<int, int> pos, Direction dir, BulletEffect::Func f, const CollisionManager* e = nullptr);
+	Bullets(std::pair<int, int> pos, Direction dir, BulletEffect::Func f, CollisionManager* e = nullptr);
 	~Bullets();
 	void update();
 	Hittable::healthType getDamage() const;
