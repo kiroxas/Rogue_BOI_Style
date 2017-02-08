@@ -16,7 +16,7 @@ void* NormalAllocator::alloc(unsigned int t_size)
 {
 	char * ret = nullptr;
 
-	for(auto e : manager)
+	for(const auto& e : manager)
 	{
 		if(e.first > t_size)
 		{
@@ -62,9 +62,9 @@ void NormalAllocator::free(void* to_delete)
 	const unsigned int size = allocated[to_del];
 	allocated.erase(to_del);
 
-	for(auto e : manager)
+	for(const auto& e : manager)
 	{
-		for(auto c : e.second)
+		for(const auto& c : e.second)
 		{
 			if(c + e.first == to_del) // First case, the memory we are freeing is after this one, let's allocate a bigger chunk
 			{
@@ -95,7 +95,7 @@ void NormalAllocator::free(void* to_delete)
 void NormalAllocator::infos() const
 {
 	std::cerr << "Manager :" << std::endl;
-	for(auto e : manager)
+	for(const auto& e : manager)
 	{
 		std::cerr << "- " << e.first << ": ";
 		for(auto c : e.second)
@@ -103,7 +103,7 @@ void NormalAllocator::infos() const
 		std::cerr << std::endl;
 	}
 	std::cerr << "Allocated :" << std::endl;
-	for(auto e : allocated)
+	for(const auto& e : allocated)
 	{
 		std::cerr << "- " << &(e.first) << ":" << e.second << std::endl;
 	}
@@ -189,7 +189,7 @@ void operator delete (void* mem)
 	n.free(mem);
 }
 
-// Don’t forget the array version of new/delete
+// Donâ€™t forget the array version of new/delete
 void* operator new[](size_t size)
 {
 	std::cout << "In custom new[] for "<< size << std::endl;
